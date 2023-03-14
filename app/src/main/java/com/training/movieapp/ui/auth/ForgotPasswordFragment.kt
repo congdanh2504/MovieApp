@@ -7,18 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
-import com.training.movieapp.databinding.FragmentLoginBinding
+import com.training.movieapp.databinding.FragmentForgotPasswordBinding
 
-class LoginFragment : Fragment() {
+class ForgotPasswordFragment : Fragment() {
 
-    private lateinit var loginBinding: FragmentLoginBinding
+    private lateinit var forgotPasswordBinding: FragmentForgotPasswordBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        loginBinding = FragmentLoginBinding.inflate(layoutInflater, container, false)
-        return loginBinding.root
+        forgotPasswordBinding =
+            FragmentForgotPasswordBinding.inflate(layoutInflater, container, false)
+        return forgotPasswordBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,12 +28,12 @@ class LoginFragment : Fragment() {
     }
 
     private fun initActions() {
-        loginBinding.apply {
-            createAccount.setOnClickListener {
-                findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        forgotPasswordBinding.apply {
+            continueBtn.setOnClickListener {
+                findNavController().navigate(R.id.action_forgotPasswordFragment_to_resetFragment)
             }
-            forgotPassword.setOnClickListener {
-                findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+            back.setOnClickListener {
+                findNavController().popBackStack()
             }
         }
     }

@@ -7,18 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
-import com.training.movieapp.databinding.FragmentLoginBinding
+import com.training.movieapp.databinding.FragmentConfirmEmailBinding
 
-class LoginFragment : Fragment() {
+class ConfirmEmailFragment : Fragment() {
 
-    private lateinit var loginBinding: FragmentLoginBinding
+    private lateinit var confirmEmailBinding: FragmentConfirmEmailBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        loginBinding = FragmentLoginBinding.inflate(layoutInflater, container, false)
-        return loginBinding.root
+        confirmEmailBinding = FragmentConfirmEmailBinding.inflate(layoutInflater, container, false)
+        return confirmEmailBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,14 +27,10 @@ class LoginFragment : Fragment() {
     }
 
     private fun initActions() {
-        loginBinding.apply {
-            createAccount.setOnClickListener {
-                findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
-            }
-            forgotPassword.setOnClickListener {
-                findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+        confirmEmailBinding.apply {
+            continueBtn.setOnClickListener {
+                findNavController().navigate(R.id.action_confirmEmailFragment2_to_loginFragment)
             }
         }
     }
-
 }
