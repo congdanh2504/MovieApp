@@ -7,7 +7,6 @@ import com.training.movieapp.R
 
 class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
     }
