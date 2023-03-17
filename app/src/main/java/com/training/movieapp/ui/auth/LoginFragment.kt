@@ -1,5 +1,6 @@
 package com.training.movieapp.ui.auth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
 import com.training.movieapp.databinding.FragmentLoginBinding
+import com.training.movieapp.ui.main.MainActivity
 
 class LoginFragment : Fragment() {
 
@@ -33,6 +35,10 @@ class LoginFragment : Fragment() {
             }
             forgotPassword.setOnClickListener {
                 findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+            }
+            loginBtn.setOnClickListener {
+                startActivity(Intent(requireActivity(), MainActivity::class.java))
+                requireActivity().finish()
             }
         }
     }
