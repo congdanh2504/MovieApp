@@ -26,7 +26,7 @@ class UserListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val users = listOf("asd", "Asd", "asd","asd", "Asd", "asd")
+        val users = listOf("asd", "Asd", "asd")
         adapter = UserListAdapter(users, requireContext())
         userListBinding.userRecycler.layoutManager = LinearLayoutManager(requireContext())
         userListBinding.userRecycler.adapter = adapter

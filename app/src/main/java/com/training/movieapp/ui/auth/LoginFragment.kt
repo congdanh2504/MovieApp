@@ -34,7 +34,7 @@ class LoginFragment : Fragment() {
                 findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
             }
             forgotPassword.setOnClickListener {
-                findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+                findNavController().navigate(R.id.action_loginFragment_to_detailCompanyFragment)
             }
             loginBtn.setOnClickListener {
                 startActivity(Intent(requireActivity(), MainActivity::class.java))
