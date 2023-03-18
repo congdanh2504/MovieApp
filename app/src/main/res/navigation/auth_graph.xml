@@ -17,8 +17,8 @@
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_detailPersonFragment"
-            app:destination="@id/detailPersonFragment" />
+            android:id="@+id/action_loginFragment_to_detailCompanyFragment"
+            app:destination="@id/detailCompanyFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -61,8 +61,8 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/detailPersonFragment"
-        android:name="com.training.movieapp.ui.detail.DetailPersonFragment"
-        android:label="fragment_detail_person"
-        tools:layout="@layout/fragment_detail_person" />
+        android:id="@+id/detailCompanyFragment"
+        android:name="com.training.movieapp.ui.detail.DetailCompanyFragment"
+        android:label="fragment_detail_company"
+        tools:layout="@layout/fragment_detail_company" />
 </navigation>
