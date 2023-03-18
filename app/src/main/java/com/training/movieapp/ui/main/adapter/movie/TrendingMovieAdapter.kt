@@ -1,4 +1,4 @@
-package com.training.movieapp.ui.main.adapter
+package com.training.movieapp.ui.main.adapter.movie
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,19 +6,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.training.movieapp.R
-import com.training.movieapp.databinding.TrendingItemBinding
+import com.training.movieapp.databinding.TrendingMovieItemBinding
 import com.training.movieapp.ui.main.model.Movie
 
-class TrendingAdapter(private val moviesModel: List<Movie>) :
-    RecyclerView.Adapter<TrendingAdapter.MovieTrendingViewHolder>() {
+class TrendingMovieAdapter(private val moviesModel: List<Movie>) :
+    RecyclerView.Adapter<TrendingMovieAdapter.MovieTrendingViewHolder>() {
 
     inner class MovieTrendingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding = TrendingItemBinding.bind(itemView)
+        val binding = TrendingMovieItemBinding.bind(itemView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieTrendingViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.trending_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.trending_movie_item, parent, false)
         return MovieTrendingViewHolder(view)
     }
 
