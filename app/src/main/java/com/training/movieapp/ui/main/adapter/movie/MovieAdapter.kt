@@ -1,4 +1,4 @@
-package com.training.movieapp.ui.main.adapter
+package com.training.movieapp.ui.main.adapter.movie
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +11,9 @@ import com.training.movieapp.ui.main.model.Movie
 
 class MovieAdapter(private val moviesModel: List<Movie>) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-
+    inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding = MovieItemBinding.bind(itemView)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
         return MovieViewHolder(view)
@@ -22,10 +24,5 @@ class MovieAdapter(private val moviesModel: List<Movie>) :
             imgMoviePoster.load(moviesModel[position].imageUrl)
         }
     }
-
     override fun getItemCount() = moviesModel.size
-
-    inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding = MovieItemBinding.bind(itemView)
-    }
 }

@@ -5,9 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.training.movieapp.R
 import com.training.movieapp.databinding.FragmentMoviesBinding
-import com.training.movieapp.ui.main.adapter.MainMovieAdapter
+import com.training.movieapp.ui.main.adapter.movie.MainMovieAdapter
 import com.training.movieapp.ui.main.utils.SampleData
 
 class MoviesFragment : Fragment() {
