@@ -1,20 +1,24 @@
 package com.training.movieapp.ui.detail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.tabs.TabLayoutMediator
 import com.training.movieapp.R
 import com.training.movieapp.databinding.FragmentDetailUserBinding
-import com.training.movieapp.ui.detail.adapter.MainAdapter
+import com.training.movieapp.ui.detail.adapter.MyPagerAdapter
+import com.training.movieapp.ui.detail.model.MovieItems
+import com.training.movieapp.ui.detail.model.UserItems
 
 class DetailUserFragment : Fragment() {
 
     private lateinit var detailUserBinding: FragmentDetailUserBinding
-    private lateinit var adapter: MainAdapter
+    private lateinit var adapter: MyPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +30,7 @@ class DetailUserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MainAdapter(requireActivity().supportFragmentManager)
+        adapter = MyPagerAdapter(listOf(MovieItems(listOf()), MovieItems(listOf()),MovieItems(listOf()), UserItems(listOf())))
         val tabOne = LayoutInflater.from(requireContext()).inflate(R.layout.custom_tab_title, null) as LinearLayout
         tabOne.findViewById<TextView>(R.id.number).text = "24"
         tabOne.findViewById<TextView>(R.id.title).text = "Watch List"
@@ -39,15 +43,16 @@ class DetailUserFragment : Fragment() {
         val tabFour = LayoutInflater.from(requireContext()).inflate(R.layout.custom_tab_title, null) as LinearLayout
         tabFour.findViewById<TextView>(R.id.number).text = "21"
         tabFour.findViewById<TextView>(R.id.title).text = "User Reviews"
-        adapter.addFragment(MovieListFragment())
-        adapter.addFragment(MovieListFragment())
-        adapter.addFragment(MovieListFragment())
-        adapter.addFragment(UserListFragment())
         detailUserBinding.viewPager.adapter = adapter
-        detailUserBinding.tab.setupWithViewPager(detailUserBinding.viewPager)
-        detailUserBinding.tab.getTabAt(0)?.customView = tabOne
-        detailUserBinding.tab.getTabAt(1)?.customView = tabTwo
-        detailUserBinding.tab.getTabAt(2)?.customView = tabThree
-        detailUserBinding.tab.getTabAt(3)?.customView = tabFour
+
+        val tabTitles = listOf(tabOne, tabTwo, tabThree, tabFour)
+
+        TabLayoutMediator(detailUserBinding.tab, detailUserBinding.viewPager) { tab, position ->
+            tab.customView = tabTitles[position]
+        }.attach()
+        detailUserBinding.follow.setOnClickListener {
+            findNavController().navigate(R.id.action_detailUserFragment_to_followFragment)
+        }
     }
+
 }

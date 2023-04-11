@@ -7,19 +7,18 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 import com.training.movieapp.R
 import com.training.movieapp.databinding.FragmentDetailPersonBinding
-import com.training.movieapp.ui.detail.adapter.MainAdapter
-import com.training.movieapp.ui.main.NotificationsFragment
-import com.training.movieapp.ui.main.SeriesFragment
+import com.training.movieapp.ui.detail.adapter.MyPagerAdapter
+import com.training.movieapp.ui.detail.model.MovieItems
+import com.training.movieapp.ui.detail.model.UserItems
 
 
 class DetailPersonFragment : Fragment() {
 
     private lateinit var detailPersonBinding: FragmentDetailPersonBinding
-    private lateinit var adapter: MainAdapter
+    private lateinit var adapter: MyPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,19 +30,21 @@ class DetailPersonFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MainAdapter(requireActivity().supportFragmentManager)
+        adapter = MyPagerAdapter(listOf(MovieItems(listOf()), UserItems(listOf())))
         val tabOne = LayoutInflater.from(requireContext()).inflate(R.layout.custom_tab_title, null) as LinearLayout
         tabOne.findViewById<TextView>(R.id.number).text = "24"
         tabOne.findViewById<TextView>(R.id.title).text = "Items"
         val tabTwo = LayoutInflater.from(requireContext()).inflate(R.layout.custom_tab_title, null) as LinearLayout
         tabTwo.findViewById<TextView>(R.id.number).text = "21"
         tabTwo.findViewById<TextView>(R.id.title).text = "Followers"
-        adapter.addFragment(MovieListFragment())
-        adapter.addFragment(UserListFragment())
+
         detailPersonBinding.viewPager.adapter = adapter
-        detailPersonBinding.tab.setupWithViewPager(detailPersonBinding.viewPager)
-        detailPersonBinding.tab.getTabAt(0)?.customView = tabOne
-        detailPersonBinding.tab.getTabAt(1)?.customView = tabTwo
+
+        val tabTitles = listOf(tabOne, tabTwo)
+
+        TabLayoutMediator(detailPersonBinding.tab, detailPersonBinding.viewPager) { tab, position ->
+            tab.customView = tabTitles[position]
+        }.attach()
     }
 
 }
