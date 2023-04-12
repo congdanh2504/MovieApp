@@ -51,7 +51,7 @@ class DetailUserFragment : Fragment() {
             tab.customView = tabTitles[position]
         }.attach()
         detailUserBinding.follow.setOnClickListener {
-            findNavController().navigate(R.id.action_detailUserFragment_to_followFragment)
+//            findNavController().navigate(R.id.action_detailUserFragment_to_followFragment)
         }
     }
 
