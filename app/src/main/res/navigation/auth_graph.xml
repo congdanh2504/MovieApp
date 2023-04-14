@@ -9,69 +9,64 @@
         android:id="@+id/loginFragment"
         android:name="com.training.movieapp.ui.auth.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
-            app:destination="@id/forgotPasswordFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_detailUserFragment"
-            app:destination="@id/detailUserFragment" />
+            app:destination="@id/forgotPasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.training.movieapp.ui.auth.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_registerFragment_to_confirmEmailFragment2"
-            app:destination="@id/confirmEmailFragment" />
+            app:destination="@id/confirmEmailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/resetFragment"
         android:name="com.training.movieapp.ui.auth.ResetFragment"
         android:label="fragment_reset"
-        tools:layout="@layout/fragment_reset" >
+        tools:layout="@layout/fragment_reset">
         <action
             android:id="@+id/action_resetFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@+id/loginFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.training.movieapp.ui.auth.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
-        tools:layout="@layout/fragment_forgot_password" >
+        tools:layout="@layout/fragment_forgot_password">
         <action
             android:id="@+id/action_forgotPasswordFragment_to_resetFragment"
-            app:destination="@id/resetFragment" />
+            app:destination="@id/resetFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
     <fragment
         android:id="@+id/confirmEmailFragment"
         android:name="com.training.movieapp.ui.auth.ConfirmEmailFragment"
         android:label="fragment_confirm_email"
-        tools:layout="@layout/fragment_confirm_email" >
+        tools:layout="@layout/fragment_confirm_email">
         <action
             android:id="@+id/action_confirmEmailFragment2_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@+id/loginFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
     </fragment>
-    <fragment
-        android:id="@+id/detailUserFragment"
-        android:name="com.training.movieapp.ui.detail.DetailUserFragment"
-        android:label="fragment_detail_user"
-        tools:layout="@layout/fragment_detail_user" >
-        <action
-            android:id="@+id/action_detailUserFragment_to_followFragment"
-            app:destination="@id/followFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/followFragment"
-        android:name="com.training.movieapp.ui.detail.FollowFragment"
-        android:label="fragment_follow"
-        tools:layout="@layout/fragment_follow" />
 </navigation>
