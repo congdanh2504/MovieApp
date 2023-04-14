@@ -27,12 +27,13 @@
         android:textStyle="bold" />
 
     <EditText
+        android:id="@+id/emailET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/rounded_rectangle"
-        android:hint="Email or Username"
+        android:hint="Email"
         android:padding="15dp" />
 
     <TextView
@@ -45,10 +46,12 @@
         android:textStyle="bold" />
 
     <EditText
+        android:id="@+id/passwordET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
+        android:inputType="textPassword"
         android:background="@drawable/rounded_rectangle"
         android:hint="Password"
         android:padding="15dp" />
@@ -61,6 +64,15 @@
         android:layout_marginTop="15dp"
         android:text="@string/forgot_password"
         android:textColor="@color/tint_secondary" />
+
+    <TextView
+        android:id="@+id/errorTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        android:textColor="@color/red" />
 
     <Button
         android:id="@+id/loginBtn"

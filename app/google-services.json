@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "354878432517",
+    "project_id": "movieapp-71536",
+    "storage_bucket": "movieapp-71536.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354878432517:android:1a78fb785da02afe76836c",
+        "android_client_info": {
+          "package_name": "com.training.movieapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354878432517-cqg2tc17jj4c6ldmoa06ea6rhda131kl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDapBjfLTLBs0GkSQiYjwKgTlnQ_fJAVaI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "354878432517-cqg2tc17jj4c6ldmoa06ea6rhda131kl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

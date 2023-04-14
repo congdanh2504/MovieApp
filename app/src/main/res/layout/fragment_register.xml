@@ -40,6 +40,7 @@
             android:textStyle="bold" />
 
         <EditText
+            android:id="@+id/emailET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -66,6 +67,7 @@
             android:textStyle="bold" />
 
         <EditText
+            android:id="@+id/usernameET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -84,12 +86,14 @@
             android:textStyle="bold" />
 
         <EditText
+            android:id="@+id/passwordET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/rounded_rectangle"
             android:hint="Password"
+            android:inputType="textPassword"
             android:padding="15dp" />
 
         <TextView
@@ -100,6 +104,15 @@
             android:text="@string/account_des2"
             android:textColor="@color/tint_secondary" />
 
+        <TextView
+            android:id="@+id/errorTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:textColor="@color/red" />
+
         <Button
             android:id="@+id/createAccountBtn"
             android:layout_width="match_parent"
@@ -108,11 +121,11 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_rectangle"
             android:padding="10dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
             android:text="Create Account"
             android:textAllCaps="false"
-            android:textColor="@color/tint_secondary" />
+            android:textColor="@color/tint_secondary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/login"
