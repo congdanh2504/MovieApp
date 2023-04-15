@@ -12,5 +12,5 @@ class AuthUseCaseImpl @Inject constructor(private val authRepository: AuthReposi
 
     override suspend fun signOut() = authRepository.signOut()
 
-//    override suspend fun resetPassword(email: String): Result<Unit> = authRepository.resetPassword(email)
+    override suspend fun resetPassword(email: String): Result<Unit> = authRepository.resetPassword(email)
 }

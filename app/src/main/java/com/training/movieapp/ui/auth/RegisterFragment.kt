@@ -43,7 +43,8 @@ class RegisterFragment : Fragment() {
         dialog = Dialog(requireContext(), R.style.ProgressHUD)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.progress_hud)
-        val back = dialog.findViewById<ImageView>(R.id.spinnerImageView).background as AnimationDrawable
+        val back =
+            dialog.findViewById<ImageView>(R.id.spinnerImageView).background as AnimationDrawable
         back.start()
     }
 
@@ -73,7 +74,11 @@ class RegisterFragment : Fragment() {
             when (state) {
                 is AuthState.Authenticated -> {
                     dialog.dismiss()
-                    findNavController().navigate(R.id.action_registerFragment_to_confirmEmailFragment2)
+                    val action =
+                        RegisterFragmentDirections.actionRegisterFragmentToConfirmEmailFragment2(
+                            registerBinding.emailET.text.toString()
+                        )
+                    findNavController().navigate(action)
                 }
                 is AuthState.UnAuthenticated -> {
                     dialog.dismiss()

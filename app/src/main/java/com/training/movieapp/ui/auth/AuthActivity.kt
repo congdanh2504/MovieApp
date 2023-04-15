@@ -21,7 +21,7 @@ class AuthActivity : AppCompatActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
-//        firebaseAuth.signOut()
+        firebaseAuth.signOut()
         splashScreen.setKeepOnScreenCondition {
             true
         }

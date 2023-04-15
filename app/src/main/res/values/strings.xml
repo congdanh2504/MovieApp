@@ -7,7 +7,7 @@
     <string name="account_des">We need your email for membership transactions. We will definitely not send mail about marketing.</string>
     <string name="account_des2">By proceeding to create a new account and using this app, you agree to our <u>PrivacyPolicy</u> and <u>Terms of Service</u>.</string>
     <string name="have_account">Already have an account? <u>Log in</u></string>
-    <string name="reset_password">We have sent an email to emailAddress. Use the token in the email to reset your password.\nIf you do not see the email, check other places it might be like your <b>spam, junk or other folders.</b></string>
+    <string name="reset_password">We have sent an email to emailAddress. Use the new pass in the email to login.\nIf you do not see the email, check other places it might be like your <b>spam, junk or other folders.</b></string>
     <string name="didnt_receive"><u>I did\'t receive the email</u></string>
     <string name="confirm_email_des">We have sent an email to emailAddress. Click the link in the email to confirm your email address.
         \nIf you do not see the email, check other places it might be like your <b>Spam, junk or other folders.</b>

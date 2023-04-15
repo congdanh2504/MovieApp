@@ -47,8 +47,13 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-//    override suspend fun resetPassword(email: String): Result<Unit> {
-//        TODO("Not yet implemented")
-//    }
+    override suspend fun resetPassword(email: String): Result<Unit> {
+        return try {
+            firebaseAuth.sendPasswordResetEmail(email).await()
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
 
 }

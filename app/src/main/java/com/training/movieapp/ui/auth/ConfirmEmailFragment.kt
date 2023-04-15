@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.training.movieapp.R
 import com.training.movieapp.databinding.FragmentConfirmEmailBinding
 import com.training.movieapp.ui.auth.viewmodel.AuthViewModel
@@ -17,6 +18,7 @@ class ConfirmEmailFragment : Fragment() {
 
     private val authViewModel: AuthViewModel by activityViewModels()
     private lateinit var confirmEmailBinding: FragmentConfirmEmailBinding
+    private val args: ConfirmEmailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +30,7 @@ class ConfirmEmailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        confirmEmailBinding.descriptionTV.text = confirmEmailBinding.descriptionTV.text.toString().replace("emailAddress", args.email)
         initActions()
     }
 

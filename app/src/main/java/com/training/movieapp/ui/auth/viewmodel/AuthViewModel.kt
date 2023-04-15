@@ -15,6 +15,8 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(private val authUseCase: AuthUseCase) : ViewModel() {
     private val _authState = MutableLiveData<AuthState>()
     val authState: LiveData<AuthState> = _authState
+    private val _resetPasswordState =  MutableLiveData<Result<Unit>>()
+    val resetPasswordState: LiveData<Result<Unit>> = _resetPasswordState
 
     fun register(email: String, username: String, password: String) = viewModelScope.launch {
         _authState.value = AuthState.Loading
@@ -24,7 +26,6 @@ class AuthViewModel @Inject constructor(private val authUseCase: AuthUseCase) : 
         }
     }
 
-
     fun login(email: String, password: String) = viewModelScope.launch {
         _authState.value = AuthState.Loading
         when (val result = authUseCase.login(email, password)) {
@@ -33,12 +34,19 @@ class AuthViewModel @Inject constructor(private val authUseCase: AuthUseCase) : 
         }
     }
 
-
     fun signOut() = viewModelScope.launch {
         _authState.value = AuthState.Loading
         when (val result = authUseCase.signOut()) {
             is Result.Success -> _authState.value = AuthState.UnAuthenticated
             is Result.Error -> _authState.value = AuthState.Error(result.exception.message)
         }
+    }
+
+    fun resetPassword(email: String) = viewModelScope.launch {
+        _resetPasswordState.value = authUseCase.resetPassword(email)
+//        when (val result = authUseCase.resetPassword(email)) {
+//            is Result.Success -> _authState.value = AuthState.UnAuthenticated
+//            is Result.Error -> _authState.value = AuthState.Error(result.exception.message)
+//        }
     }
 }
