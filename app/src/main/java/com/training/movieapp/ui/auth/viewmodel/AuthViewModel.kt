@@ -16,23 +16,29 @@ class AuthViewModel @Inject constructor(private val authUseCase: AuthUseCase) : 
     private val _authState = MutableLiveData<AuthState>()
     val authState: LiveData<AuthState> = _authState
 
-    fun register(email: String, username: String, password: String) {
-        viewModelScope.launch {
-            _authState.value = AuthState.Loading
-            when (val result = authUseCase.register(email, username, password)) {
-                is Result.Success -> _authState.value = AuthState.Authenticated
-                is Result.Error -> _authState.value = AuthState.Error(result.exception.message)
-            }
+    fun register(email: String, username: String, password: String) = viewModelScope.launch {
+        _authState.value = AuthState.Loading
+        when (val result = authUseCase.register(email, username, password)) {
+            is Result.Success -> _authState.value = AuthState.Authenticated
+            is Result.Error -> _authState.value = AuthState.Error(result.exception.message)
         }
     }
 
-    fun login(email: String, password: String) {
-        viewModelScope.launch {
-            _authState.value = AuthState.Loading
-            when (val result = authUseCase.login(email, password)) {
-                is Result.Success -> _authState.value = AuthState.Authenticated
-                is Result.Error -> _authState.value = AuthState.Error(result.exception.message)
-            }
+
+    fun login(email: String, password: String) = viewModelScope.launch {
+        _authState.value = AuthState.Loading
+        when (val result = authUseCase.login(email, password)) {
+            is Result.Success -> _authState.value = AuthState.Authenticated
+            is Result.Error -> _authState.value = AuthState.Error(result.exception.message)
+        }
+    }
+
+
+    fun signOut() = viewModelScope.launch {
+        _authState.value = AuthState.Loading
+        when (val result = authUseCase.signOut()) {
+            is Result.Success -> _authState.value = AuthState.UnAuthenticated
+            is Result.Error -> _authState.value = AuthState.Error(result.exception.message)
         }
     }
 }

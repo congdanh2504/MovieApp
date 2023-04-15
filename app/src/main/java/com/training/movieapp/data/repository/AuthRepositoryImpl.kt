@@ -38,6 +38,15 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun signOut(): Result<Unit> {
+        return try {
+            firebaseAuth.signOut()
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
 //    override suspend fun resetPassword(email: String): Result<Unit> {
 //        TODO("Not yet implemented")
 //    }
