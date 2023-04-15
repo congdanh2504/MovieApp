@@ -1,9 +1,6 @@
 package com.training.movieapp.ui.main.utils
 
-import com.training.movieapp.ui.main.model.MainMovie
-import com.training.movieapp.ui.main.model.MainSeries
-import com.training.movieapp.ui.main.model.Movie
-import com.training.movieapp.ui.main.model.Series
+import com.training.movieapp.ui.main.model.*
 
 object SampleData {
     private val Movies = listOf(
@@ -43,5 +40,13 @@ object SampleData {
         MainSeries("Airing Today", Series,Trending.FALSE),
         MainSeries("Most Popular", Series,Trending.FALSE),
         MainSeries("Most Anticipated", Series,Trending.FALSE),
+    )
+    val User = listOf(
+        User(Images.imageUrl1,"Ngoc Khanh"),
+        User(Images.imageUrl1,"Khanh Le"),
+        User(Images.imageUrl1,"Thuy Hai"),
+        User(Images.imageUrl1,"Ngoc Hau"),
+        User(Images.imageUrl1,"aasd zzxc"),
+        User(Images.imageUrl1,"bzxc aasd")
     )
 }

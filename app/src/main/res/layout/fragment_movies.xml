@@ -4,14 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_primary"
     tools:context=".ui.main.MoviesFragment">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMainMovie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/movie_parent_item"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/movie_parent_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>
