@@ -3,33 +3,24 @@ package com.training.movieapp.ui.auth
 import android.app.Dialog
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
+import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentRegisterBinding
 import com.training.movieapp.domain.model.AuthState
 import com.training.movieapp.ui.auth.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterFragment : Fragment() {
+class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     private val authViewModel: AuthViewModel by activityViewModels()
-    private lateinit var registerBinding: FragmentRegisterBinding
+    private val binding: FragmentRegisterBinding by viewBinding(FragmentRegisterBinding::bind)
     private lateinit var dialog: Dialog
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        registerBinding = FragmentRegisterBinding.inflate(layoutInflater, container, false)
-        return registerBinding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,7 +30,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun initView() {
-        registerBinding.errorTV.visibility = View.INVISIBLE
+        binding.errorTV.visibility = View.INVISIBLE
         dialog = Dialog(requireContext(), R.style.ProgressHUD)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.progress_hud)
@@ -49,7 +40,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun initActions() {
-        registerBinding.apply {
+        binding.apply {
             back.setOnClickListener {
                 findNavController().popBackStack()
             }
@@ -63,9 +54,9 @@ class RegisterFragment : Fragment() {
     }
 
     private fun register() {
-        val email = registerBinding.emailET.text.toString()
-        val username = registerBinding.usernameET.text.toString()
-        val password = registerBinding.passwordET.text.toString()
+        val email = binding.emailET.text.toString()
+        val username = binding.usernameET.text.toString()
+        val password = binding.passwordET.text.toString()
         authViewModel.register(email, username, password)
     }
 
@@ -76,7 +67,7 @@ class RegisterFragment : Fragment() {
                     dialog.dismiss()
                     val action =
                         RegisterFragmentDirections.actionRegisterFragmentToConfirmEmailFragment2(
-                            registerBinding.emailET.text.toString()
+                            binding.emailET.text.toString()
                         )
                     findNavController().navigate(action)
                 }
@@ -85,8 +76,8 @@ class RegisterFragment : Fragment() {
                 }
                 is AuthState.Error -> {
                     dialog.dismiss()
-                    registerBinding.errorTV.visibility = View.VISIBLE
-                    registerBinding.errorTV.text = state.message
+                    binding.errorTV.visibility = View.VISIBLE
+                    binding.errorTV.text = state.message
                 }
                 AuthState.Loading -> {
                     dialog.show()

@@ -1,6 +1,6 @@
 package com.training.movieapp.domain.usecase
 
-import com.training.movieapp.domain.model.Result
+import com.training.movieapp.common.Result
 
 interface AuthUseCase {
     suspend fun login(email: String, password: String): Result<Unit>

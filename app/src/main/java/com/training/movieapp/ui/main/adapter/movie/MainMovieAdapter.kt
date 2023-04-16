@@ -16,6 +16,7 @@ class MainMovieAdapter(private val collection: List<MainMovie>) :
         const val TRENDING = 0
         const val noTRENDING = 1
     }
+
     inner class CollectionViewHolder(private val movieParent: MovieParentItemBinding) :
         RecyclerView.ViewHolder(movieParent.root) {
         fun bind(collection: MainMovie) {
@@ -24,6 +25,7 @@ class MainMovieAdapter(private val collection: List<MainMovie>) :
             movieParent.rvMovie.adapter = movieAdapter
         }
     }
+
     inner class TrendingViewHolder(private val trendingParent: TrendingMovieParentItemBinding) :
         RecyclerView.ViewHolder(trendingParent.root) {
         fun bind(collection: MainMovie) {
@@ -32,6 +34,7 @@ class MainMovieAdapter(private val collection: List<MainMovie>) :
             trendingParent.rvMovieTrending.adapter = trendingAdapter
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TRENDING) {
             val view =
@@ -47,6 +50,7 @@ class MainMovieAdapter(private val collection: List<MainMovie>) :
             CollectionViewHolder(view)
         }
     }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (getItemViewType(position) == TRENDING) {
             (holder as TrendingViewHolder).bind(collection[position])
@@ -54,8 +58,10 @@ class MainMovieAdapter(private val collection: List<MainMovie>) :
             (holder as CollectionViewHolder).bind(collection[position])
         }
     }
+
     override fun getItemViewType(position: Int): Int {
         return if (collection[position].trending == Trending.TRUE) TRENDING else noTRENDING
     }
+
     override fun getItemCount() = collection.size
 }

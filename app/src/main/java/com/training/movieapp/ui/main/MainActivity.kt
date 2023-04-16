@@ -1,18 +1,18 @@
 package com.training.movieapp.ui.main
 
-
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.training.movieapp.R
+import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::inflate)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         replaceFragment(MoviesFragment())
         binding.apply {
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                         replaceFragment(SeriesFragment())
                         collapsingToolbar.title = "Series"
                     }
-                    R.id.action_explore ->{
+                    R.id.action_explore -> {
                         replaceFragment(ExploreFragment())
                         collapsingToolbar.title = "Explore"
                     }
