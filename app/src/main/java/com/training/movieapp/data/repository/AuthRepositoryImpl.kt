@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.training.movieapp.domain.repository.AuthRepository
-import com.training.movieapp.domain.model.Result
+import com.training.movieapp.common.Result
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 

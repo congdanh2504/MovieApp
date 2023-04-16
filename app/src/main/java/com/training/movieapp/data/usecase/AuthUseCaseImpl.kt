@@ -3,7 +3,7 @@ package com.training.movieapp.data.usecase
 import com.training.movieapp.domain.repository.AuthRepository
 import com.training.movieapp.domain.usecase.AuthUseCase
 import javax.inject.Inject
-import com.training.movieapp.domain.model.Result
+import com.training.movieapp.common.Result
 
 class AuthUseCaseImpl @Inject constructor(private val authRepository: AuthRepository): AuthUseCase {
     override suspend fun login(email: String, password: String) = authRepository.login(email, password)

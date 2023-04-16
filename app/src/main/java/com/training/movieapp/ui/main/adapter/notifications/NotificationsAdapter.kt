@@ -9,7 +9,7 @@ import com.training.movieapp.R
 import com.training.movieapp.databinding.UserItemNotificationsBinding
 import com.training.movieapp.ui.main.model.User
 
-class NotificationsAdapter(private val userModel: List<User>):
+class NotificationsAdapter(private val userModel: List<User>) :
     RecyclerView.Adapter<NotificationsAdapter.NotificationsViewHolder>() {
     inner class NotificationsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = UserItemNotificationsBinding.bind(itemView)
@@ -27,7 +27,7 @@ class NotificationsAdapter(private val userModel: List<User>):
         holder.binding.apply {
             userImage.load(userModel[position].imageUrl)
             tvUsername.text = userModel[position].name
-            tvNickname.text = "@"+userModel[position].name
+            tvNickname.text = "@" + userModel[position].name
         }
     }
 }

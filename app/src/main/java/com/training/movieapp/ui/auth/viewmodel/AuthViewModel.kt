@@ -4,18 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.training.movieapp.common.Result
 import com.training.movieapp.domain.model.AuthState
 import com.training.movieapp.domain.usecase.AuthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import com.training.movieapp.domain.model.Result
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(private val authUseCase: AuthUseCase) : ViewModel() {
     private val _authState = MutableLiveData<AuthState>()
     val authState: LiveData<AuthState> = _authState
-    private val _resetPasswordState =  MutableLiveData<Result<Unit>>()
+    private val _resetPasswordState = MutableLiveData<Result<Unit>>()
     val resetPasswordState: LiveData<Result<Unit>> = _resetPasswordState
 
     fun register(email: String, username: String, password: String) = viewModelScope.launch {
