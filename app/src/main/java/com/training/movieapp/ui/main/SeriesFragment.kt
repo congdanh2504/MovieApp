@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.training.movieapp.databinding.FragmentSeriesBinding
-import com.training.movieapp.ui.main.adapter.movie.series.MainSeriesAdapter
+import com.training.movieapp.ui.main.adapter.series.MainSeriesAdapter
 import com.training.movieapp.ui.main.utils.SampleData
 
 class SeriesFragment : Fragment() {
