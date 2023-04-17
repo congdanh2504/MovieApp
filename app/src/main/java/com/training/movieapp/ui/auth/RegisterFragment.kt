@@ -6,19 +6,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentRegisterBinding
-import com.training.movieapp.domain.model.AuthState
-import com.training.movieapp.ui.auth.viewmodel.AuthViewModel
+import com.training.movieapp.domain.model.RegisterState
+import com.training.movieapp.ui.auth.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
-    private val authViewModel: AuthViewModel by activityViewModels()
+    private val registerViewModel: RegisterViewModel by viewModels()
     private val binding: FragmentRegisterBinding by viewBinding(FragmentRegisterBinding::bind)
     private lateinit var dialog: Dialog
 
@@ -57,32 +58,28 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         val email = binding.emailET.text.toString()
         val username = binding.usernameET.text.toString()
         val password = binding.passwordET.text.toString()
-        authViewModel.register(email, username, password)
+        registerViewModel.register(email, username, password)
     }
 
     private fun initObservers() {
-        authViewModel.authState.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is AuthState.Authenticated -> {
-                    dialog.dismiss()
-                    val action =
-                        RegisterFragmentDirections.actionRegisterFragmentToConfirmEmailFragment2(
-                            binding.emailET.text.toString()
-                        )
-                    findNavController().navigate(action)
+        lifecycleScope.launchWhenStarted {
+            registerViewModel.registerState
+                .collect { state ->
+                    when (state) {
+                        is RegisterState.Success -> {
+                            dialog.dismiss()
+                            findNavController().popBackStack()
+                        }
+                        is RegisterState.Error -> {
+                            dialog.dismiss()
+                            binding.errorTV.visibility = View.VISIBLE
+                            binding.errorTV.text = state.message
+                        }
+                        is RegisterState.Loading -> {
+                            dialog.show()
+                        }
+                    }
                 }
-                is AuthState.UnAuthenticated -> {
-                    dialog.dismiss()
-                }
-                is AuthState.Error -> {
-                    dialog.dismiss()
-                    binding.errorTV.visibility = View.VISIBLE
-                    binding.errorTV.text = state.message
-                }
-                AuthState.Loading -> {
-                    dialog.show()
-                }
-            }
         }
     }
 
