@@ -3,10 +3,8 @@ package com.training.movieapp.data.repository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.auth.User
 import com.training.movieapp.domain.repository.AuthRepository
 import com.training.movieapp.common.Result
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -18,7 +16,7 @@ class AuthRepositoryImpl @Inject constructor(
     AuthRepository {
     override suspend fun login(email: String, password: String) = flow {
         try {
-            val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            firebaseAuth.signInWithEmailAndPassword(email, password).await()
             emit(Result.Success(Unit))
         } catch (e: Exception) {
             emit(Result.Error(e))
