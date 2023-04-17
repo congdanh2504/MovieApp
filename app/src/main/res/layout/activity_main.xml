@@ -60,16 +60,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <FrameLayout
-                    android:id="@+id/frame_layout"
+                <fragment
+                    android:id="@+id/fragmentMain"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginBottom="@dimen/_40sdp"
+                    app:defaultNavHost="true"
                     app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:navGraph="@navigation/main_graph"
+                    />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

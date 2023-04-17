@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_movies"
+        android:id="@+id/moviesFragment"
         android:icon="@drawable/icon_movies"
         android:title="Movies" />
     <item
-        android:id="@+id/action_series"
+        android:id="@+id/seriesFragment"
         android:icon="@drawable/icon_series"
         android:title="Series" />
     <item
-        android:id="@+id/action_explore"
+        android:id="@+id/exploreFragment"
         android:icon="@drawable/icon_explore"
         android:title="Explore" />
     <item
-        android:id="@+id/action_notification"
+        android:id="@+id/notificationsFragment"
         android:icon="@drawable/icon_notifications"
         android:title="Notifications" />
 </menu>

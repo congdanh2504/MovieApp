@@ -2,7 +2,8 @@ package com.training.movieapp.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.training.movieapp.R
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.ActivityMainBinding
@@ -10,44 +11,37 @@ import com.training.movieapp.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::inflate)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        replaceFragment(MoviesFragment())
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentMain) as NavHostFragment
+        var navController = navHostFragment.navController
+        setupWithNavController(binding.bottomNavigation,navController)
         binding.apply {
             collapsingToolbar.title = "Movies"
             bottomNavigation.setOnItemSelectedListener {
                 when (it.itemId) {
-                    R.id.action_movies -> {
-                        replaceFragment(MoviesFragment())
+                    R.id.moviesFragment -> {
                         collapsingToolbar.title = "Movies"
+                        navController.navigate(R.id.moviesFragment)
                     }
-                    R.id.action_series -> {
-                        replaceFragment(SeriesFragment())
+                    R.id.seriesFragment -> {
                         collapsingToolbar.title = "Series"
+                        navController.navigate(R.id.seriesFragment)
                     }
-                    R.id.action_explore -> {
-                        replaceFragment(ExploreFragment())
+                    R.id.exploreFragment -> {
                         collapsingToolbar.title = "Explore"
+                        navController.navigate(R.id.exploreFragment)
                     }
-                    R.id.action_notification -> {
-                        replaceFragment(NotificationsFragment())
+                    R.id.notificationsFragment -> {
                         collapsingToolbar.title = "Notification"
+                        navController.navigate(R.id.notificationsFragment)
                     }
                     else -> {
-
                     }
                 }
                 true
             }
         }
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout, fragment)
-        fragmentTransaction.commit()
     }
 }

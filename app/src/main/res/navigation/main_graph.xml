@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/moviesFragment">
+
+    <fragment
+        android:id="@+id/seriesFragment"
+        android:name="com.training.movieapp.ui.main.SeriesFragment"
+        android:label="fragment_series"
+        tools:layout="@layout/fragment_series" >
+        <action
+            android:id="@+id/action_seriesFragment_to_moviesFragment2"
+            app:destination="@id/moviesFragment" />
+        <action
+            android:id="@+id/action_seriesFragment_to_exploreFragment2"
+            app:destination="@id/exploreFragment" />
+        <action
+            android:id="@+id/action_seriesFragment_to_notificationsFragment2"
+            app:destination="@id/notificationsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/moviesFragment"
+        android:name="com.training.movieapp.ui.main.MoviesFragment"
+        android:label="fragment_movies"
+        tools:layout="@layout/fragment_movies" >
+        <action
+            android:id="@+id/action_moviesFragment_to_seriesFragment"
+            app:destination="@id/seriesFragment" />
+        <action
+            android:id="@+id/action_moviesFragment_to_exploreFragment"
+            app:destination="@id/exploreFragment" />
+        <action
+            android:id="@+id/action_moviesFragment_to_notificationsFragment"
+            app:destination="@id/notificationsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="com.training.movieapp.ui.main.ExploreFragment"
+        android:label="fragment_explore"
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_exploreFragment_to_moviesFragment2"
+            app:destination="@id/moviesFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_seriesFragment2"
+            app:destination="@id/seriesFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_notificationsFragment"
+            app:destination="@id/notificationsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.training.movieapp.ui.main.NotificationsFragment"
+        android:label="fragment_notifications"
+        tools:layout="@layout/fragment_notifications" >
+        <action
+            android:id="@+id/action_notificationsFragment_to_seriesFragment"
+            app:destination="@id/seriesFragment" />
+        <action
+            android:id="@+id/action_notificationsFragment_to_exploreFragment2"
+            app:destination="@id/exploreFragment" />
+        <action
+            android:id="@+id/action_notificationsFragment_to_moviesFragment"
+            app:destination="@id/moviesFragment" />
+    </fragment>
+</navigation>
