@@ -14,33 +14,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentMain) as NavHostFragment
-        var navController = navHostFragment.navController
-        setupWithNavController(binding.bottomNavigation,navController)
-        binding.apply {
-            collapsingToolbar.title = "Movies"
-            bottomNavigation.setOnItemSelectedListener {
-                when (it.itemId) {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentMain) as NavHostFragment
+        val navController = navHostFragment.navController
+        setupWithNavController(binding.bottomNavigation, navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            binding.apply {
+                when (destination.id) {
                     R.id.moviesFragment -> {
-                        collapsingToolbar.title = "Movies"
-                        navController.navigate(R.id.moviesFragment)
+                        binding.collapsingToolbar.title = "Movies"
                     }
                     R.id.seriesFragment -> {
                         collapsingToolbar.title = "Series"
-                        navController.navigate(R.id.seriesFragment)
                     }
                     R.id.exploreFragment -> {
                         collapsingToolbar.title = "Explore"
-                        navController.navigate(R.id.exploreFragment)
                     }
                     R.id.notificationsFragment -> {
                         collapsingToolbar.title = "Notification"
-                        navController.navigate(R.id.notificationsFragment)
-                    }
-                    else -> {
                     }
                 }
-                true
             }
         }
     }

@@ -17,6 +17,7 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
+            android:background="@color/background_primary"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_60sdp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +29,7 @@
                 android:id="@+id/collapsingToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
+                android:background="@color/background_primary"
                 app:collapsedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Collapsed"
                 app:expandedTitleMarginStart="@dimen/_12sdp"
                 app:expandedTitleMarginBottom="@dimen/_2sdp"
@@ -40,7 +41,7 @@
                     style="@style/Widget.MaterialComponents.Toolbar.Primary"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="@color/white"
+                    android:background="@color/background_primary"
                     android:elevation="0dp"
                     app:layout_collapseMode="pin"
                     app:menu="@menu/top_app_bar_menu"
@@ -60,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <fragment
+                <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/fragmentMain"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
