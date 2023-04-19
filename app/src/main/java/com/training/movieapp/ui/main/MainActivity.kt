@@ -1,16 +1,24 @@
 package com.training.movieapp.ui.main
 
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import com.google.android.material.navigation.NavigationView
 import com.training.movieapp.R
+import com.training.movieapp.common.Screen
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
 
     private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::inflate)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -36,5 +44,26 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        initActions()
+        setupDrawerLayout()
+    }
+
+    private fun initActions() {
+        binding.buttonMenu.setOnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+        }
+        val headerContainer: View = binding.navigationView.getHeaderView(0)
+        val settings = headerContainer.findViewById<ImageView>(R.id.imageView_settings)
+
+        settings.setOnClickListener {
+            Toast.makeText(this, "asd", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setupDrawerLayout() {
+        val widthOfNav = (Screen.width) * 0.8
+        binding.navigationView.layoutParams.width = widthOfNav.toInt()
+        binding.navigationView.requestLayout()
     }
 }
