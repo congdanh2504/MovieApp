@@ -34,7 +34,8 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/rounded_rectangle"
         android:hint="Email"
-        android:padding="15dp" />
+        android:padding="15dp"
+        android:textColorHint="@color/tint_tertiary" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,10 +52,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
-        android:inputType="textPassword"
         android:background="@drawable/rounded_rectangle"
         android:hint="Password"
-        android:padding="15dp" />
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:textColorHint="@color/tint_tertiary" />
 
     <TextView
         android:id="@+id/forgot_password"
@@ -71,8 +73,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="15dp"
-        android:visibility="gone"
-        android:textColor="@color/red" />
+        android:textColor="@color/red"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/loginBtn"

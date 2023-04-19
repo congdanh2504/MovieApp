@@ -12,5 +12,6 @@
     <string name="confirm_email_des">We have sent an email to emailAddress. Click the link in the email to confirm your email address.
         \nIf you do not see the email, check other places it might be like your <b>Spam, junk or other folders.</b>
         \nAfter you confirm click <b>Continue</b></string>
+    <string name="contact">Contact us for feature requests, bug reports or anything else.</string>
 
 </resources>

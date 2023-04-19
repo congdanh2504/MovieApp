@@ -1,5 +1,6 @@
 package com.training.movieapp.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -13,6 +14,7 @@ import com.training.movieapp.R
 import com.training.movieapp.common.Screen
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.ActivityMainBinding
+import com.training.movieapp.ui.settings.SettingsActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             binding.apply {
                 when (destination.id) {
                     R.id.moviesFragment -> {
-                        binding.collapsingToolbar.title = "Movies"
+                        collapsingToolbar.title = "Movies"
                     }
                     R.id.seriesFragment -> {
                         collapsingToolbar.title = "Series"
@@ -57,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         val settings = headerContainer.findViewById<ImageView>(R.id.imageView_settings)
 
         settings.setOnClickListener {
-            Toast.makeText(this, "asd", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
         }
     }
 
