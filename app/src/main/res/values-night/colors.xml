@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#FF0000</color>
+    <color name="blue">#0000FF</color>
+    <color name="yellow">#FFCC00</color>
+    <color name="green">#34C759</color>
+
+    // Brand
+    <color name="brand_primary">#1EC7FA</color>
+    <color name="brand_secondary">#1E6FF1</color>
+
+    // Tint
+    <color name="tint_primary">#E5E5E5</color>
+    <color name="tint_secondary">#7F7F7F</color>
+    <color name="tint_tertiary">#3F3F3F</color>
+
+    // Fill
+    <color name="fill_primary">#262626</color>
+    <color name="fill_secondary">#3F3F3F</color>
+
+    // Background
+    <color name="background_primary">#0C0C0C</color>
+    <color name="background_grouped_primary">#191919</color>
+    <color name="background_grouped_secondary">#000000</color>
+
+    // Separator
+    <color name="separator_primary">#262626</color>
+
+    // Shadow
+    <color name="shadow_primary">#40000000</color>
+
+    // Design System
+    <color name="blur">#61F0F0F0</color>
+    <color name="status_bar_or_home_indicator">#FFFFFF</color>
+    <color name="blur_dark">#80464646</color>
+</resources>
