@@ -1,4 +1,4 @@
-package com.training.movieapp.domain.model
+package com.training.movieapp.domain.model.state
 
 sealed class RegisterState {
     object Loading : RegisterState()

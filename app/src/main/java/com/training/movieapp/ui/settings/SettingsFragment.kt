@@ -11,12 +11,14 @@ import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentSettingsBinding
-import com.training.movieapp.domain.model.SignOutState
+import com.training.movieapp.domain.model.state.SignOutState
 import com.training.movieapp.ui.auth.AuthActivity
 import com.training.movieapp.ui.main.MainActivity
 import com.training.movieapp.ui.settings.viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
@@ -50,13 +52,25 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private fun initObservers() {
         lifecycleScope.launchWhenStarted {
-            settingsViewModel.signOutState.collect() { state ->
-                when (state) {
-                    is SignOutState.Success -> {
-                        startActivity(Intent(requireContext(), AuthActivity::class.java))
+            launch {
+                settingsViewModel.signOutState.collect() { state ->
+                    when (state) {
+                        is SignOutState.Success -> {
+                            startActivity(Intent(requireContext(), AuthActivity::class.java))
+                            requireActivity().finish()
+                        }
+                        is SignOutState.Error -> {
+                            Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG)
+                                .show()
+                        }
                     }
-                    is SignOutState.Error -> {
-                        Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG).show()
+                }
+            }
+            launch {
+                settingsViewModel.user.collect() { user ->
+                    binding.apply {
+                        textViewUsername.text = user.username
+                        textViewUsername2.text = "@${user.username}"
                     }
                 }
             }

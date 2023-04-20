@@ -4,9 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.google.android.material.navigation.NavigationView
@@ -14,12 +17,15 @@ import com.training.movieapp.R
 import com.training.movieapp.common.Screen
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.ActivityMainBinding
+import com.training.movieapp.ui.main.viewmodel.MainViewModel
 import com.training.movieapp.ui.settings.SettingsActivity
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::inflate)
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         initActions()
+        initObservers()
         setupDrawerLayout()
     }
 
@@ -60,6 +67,18 @@ class MainActivity : AppCompatActivity() {
 
         settings.setOnClickListener {
             startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
+        }
+    }
+
+    private fun initObservers() {
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.user.collect() { user ->
+                val headerContainer: View = binding.navigationView.getHeaderView(0)
+                val usernameTextView = headerContainer.findViewById<TextView>(R.id.textView_username)
+                val username2TextView = headerContainer.findViewById<TextView>(R.id.textView_username2)
+                usernameTextView.text = user.username
+                username2TextView.text = "@${user.username}"
+            }
         }
     }
 
