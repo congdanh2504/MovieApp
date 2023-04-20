@@ -34,6 +34,7 @@ class AuthRepositoryImpl @Inject constructor(
             )
             userDocument.set(userData, SetOptions.merge()).await()
             emit(Result.Success(Unit))
+            firebaseAuth.signOut()
         } catch (e: Exception) {
             emit(Result.Error(e))
         }
