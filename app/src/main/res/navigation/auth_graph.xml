@@ -29,13 +29,7 @@
         android:id="@+id/registerFragment"
         android:name="com.training.movieapp.ui.auth.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register">
-        <action
-            android:id="@+id/action_registerFragment_to_confirmEmailFragment2"
-            app:destination="@id/confirmEmailFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
-    </fragment>
+        tools:layout="@layout/fragment_register"/>
     <fragment
         android:id="@+id/resetFragment"
         android:name="com.training.movieapp.ui.auth.ResetFragment"
@@ -64,21 +58,5 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
-    </fragment>
-    <fragment
-        android:id="@+id/confirmEmailFragment"
-        android:name="com.training.movieapp.ui.auth.ConfirmEmailFragment"
-        android:label="fragment_confirm_email"
-        tools:layout="@layout/fragment_confirm_email">
-        <action
-            android:id="@+id/action_confirmEmailFragment2_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@+id/loginFragment"
-            app:popUpToInclusive="true"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_right"/>
-        <argument
-            android:name="email"
-            app:argType="string" />
     </fragment>
 </navigation>
