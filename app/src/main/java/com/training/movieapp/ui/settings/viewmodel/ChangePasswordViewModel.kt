@@ -25,7 +25,7 @@ class ChangePasswordViewModel @Inject constructor(
     private val _changePasswordState = MutableSharedFlow<ChangePasswordState>(replay = 0)
     val changePasswordState: SharedFlow<ChangePasswordState> = _changePasswordState.asSharedFlow()
 
-    private val _user = MutableSharedFlow<User>(replay = 0)
+    private val _user = MutableSharedFlow<User>(replay = 1)
     val user: SharedFlow<User> = _user.asSharedFlow()
 
     init {

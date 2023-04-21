@@ -37,7 +37,8 @@
                 app:cardCornerRadius="@dimen/_300sdp">
 
                 <ImageView
-                    android:id="@+id/userImage"
+                    android:scaleType="centerCrop"
+                    android:id="@+id/imageView_userImage"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:src="@drawable/icons8user" />

@@ -1,6 +1,7 @@
 package com.training.movieapp.data.repository
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.DataStore
 import androidx.datastore.preferences.*
 import com.google.gson.Gson
@@ -43,6 +44,7 @@ class DataStoreRepositoryImpl @Inject constructor(context: Context) :
             }
             .map { preference ->
                 val user = preference[PreferenceKeys.user] ?: ""
+                Log.d("AAA", "Datastore: ${user.toString()}")
                 Gson().fromJson(user, User::class.java)
             }
 }

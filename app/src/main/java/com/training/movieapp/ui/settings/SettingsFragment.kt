@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import coil.Coil
+import coil.load
 import com.training.movieapp.R
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentSettingsBinding
@@ -30,6 +32,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         super.onViewCreated(view, savedInstanceState)
         initActions()
         initObservers()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        settingsViewModel.readUser()
     }
 
     private fun initActions() {
@@ -71,6 +78,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     binding.apply {
                         textViewUsername.text = user.username
                         textViewUsername2.text = "@${user.username}"
+                        user.imageURL?.let { imageViewUserImage.load(user.imageURL) }
                     }
                 }
             }

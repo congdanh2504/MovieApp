@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val readUserUseCase: ReadUserUseCase) :
     ViewModel() {
-    private val _user = MutableSharedFlow<User>(replay = 0)
+    private val _user = MutableSharedFlow<User>(replay = 1)
     val user: SharedFlow<User> = _user.asSharedFlow()
 
     init {

@@ -65,7 +65,11 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
                     when (state) {
                         is ChangePasswordState.Success -> {
                             dialog.dismiss()
-                            Toast.makeText(requireContext(), "Change password successfully!", Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Change password successfully!",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
                         is ChangePasswordState.Error -> {
                             dialog.dismiss()
@@ -91,7 +95,6 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
         }
         return true
     }
-
 
     private fun changePassword() {
         val email = currentUser.email

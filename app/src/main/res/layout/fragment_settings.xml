@@ -69,10 +69,10 @@
                         app:cardCornerRadius="@dimen/_300sdp">
 
                         <ImageView
-                            android:scaleType="centerCrop"
                             android:id="@+id/imageView_userImage"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
+                            android:scaleType="centerCrop"
                             android:src="@drawable/icons8user" />
 
                     </androidx.cardview.widget.CardView>

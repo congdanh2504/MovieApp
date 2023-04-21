@@ -12,6 +12,8 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import coil.Coil
+import coil.load
 import com.google.android.material.navigation.NavigationView
 import com.training.movieapp.R
 import com.training.movieapp.common.Screen
@@ -30,6 +32,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        initNavController()
+        initActions()
+        initObservers()
+        setupDrawerLayout()
+    }
+
+    private fun initNavController() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentMain) as NavHostFragment
         val navController = navHostFragment.navController
@@ -52,10 +61,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        initActions()
-        initObservers()
-        setupDrawerLayout()
     }
 
     private fun initActions() {
@@ -74,10 +79,15 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launchWhenStarted {
             mainViewModel.user.collect() { user ->
                 val headerContainer: View = binding.navigationView.getHeaderView(0)
-                val usernameTextView = headerContainer.findViewById<TextView>(R.id.textView_username)
-                val username2TextView = headerContainer.findViewById<TextView>(R.id.textView_username2)
+                val usernameTextView =
+                    headerContainer.findViewById<TextView>(R.id.textView_username)
+                val username2TextView =
+                    headerContainer.findViewById<TextView>(R.id.textView_username2)
+                val userImage =
+                    headerContainer.findViewById<ImageView>(R.id.imageView_userImage)
                 usernameTextView.text = user.username
                 username2TextView.text = "@${user.username}"
+                user.imageURL?.let { userImage.load(user.imageURL) }
             }
         }
     }

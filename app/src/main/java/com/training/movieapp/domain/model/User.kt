@@ -7,5 +7,5 @@ data class User(
     val bio: String = "",
     val imageURL: String?
 ) {
-    constructor() : this("", "" , "", "", "")
+    constructor() : this("", "" , "", "", null)
 }
