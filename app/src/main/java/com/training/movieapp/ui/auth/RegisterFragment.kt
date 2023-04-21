@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
+import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentRegisterBinding
 import com.training.movieapp.domain.model.state.RegisterState
@@ -21,7 +22,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     private val registerViewModel: RegisterViewModel by viewModels()
     private val binding: FragmentRegisterBinding by viewBinding(FragmentRegisterBinding::bind)
-    private lateinit var dialog: Dialog
+    private lateinit var dialog: LoadingDialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,12 +33,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     private fun initView() {
         binding.errorTV.visibility = View.INVISIBLE
-        dialog = Dialog(requireContext(), R.style.ProgressHUD)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.progress_hud)
-        val back =
-            dialog.findViewById<ImageView>(R.id.spinnerImageView).background as AnimationDrawable
-        back.start()
+        dialog = LoadingDialog(requireContext())
     }
 
     private fun initActions() {

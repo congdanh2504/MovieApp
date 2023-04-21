@@ -67,4 +67,9 @@ object AuthModule {
     fun provideReadUserUseCase(repository: DataStoreRepository): ReadUserUseCase {
         return ReadUserUseCaseImpl(repository)
     }
+
+    @Provides
+    fun provideChangePasswordUseCase(repository: AuthRepository): ChangePasswordUseCase {
+        return ChangePasswordUseCaseImpl(repository)
+    }
 }
