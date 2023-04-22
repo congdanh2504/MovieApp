@@ -35,7 +35,6 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
     }
 
     private fun initView() {
-        binding.textViewError.visibility = View.INVISIBLE
         dialog = LoadingDialog(requireContext())
     }
 
@@ -63,6 +62,11 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
                 launch {
                     changePasswordViewModel.changePasswordState.collect { state ->
                         when (state) {
+                            is OperationState.Idle -> {
+                                binding.textViewError.visibility = View.INVISIBLE
+                                dialog.dismiss()
+                            }
+
                             is OperationState.Success -> {
                                 dialog.dismiss()
                                 Toast.makeText(

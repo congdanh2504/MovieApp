@@ -64,6 +64,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 launch {
                     settingsViewModel.signOutState.collect { state ->
                         when (state) {
+                            is OperationState.Idle -> {
+                                dialog.dismiss()
+                            }
+
                             is OperationState.Success -> {
                                 dialog.dismiss()
                                 startActivity(Intent(requireContext(), AuthActivity::class.java))

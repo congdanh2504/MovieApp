@@ -32,7 +32,6 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun initView() {
-        binding.errorTV.visibility = View.INVISIBLE
         dialog = LoadingDialog(requireContext())
     }
 
@@ -63,6 +62,11 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                 registerViewModel.registerState
                     .collect { state ->
                         when (state) {
+                            is OperationState.Idle -> {
+                                binding.errorTV.visibility = View.INVISIBLE
+                                dialog.dismiss()
+                            }
+
                             is OperationState.Success -> {
                                 dialog.dismiss()
                                 findNavController().popBackStack()

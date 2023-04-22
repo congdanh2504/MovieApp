@@ -159,7 +159,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:paddingHorizontal="@dimen/_15sdp"
-                    android:paddingVertical="@dimen/_8sdp"
+                    android:paddingVertical="@dimen/_10sdp"
                     android:weightSum="10">
 
                     <ImageView
@@ -200,7 +200,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:paddingHorizontal="@dimen/_15sdp"
-                    android:paddingVertical="@dimen/_8sdp"
+                    android:paddingVertical="@dimen/_10sdp"
                     android:weightSum="10">
 
                     <ImageView
@@ -582,6 +582,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:backgroundTint="@color/background_grouped_primary"
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardElevation="0dp">
 
@@ -589,8 +590,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="horizontal"
-                app:tint="@color/tint_primary">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -9,8 +9,11 @@ import com.training.movieapp.domain.usecase.ChangePasswordUseCase
 import com.training.movieapp.domain.usecase.ReadUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,8 +24,8 @@ class ChangePasswordViewModel @Inject constructor(
     private val readUserUseCase: ReadUserUseCase
 ) :
     ViewModel() {
-    private val _changePasswordState = MutableSharedFlow<OperationState<Unit>>(replay = 0)
-    val changePasswordState: SharedFlow<OperationState<Unit>> = _changePasswordState.asSharedFlow()
+    private val _changePasswordState = MutableStateFlow<OperationState<Unit>>(OperationState.Idle)
+    val changePasswordState: StateFlow<OperationState<Unit>> = _changePasswordState.asStateFlow()
 
     private val _user = MutableSharedFlow<User>(replay = 1)
     val user: SharedFlow<User> = _user.asSharedFlow()

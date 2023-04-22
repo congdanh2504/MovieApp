@@ -7,8 +7,11 @@ import com.training.movieapp.domain.model.state.OperationState
 import com.training.movieapp.domain.usecase.ResetPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,8 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ResetPasswordViewModel @Inject constructor(private val resetPasswordUseCase: ResetPasswordUseCase) :
     ViewModel() {
-    private val _resetPasswordState = MutableSharedFlow<OperationState<Unit>>(replay = 0)
-    val resetPasswordState: SharedFlow<OperationState<Unit>> = _resetPasswordState.asSharedFlow()
+    private val _resetPasswordState = MutableStateFlow<OperationState<Unit>>(OperationState.Idle)
+    val resetPasswordState: StateFlow<OperationState<Unit>> = _resetPasswordState.asStateFlow()
 
     fun resetPassword(email: String) = viewModelScope.launch {
         resetPasswordUseCase.resetPassword(email)

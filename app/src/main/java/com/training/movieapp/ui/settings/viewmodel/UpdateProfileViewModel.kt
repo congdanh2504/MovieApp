@@ -11,8 +11,11 @@ import com.training.movieapp.domain.usecase.SaveUserUseCase
 import com.training.movieapp.domain.usecase.UpdateProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,8 +31,8 @@ class UpdateProfileViewModel @Inject constructor(
     private val _user = MutableSharedFlow<User>(replay = 0)
     val user: SharedFlow<User> = _user.asSharedFlow()
 
-    private val _updateProfileState = MutableSharedFlow<OperationState<User>>(replay = 0)
-    val updateProfileState: SharedFlow<OperationState<User>> = _updateProfileState.asSharedFlow()
+    private val _updateProfileState = MutableStateFlow<OperationState<User>>(OperationState.Idle)
+    val updateProfileState: StateFlow<OperationState<User>> = _updateProfileState.asStateFlow()
 
     init {
         readUser()

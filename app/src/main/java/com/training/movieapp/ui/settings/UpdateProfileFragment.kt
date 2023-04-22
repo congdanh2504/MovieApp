@@ -1,7 +1,5 @@
 package com.training.movieapp.ui.settings
 
-import android.app.Activity
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -41,7 +39,6 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
     }
 
     private fun initView() {
-        binding.textViewError.visibility = View.INVISIBLE
         dialog = LoadingDialog(requireContext())
     }
 
@@ -75,6 +72,11 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
                 launch {
                     updateProfileViewModel.updateProfileState.collect { state ->
                         when (state) {
+                            is OperationState.Idle -> {
+                                binding.textViewError.visibility = View.INVISIBLE
+                                dialog.dismiss()
+                            }
+
                             is OperationState.Success -> {
                                 dialog.dismiss()
                                 Toast.makeText(
@@ -101,21 +103,13 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
     }
 
     private fun openImageChooser() {
-        Intent(Intent.ACTION_PICK).also {
-            it.type = "image/*"
-            val mimeTypes = arrayOf("image/jpeg", "image/png")
-            it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-            resultLauncher.launch(it)
-        }
+        getContent.launch("image/*")
     }
 
-    private var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val uri = result?.data!!.data!!
-                imageUri = uri
-                binding.imageViewChoose.setImageURI(uri)
-            }
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            imageUri = uri
+            binding.imageViewChoose.setImageURI(uri)
         }
 
     private fun updateProfile() {

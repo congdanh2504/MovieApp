@@ -8,9 +8,9 @@ import com.training.movieapp.domain.model.state.OperationState
 import com.training.movieapp.domain.usecase.LoginUseCase
 import com.training.movieapp.domain.usecase.SaveUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,8 +20,8 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val saveUserUseCase: SaveUserUseCase
 ) : ViewModel() {
-    private val _loginState = MutableSharedFlow<OperationState<User>>(replay = 0)
-    val loginState: SharedFlow<OperationState<User>> = _loginState.asSharedFlow()
+    private val _loginState = MutableStateFlow<OperationState<User>>(OperationState.Idle)
+    val loginState: StateFlow<OperationState<User>> = _loginState.asStateFlow()
 
     fun login(email: String, password: String) = viewModelScope.launch {
         loginUseCase.login(email, password)

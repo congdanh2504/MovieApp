@@ -34,7 +34,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun initView() {
-        binding.errorTV.visibility = View.INVISIBLE
         dialog = LoadingDialog(requireContext())
     }
 
@@ -63,6 +62,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.loginState.collect { state ->
                     when (state) {
+                        is OperationState.Idle -> {
+                            binding.errorTV.visibility = View.INVISIBLE
+                            dialog.dismiss()
+                        }
+
                         is OperationState.Success -> {
                             dialog.dismiss()
                             loginViewModel.saveUser(state.data)
