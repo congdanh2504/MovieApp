@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
-class DataStoreRepositoryImpl @Inject constructor(private val context: Context) :
+class DataStoreRepositoryImpl @Inject constructor(context: Context) :
     DataStoreRepository {
 
     companion object {
