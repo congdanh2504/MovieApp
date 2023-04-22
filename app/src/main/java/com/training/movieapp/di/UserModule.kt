@@ -21,21 +21,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object UserModule {
 
-    @Singleton
     @Provides
     fun provideDataStoreRepository(
         @ApplicationContext context: Context
     ): DataStoreRepository = DataStoreRepositoryImpl(context)
-
-    @Provides
-    fun provideUserRepository(
-        auth: FirebaseAuth,
-        fireStore: FirebaseFirestore,
-        storage: FirebaseStorage
-    ): UserRepository = UserRepositoryImpl(auth, fireStore, storage)
-
-    @Provides
-    fun provideUpdateProfileUseCase(repository: UserRepository): UpdateProfileUseCase {
-        return UpdateProfileUseCaseImpl(repository)
-    }
 }
