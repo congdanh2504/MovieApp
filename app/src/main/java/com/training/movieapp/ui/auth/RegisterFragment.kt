@@ -1,10 +1,7 @@
 package com.training.movieapp.ui.auth
 
-import android.app.Dialog
-import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -58,7 +55,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun initObservers() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             registerViewModel.registerState
                 .collect { state ->
                     when (state) {
@@ -66,11 +63,13 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                             dialog.dismiss()
                             findNavController().popBackStack()
                         }
+
                         is RegisterState.Error -> {
                             dialog.dismiss()
                             binding.errorTV.visibility = View.VISIBLE
                             binding.errorTV.text = state.message
                         }
+
                         is RegisterState.Loading -> {
                             dialog.show()
                         }

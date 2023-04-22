@@ -1,11 +1,9 @@
 package com.training.movieapp.ui.settings
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -18,7 +16,6 @@ import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.model.state.ChangePasswordState
 import com.training.movieapp.ui.settings.viewmodel.ChangePasswordViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -54,7 +51,7 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
     }
 
     private fun initObservers() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             launch {
                 changePasswordViewModel.user.collect() {
                     currentUser = it
@@ -71,10 +68,12 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+
                         is ChangePasswordState.Error -> {
                             dialog.dismiss()
                             binding.textViewError.setErrorText(state.message.toString())
                         }
+
                         is ChangePasswordState.Loading -> {
                             dialog.show()
                         }

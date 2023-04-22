@@ -52,7 +52,7 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
     }
 
     private fun initObservers() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             resetPasswordViewModel.resetPasswordState
                 .collect { state ->
                     when (state) {
@@ -64,11 +64,13 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
                                 )
                             findNavController().navigate(action)
                         }
+
                         is ResetPasswordState.Error -> {
                             dialog.dismiss()
                             binding.errorTV.visibility = View.VISIBLE
                             binding.errorTV.text = state.message
                         }
+
                         is ResetPasswordState.Loading -> {
                             dialog.show()
                         }

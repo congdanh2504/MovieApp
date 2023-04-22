@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import coil.Coil
 import coil.load
 import com.training.movieapp.R
 import com.training.movieapp.common.viewBinding
@@ -18,8 +17,6 @@ import com.training.movieapp.ui.auth.AuthActivity
 import com.training.movieapp.ui.main.MainActivity
 import com.training.movieapp.ui.settings.viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -53,7 +50,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun initObservers() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             launch {
                 settingsViewModel.signOutState.collect() { state ->
                     when (state) {
@@ -61,6 +58,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                             startActivity(Intent(requireContext(), AuthActivity::class.java))
                             requireActivity().finish()
                         }
+
                         is SignOutState.Error -> {
                             Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG)
                                 .show()
