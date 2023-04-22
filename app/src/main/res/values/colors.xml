@@ -16,42 +16,28 @@
     // Brand
     <color name="brand_primary">#1EC7FA</color>
     <color name="brand_secondary">#1E6FF1</color>
-    <color name="brand_primary_dark">#1EC7FA</color>
-    <color name="brand_secondary_dark">#1E6FF1</color>
 
     // Tint
     <color name="tint_primary">#000000</color>
     <color name="tint_secondary">#7F7F7F</color>
     <color name="tint_tertiary">#BFBFBF</color>
-    <color name="tint_primary_dark">#E5E5E5</color>
-    <color name="tint_secondary_dark">#7F7F7F</color>
-    <color name="tint_tertiary_dark">#3F3F3F</color>
 
     // Fill
     <color name="fill_primary">#D8D8D8</color>
     <color name="fill_secondary">#BFBFBF</color>
-    <color name="fill_primary_dark">#262626</color>
-    <color name="fill_secondary_dark">#3F3F3F</color>
 
     // Background
     <color name="background_primary">#F2F2F2</color>
     <color name="background_grouped_primary">#FFFFFF</color>
     <color name="background_grouped_secondary">#FFFFFF</color>
-    <color name="background_primary_dark">#0C0C0C</color>
-    <color name="background_grouped_primary_dark">#191919</color>
-    <color name="background_grouped_secondary_dark">#000000</color>
 
     // Separator
     <color name="separator_primary">#D8D8D8</color>
-    <color name="separator_primary_dark">#262626</color>
 
     // Shadow
     <color name="shadow_primary">#40000000</color>
-    <color name="shadow_primary_dark">#40000000</color>
 
     // Design System
     <color name="blur">#61F0F0F0</color>
     <color name="status_bar_or_home_indicator">#000000</color>
-    <color name="blur_dark">#80464646</color>
-    <color name="status_bar_or_home_indicator_dark">#FFFFFF</color>
 </resources>

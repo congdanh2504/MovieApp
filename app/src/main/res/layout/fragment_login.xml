@@ -13,7 +13,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="50dp"
         android:text="Log in"
-        android:textColor="@color/black"
+        android:textColor="@color/tint_primary"
         android:textSize="34dp"
         android:textStyle="bold" />
 
@@ -34,6 +34,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/rounded_rectangle"
         android:hint="Email"
+        android:inputType="textEmailAddress"
         android:padding="15dp"
         android:textColorHint="@color/tint_tertiary" />
 

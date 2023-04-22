@@ -40,5 +40,4 @@
     // Design System
     <color name="blur">#61F0F0F0</color>
     <color name="status_bar_or_home_indicator">#FFFFFF</color>
-    <color name="blur_dark">#80464646</color>
 </resources>

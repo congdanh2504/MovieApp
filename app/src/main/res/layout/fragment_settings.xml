@@ -19,7 +19,8 @@
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:padding="@dimen/_2sdp"
-            android:src="@drawable/baseline_arrow_back_ios_24" />
+            android:src="@drawable/baseline_arrow_back_ios_24"
+            app:tint="@color/tint_secondary" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="@color/white"
+            android:backgroundTint="@color/background_grouped_primary"
             android:elevation="0dp"
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardElevation="0dp">
@@ -144,6 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:backgroundTint="@color/background_grouped_primary"
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardElevation="0dp">
 
@@ -161,10 +163,11 @@
                     android:weightSum="10">
 
                     <ImageView
-                        android:layout_width="@dimen/_16sdp"
+                        android:layout_width="wrap_content"
                         android:layout_height="@dimen/_16sdp"
                         android:layout_weight="0"
-                        android:src="@drawable/email" />
+                        android:src="@drawable/email"
+                        app:tint="@color/tint_primary" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -204,7 +207,8 @@
                         android:layout_width="@dimen/_16sdp"
                         android:layout_height="@dimen/_16sdp"
                         android:layout_weight="0"
-                        android:src="@drawable/password" />
+                        android:src="@drawable/password"
+                        app:tint="@color/tint_primary" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -242,6 +246,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:backgroundTint="@color/background_grouped_primary"
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardElevation="0dp">
 
@@ -267,7 +272,8 @@
                             android:layout_width="@dimen/_16sdp"
                             android:layout_height="@dimen/_16sdp"
                             android:layout_gravity="center"
-                            android:src="@drawable/email" />
+                            android:src="@drawable/email"
+                            app:tint="@color/tint_primary" />
 
                     </LinearLayout>
 
@@ -296,7 +302,7 @@
                             android:layout_weight="1"
                             android:lines="1"
                             android:text="support@konsensusapp.com"
-                            android:textColor="@color/tint_tertiary"
+                            android:textColor="@color/tint_secondary"
                             android:textSize="@dimen/_12ssp" />
 
                     </LinearLayout>
@@ -344,7 +350,8 @@
                             android:layout_width="@dimen/_16sdp"
                             android:layout_height="@dimen/_16sdp"
                             android:layout_gravity="center"
-                            android:src="@drawable/twitter" />
+                            android:src="@drawable/twitter"
+                            app:tint="@color/tint_primary" />
 
                     </LinearLayout>
 
@@ -374,7 +381,7 @@
                             android:layout_weight="1"
                             android:lines="1"
                             android:text="\@konsensusapp"
-                            android:textColor="@color/tint_tertiary"
+                            android:textColor="@color/tint_secondary"
                             android:textSize="@dimen/_12ssp" />
 
                     </LinearLayout>
@@ -422,7 +429,8 @@
                             android:layout_width="@dimen/_16sdp"
                             android:layout_height="@dimen/_16sdp"
                             android:layout_gravity="center"
-                            android:src="@drawable/instagram" />
+                            android:src="@drawable/instagram"
+                            app:tint="@color/tint_primary" />
 
                     </LinearLayout>
 
@@ -452,7 +460,7 @@
                             android:layout_weight="1"
                             android:lines="1"
                             android:text="\@konsensusapp"
-                            android:textColor="@color/tint_tertiary"
+                            android:textColor="@color/tint_secondary"
                             android:textSize="@dimen/_12ssp" />
 
                     </LinearLayout>
@@ -531,7 +539,7 @@
                             android:layout_weight="1"
                             android:lines="1"
                             android:text="konsensusapp.com"
-                            android:textColor="@color/tint_tertiary"
+                            android:textColor="@color/tint_secondary"
                             android:textSize="@dimen/_12ssp" />
 
                     </LinearLayout>
@@ -581,7 +589,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:tint="@color/tint_primary">
 
                 <TextView
                     android:layout_width="wrap_content"
