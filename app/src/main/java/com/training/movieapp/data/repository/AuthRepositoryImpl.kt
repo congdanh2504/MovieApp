@@ -20,10 +20,14 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun login(email: String, password: String) = flow {
         try {
             firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            val currentUser = firebaseAuth.currentUser ?: throw NullPointerException("User is null")
             val userDocument =
-                fireStore.collection("users").document(firebaseAuth.currentUser!!.uid)
-            val user = userDocument.get().await().toObject(User::class.java)
-            emit(Result.Success(user!!))
+                fireStore.collection("users").document(currentUser.uid)
+            val user =
+                userDocument.get().await().toObject(User::class.java) ?: throw NullPointerException(
+                    "User is null"
+                )
+            emit(Result.Success(user))
         } catch (e: Exception) {
             emit(Result.Error(e))
         }
@@ -32,8 +36,8 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun register(email: String, username: String, password: String) = flow {
         try {
             val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-            val user = authResult.user
-            val userDocument = fireStore.collection("users").document(user!!.uid)
+            val user = authResult.user ?: throw NullPointerException("User is null")
+            val userDocument = fireStore.collection("users").document(user.uid)
             val userData = hashMapOf(
                 "id" to user.uid,
                 "email" to email,
@@ -74,8 +78,8 @@ class AuthRepositoryImpl @Inject constructor(
     ) = flow {
         try {
             val credential = EmailAuthProvider.getCredential(email, currentPassword)
-            val currentUser = firebaseAuth.currentUser
-            currentUser!!.reauthenticate(credential).await()
+            val currentUser = firebaseAuth.currentUser ?: throw NullPointerException("User is null")
+            currentUser.reauthenticate(credential).await()
             currentUser.updatePassword(newPassword)
             emit(Result.Success(Unit))
         } catch (e: Exception) {
