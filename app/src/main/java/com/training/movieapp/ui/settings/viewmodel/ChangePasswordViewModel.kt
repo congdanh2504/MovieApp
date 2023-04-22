@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.training.movieapp.common.Result
 import com.training.movieapp.domain.model.User
-import com.training.movieapp.domain.model.state.ChangePasswordState
-import com.training.movieapp.domain.model.state.LoginState
+import com.training.movieapp.domain.model.state.OperationState
 import com.training.movieapp.domain.usecase.ChangePasswordUseCase
 import com.training.movieapp.domain.usecase.ReadUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,8 +21,8 @@ class ChangePasswordViewModel @Inject constructor(
     private val readUserUseCase: ReadUserUseCase
 ) :
     ViewModel() {
-    private val _changePasswordState = MutableSharedFlow<ChangePasswordState>(replay = 0)
-    val changePasswordState: SharedFlow<ChangePasswordState> = _changePasswordState.asSharedFlow()
+    private val _changePasswordState = MutableSharedFlow<OperationState<Unit>>(replay = 0)
+    val changePasswordState: SharedFlow<OperationState<Unit>> = _changePasswordState.asSharedFlow()
 
     private val _user = MutableSharedFlow<User>(replay = 1)
     val user: SharedFlow<User> = _user.asSharedFlow()
@@ -42,13 +41,13 @@ class ChangePasswordViewModel @Inject constructor(
         viewModelScope.launch {
             changePasswordUseCase.changePassword(email, currentPassword, newPassword)
                 .onStart {
-                    _changePasswordState.emit(ChangePasswordState.Loading)
+                    _changePasswordState.emit(OperationState.Loading)
                 }
                 .collect { result ->
                     when (result) {
-                        is Result.Success -> _changePasswordState.emit(ChangePasswordState.Success)
+                        is Result.Success -> _changePasswordState.emit(OperationState.Success(Unit))
                         is Result.Error -> _changePasswordState.emit(
-                            ChangePasswordState.Error(
+                            OperationState.Error(
                                 result.exception.message
                             )
                         )

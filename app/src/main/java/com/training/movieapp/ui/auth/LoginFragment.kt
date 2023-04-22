@@ -13,7 +13,7 @@ import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentLoginBinding
-import com.training.movieapp.domain.model.state.LoginState
+import com.training.movieapp.domain.model.state.OperationState
 import com.training.movieapp.ui.auth.viewmodel.LoginViewModel
 import com.training.movieapp.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,20 +63,20 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.loginState.collect { state ->
                     when (state) {
-                        is LoginState.Success -> {
+                        is OperationState.Success -> {
                             dialog.dismiss()
-                            loginViewModel.saveUser(state.user)
+                            loginViewModel.saveUser(state.data)
                             startActivity(Intent(requireActivity(), MainActivity::class.java))
                             requireActivity().finish()
                         }
 
-                        is LoginState.Error -> {
+                        is OperationState.Error -> {
                             dialog.dismiss()
                             binding.errorTV.visibility = View.VISIBLE
                             binding.errorTV.text = state.message
                         }
 
-                        is LoginState.Loading -> {
+                        is OperationState.Loading -> {
                             dialog.show()
                         }
                     }

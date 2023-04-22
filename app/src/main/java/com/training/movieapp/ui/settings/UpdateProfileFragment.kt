@@ -20,7 +20,7 @@ import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.setErrorText
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentUpdateProfileBinding
-import com.training.movieapp.domain.model.state.UpdateProfileState
+import com.training.movieapp.domain.model.state.OperationState
 import com.training.movieapp.ui.settings.viewmodel.UpdateProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -75,22 +75,22 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
                 launch {
                     updateProfileViewModel.updateProfileState.collect { state ->
                         when (state) {
-                            is UpdateProfileState.Success -> {
+                            is OperationState.Success -> {
                                 dialog.dismiss()
                                 Toast.makeText(
                                     requireContext(),
                                     "Update profile successfully!",
                                     Toast.LENGTH_LONG
                                 ).show()
-                                updateProfileViewModel.saveUser(state.user)
+                                updateProfileViewModel.saveUser(state.data)
                             }
 
-                            is UpdateProfileState.Error -> {
+                            is OperationState.Error -> {
                                 dialog.dismiss()
                                 binding.textViewError.setErrorText(state.message.toString())
                             }
 
-                            is UpdateProfileState.Loading -> {
+                            is OperationState.Loading -> {
                                 dialog.show()
                             }
                         }

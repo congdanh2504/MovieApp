@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.training.movieapp.common.Result
 import com.training.movieapp.domain.model.User
-import com.training.movieapp.domain.model.state.UpdateProfileState
+import com.training.movieapp.domain.model.state.OperationState
 import com.training.movieapp.domain.usecase.ReadUserUseCase
 import com.training.movieapp.domain.usecase.SaveUserUseCase
 import com.training.movieapp.domain.usecase.UpdateProfileUseCase
@@ -28,8 +28,8 @@ class UpdateProfileViewModel @Inject constructor(
     private val _user = MutableSharedFlow<User>(replay = 0)
     val user: SharedFlow<User> = _user.asSharedFlow()
 
-    private val _updateProfileState = MutableSharedFlow<UpdateProfileState>(replay = 0)
-    val updateProfileState: SharedFlow<UpdateProfileState> = _updateProfileState.asSharedFlow()
+    private val _updateProfileState = MutableSharedFlow<OperationState<User>>(replay = 0)
+    val updateProfileState: SharedFlow<OperationState<User>> = _updateProfileState.asSharedFlow()
 
     init {
         readUser()
@@ -43,14 +43,15 @@ class UpdateProfileViewModel @Inject constructor(
 
     fun updateProfile(username: String, bio: String, imageUri: Uri?) = viewModelScope.launch {
         updateProfileUseCase.updateProfile(username, bio, imageUri)
-            .onStart { _updateProfileState.emit(UpdateProfileState.Loading) }
+            .onStart { _updateProfileState.emit(OperationState.Loading) }
             .collect { result ->
                 when (result) {
                     is Result.Success -> {
-                        _updateProfileState.emit(UpdateProfileState.Success(result.data))
+                        _updateProfileState.emit(OperationState.Success(result.data))
                     }
+
                     is Result.Error -> {
-                        _updateProfileState.emit(UpdateProfileState.Error(result.exception.message))
+                        _updateProfileState.emit(OperationState.Error(result.exception.message))
                     }
                 }
             }

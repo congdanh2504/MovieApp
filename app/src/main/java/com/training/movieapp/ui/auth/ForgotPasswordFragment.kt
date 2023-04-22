@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentForgotPasswordBinding
-import com.training.movieapp.domain.model.state.ResetPasswordState
+import com.training.movieapp.domain.model.state.OperationState
 import com.training.movieapp.ui.auth.viewmodel.ResetPasswordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -60,7 +60,7 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
                 resetPasswordViewModel.resetPasswordState
                     .collect { state ->
                         when (state) {
-                            is ResetPasswordState.EmailSent -> {
+                            is OperationState.Success -> {
                                 dialog.dismiss()
                                 val action =
                                     ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToResetFragment(
@@ -69,13 +69,13 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
                                 findNavController().navigate(action)
                             }
 
-                            is ResetPasswordState.Error -> {
+                            is OperationState.Error -> {
                                 dialog.dismiss()
                                 binding.errorTV.visibility = View.VISIBLE
                                 binding.errorTV.text = state.message
                             }
 
-                            is ResetPasswordState.Loading -> {
+                            is OperationState.Loading -> {
                                 dialog.show()
                             }
                         }

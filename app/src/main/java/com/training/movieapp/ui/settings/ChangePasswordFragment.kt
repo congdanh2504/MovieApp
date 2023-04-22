@@ -15,7 +15,7 @@ import com.training.movieapp.common.setErrorText
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentChangePasswordBinding
 import com.training.movieapp.domain.model.User
-import com.training.movieapp.domain.model.state.ChangePasswordState
+import com.training.movieapp.domain.model.state.OperationState
 import com.training.movieapp.ui.settings.viewmodel.ChangePasswordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -63,7 +63,7 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
                 launch {
                     changePasswordViewModel.changePasswordState.collect { state ->
                         when (state) {
-                            is ChangePasswordState.Success -> {
+                            is OperationState.Success -> {
                                 dialog.dismiss()
                                 Toast.makeText(
                                     requireContext(),
@@ -72,12 +72,12 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
                                 ).show()
                             }
 
-                            is ChangePasswordState.Error -> {
+                            is OperationState.Error -> {
                                 dialog.dismiss()
                                 binding.textViewError.setErrorText(state.message.toString())
                             }
 
-                            is ChangePasswordState.Loading -> {
+                            is OperationState.Loading -> {
                                 dialog.show()
                             }
                         }

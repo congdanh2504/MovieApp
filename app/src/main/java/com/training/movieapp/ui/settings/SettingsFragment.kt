@@ -12,9 +12,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.training.movieapp.R
+import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentSettingsBinding
-import com.training.movieapp.domain.model.state.SignOutState
+import com.training.movieapp.domain.model.state.OperationState
 import com.training.movieapp.ui.auth.AuthActivity
 import com.training.movieapp.ui.main.MainActivity
 import com.training.movieapp.ui.settings.viewmodel.SettingsViewModel
@@ -26,11 +27,17 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private val binding: FragmentSettingsBinding by viewBinding(FragmentSettingsBinding::bind)
     private val settingsViewModel: SettingsViewModel by viewModels()
+    private lateinit var dialog: LoadingDialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
         initActions()
         initObservers()
+    }
+
+    private fun initView() {
+        dialog = LoadingDialog(requireContext())
     }
 
     private fun initActions() {
@@ -57,14 +64,20 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 launch {
                     settingsViewModel.signOutState.collect { state ->
                         when (state) {
-                            is SignOutState.Success -> {
+                            is OperationState.Success -> {
+                                dialog.dismiss()
                                 startActivity(Intent(requireContext(), AuthActivity::class.java))
                                 requireActivity().finish()
                             }
 
-                            is SignOutState.Error -> {
+                            is OperationState.Error -> {
+                                dialog.dismiss()
                                 Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG)
                                     .show()
+                            }
+
+                            is OperationState.Loading -> {
+                                dialog.show()
                             }
                         }
                     }
