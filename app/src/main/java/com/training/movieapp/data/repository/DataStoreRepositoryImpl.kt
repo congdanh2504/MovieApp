@@ -7,13 +7,14 @@ import androidx.datastore.preferences.*
 import com.google.gson.Gson
 import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.repository.DataStoreRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
-class DataStoreRepositoryImpl @Inject constructor(context: Context) :
+class DataStoreRepositoryImpl @Inject constructor(private val context: Context) :
     DataStoreRepository {
 
     companion object {
@@ -44,7 +45,6 @@ class DataStoreRepositoryImpl @Inject constructor(context: Context) :
             }
             .map { preference ->
                 val user = preference[PreferenceKeys.user] ?: ""
-                Log.d("AAA", "Datastore: ${user.toString()}")
                 Gson().fromJson(user, User::class.java)
             }
 }

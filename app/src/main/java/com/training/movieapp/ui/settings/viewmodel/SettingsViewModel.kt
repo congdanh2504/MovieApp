@@ -1,6 +1,5 @@
 package com.training.movieapp.ui.settings.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.training.movieapp.common.Result
@@ -24,13 +23,16 @@ class SettingsViewModel @Inject constructor(
     private val _signOutState = MutableSharedFlow<SignOutState>(replay = 0)
     val signOutState: SharedFlow<SignOutState> = _signOutState.asSharedFlow()
 
-    private val _user = MutableSharedFlow<User>(replay = 0)
+    private val _user = MutableSharedFlow<User>(replay = 1)
     val user: SharedFlow<User> = _user.asSharedFlow()
 
-    fun readUser() = viewModelScope.launch {
+    init {
+        readUser()
+    }
+
+    private fun readUser() = viewModelScope.launch {
         readUserUseCase.readUser().collect() { user ->
             _user.emit(user)
-            Log.d("AAA", user.toString())
         }
     }
 

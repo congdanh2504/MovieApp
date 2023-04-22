@@ -34,11 +34,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         initObservers()
     }
 
-    override fun onResume() {
-        super.onResume()
-        settingsViewModel.readUser()
-    }
-
     private fun initActions() {
         binding.apply {
             imageViewBack.setOnClickListener {
