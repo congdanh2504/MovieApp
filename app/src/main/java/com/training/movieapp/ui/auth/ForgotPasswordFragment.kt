@@ -10,10 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
-import com.training.movieapp.common.Result
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentForgotPasswordBinding
-import com.training.movieapp.domain.model.ResetPasswordState
+import com.training.movieapp.domain.model.state.ResetPasswordState
 import com.training.movieapp.ui.auth.viewmodel.ResetPasswordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

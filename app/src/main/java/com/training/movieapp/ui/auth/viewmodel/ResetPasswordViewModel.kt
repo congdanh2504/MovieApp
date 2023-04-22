@@ -3,7 +3,7 @@ package com.training.movieapp.ui.auth.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.training.movieapp.common.Result
-import com.training.movieapp.domain.model.ResetPasswordState
+import com.training.movieapp.domain.model.state.ResetPasswordState
 import com.training.movieapp.domain.usecase.ResetPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
