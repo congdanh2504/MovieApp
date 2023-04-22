@@ -8,7 +8,9 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import coil.load
@@ -19,6 +21,7 @@ import com.training.movieapp.databinding.ActivityMainBinding
 import com.training.movieapp.ui.main.viewmodel.MainViewModel
 import com.training.movieapp.ui.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -76,18 +79,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
-        lifecycleScope.launchWhenStarted {
-            mainViewModel.user.collect() { user ->
-                val headerContainer: View = binding.navigationView.getHeaderView(0)
-                val usernameTextView =
-                    headerContainer.findViewById<TextView>(R.id.textView_username)
-                val username2TextView =
-                    headerContainer.findViewById<TextView>(R.id.textView_username2)
-                val userImage =
-                    headerContainer.findViewById<ImageView>(R.id.imageView_userImage)
-                usernameTextView.text = user.username
-                username2TextView.text = "@${user.username}"
-                user.imageURL?.let { userImage.load(user.imageURL) }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.user.collect() { user ->
+                    val headerContainer: View = binding.navigationView.getHeaderView(0)
+                    val usernameTextView =
+                        headerContainer.findViewById<TextView>(R.id.textView_username)
+                    val username2TextView =
+                        headerContainer.findViewById<TextView>(R.id.textView_username2)
+                    val userImage =
+                        headerContainer.findViewById<ImageView>(R.id.imageView_userImage)
+                    usernameTextView.text = user.username
+                    username2TextView.text = "@${user.username}"
+                    user.imageURL?.let { userImage.load(user.imageURL) }
+                }
             }
         }
     }

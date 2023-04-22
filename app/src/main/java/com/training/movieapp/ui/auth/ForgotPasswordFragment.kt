@@ -7,7 +7,9 @@ import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
 import com.training.movieapp.common.viewBinding
@@ -15,6 +17,7 @@ import com.training.movieapp.databinding.FragmentForgotPasswordBinding
 import com.training.movieapp.domain.model.state.ResetPasswordState
 import com.training.movieapp.ui.auth.viewmodel.ResetPasswordViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
@@ -52,30 +55,32 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
     }
 
     private fun initObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            resetPasswordViewModel.resetPasswordState
-                .collect { state ->
-                    when (state) {
-                        is ResetPasswordState.EmailSent -> {
-                            dialog.dismiss()
-                            val action =
-                                ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToResetFragment(
-                                    binding.emailET.text.toString()
-                                )
-                            findNavController().navigate(action)
-                        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                resetPasswordViewModel.resetPasswordState
+                    .collect { state ->
+                        when (state) {
+                            is ResetPasswordState.EmailSent -> {
+                                dialog.dismiss()
+                                val action =
+                                    ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToResetFragment(
+                                        binding.emailET.text.toString()
+                                    )
+                                findNavController().navigate(action)
+                            }
 
-                        is ResetPasswordState.Error -> {
-                            dialog.dismiss()
-                            binding.errorTV.visibility = View.VISIBLE
-                            binding.errorTV.text = state.message
-                        }
+                            is ResetPasswordState.Error -> {
+                                dialog.dismiss()
+                                binding.errorTV.visibility = View.VISIBLE
+                                binding.errorTV.text = state.message
+                            }
 
-                        is ResetPasswordState.Loading -> {
-                            dialog.show()
+                            is ResetPasswordState.Loading -> {
+                                dialog.show()
+                            }
                         }
                     }
-                }
+            }
         }
     }
 

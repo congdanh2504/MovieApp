@@ -6,7 +6,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.training.movieapp.R
@@ -50,28 +52,30 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun initObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            launch {
-                settingsViewModel.signOutState.collect() { state ->
-                    when (state) {
-                        is SignOutState.Success -> {
-                            startActivity(Intent(requireContext(), AuthActivity::class.java))
-                            requireActivity().finish()
-                        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    settingsViewModel.signOutState.collect { state ->
+                        when (state) {
+                            is SignOutState.Success -> {
+                                startActivity(Intent(requireContext(), AuthActivity::class.java))
+                                requireActivity().finish()
+                            }
 
-                        is SignOutState.Error -> {
-                            Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG)
-                                .show()
+                            is SignOutState.Error -> {
+                                Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG)
+                                    .show()
+                            }
                         }
                     }
                 }
-            }
-            launch {
-                settingsViewModel.user.collect() { user ->
-                    binding.apply {
-                        textViewUsername.text = user.username
-                        textViewUsername2.text = "@${user.username}"
-                        user.imageURL?.let { imageViewUserImage.load(user.imageURL) }
+                launch {
+                    settingsViewModel.user.collect { user ->
+                        binding.apply {
+                            textViewUsername.text = user.username
+                            textViewUsername2.text = "@${user.username}"
+                            user.imageURL?.let { imageViewUserImage.load(user.imageURL) }
+                        }
                     }
                 }
             }

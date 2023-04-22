@@ -5,7 +5,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
@@ -51,31 +53,33 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
     }
 
     private fun initObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            launch {
-                changePasswordViewModel.user.collect() {
-                    currentUser = it
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    changePasswordViewModel.user.collect {
+                        currentUser = it
+                    }
                 }
-            }
-            launch {
-                changePasswordViewModel.changePasswordState.collect() { state ->
-                    when (state) {
-                        is ChangePasswordState.Success -> {
-                            dialog.dismiss()
-                            Toast.makeText(
-                                requireContext(),
-                                "Change password successfully!",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
+                launch {
+                    changePasswordViewModel.changePasswordState.collect { state ->
+                        when (state) {
+                            is ChangePasswordState.Success -> {
+                                dialog.dismiss()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Change password successfully!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
 
-                        is ChangePasswordState.Error -> {
-                            dialog.dismiss()
-                            binding.textViewError.setErrorText(state.message.toString())
-                        }
+                            is ChangePasswordState.Error -> {
+                                dialog.dismiss()
+                                binding.textViewError.setErrorText(state.message.toString())
+                            }
 
-                        is ChangePasswordState.Loading -> {
-                            dialog.show()
+                            is ChangePasswordState.Loading -> {
+                                dialog.show()
+                            }
                         }
                     }
                 }
