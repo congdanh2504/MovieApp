@@ -1,8 +1,8 @@
-package com.training.movieapp.domain.usecase
+package com.training.movieapp.domain.usecase.auth
 
 import com.training.movieapp.common.Result
 import kotlinx.coroutines.flow.Flow
 
 interface SignOutUseCase {
-    suspend fun signOut(): Flow<Result<Unit>>
+    suspend fun execute(): Flow<Result<Unit>>
 }

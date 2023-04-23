@@ -3,12 +3,11 @@ package com.training.movieapp.ui.main.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.training.movieapp.domain.model.User
-import com.training.movieapp.domain.usecase.ReadUserUseCase
+import com.training.movieapp.domain.usecase.datastore.ReadUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +22,7 @@ class MainViewModel @Inject constructor(private val readUserUseCase: ReadUserUse
     }
 
     private fun readUser() = viewModelScope.launch {
-        readUserUseCase.readUser().collect() { user ->
+        readUserUseCase.execute().collect() { user ->
             _user.emit(user)
         }
     }

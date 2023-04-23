@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.training.movieapp.common.Result
 import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.model.state.OperationState
-import com.training.movieapp.domain.usecase.ReadUserUseCase
-import com.training.movieapp.domain.usecase.SignOutUseCase
+import com.training.movieapp.domain.usecase.datastore.ReadUserUseCase
+import com.training.movieapp.domain.usecase.auth.SignOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,13 +34,13 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun readUser() = viewModelScope.launch {
-        readUserUseCase.readUser().collect() { user ->
+        readUserUseCase.execute().collect() { user ->
             _user.emit(user)
         }
     }
 
     fun signOut() = viewModelScope.launch {
-        signOutUseCase.signOut()
+        signOutUseCase.execute()
             .collect { result ->
                 when (result) {
                     is Result.Success -> _signOutState.emit(OperationState.Success(Unit))

@@ -87,4 +87,32 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun changeEmail(
+        email: String,
+        currentPassword: String,
+        newEmail: String
+    ) = flow {
+        try {
+            val credential = EmailAuthProvider.getCredential(email, currentPassword)
+            val currentUser = firebaseAuth.currentUser ?: throw NullPointerException("User is null")
+            currentUser.reauthenticate(credential).await()
+
+            currentUser.updateEmail(newEmail).await()
+
+            val userDocument =
+                fireStore.collection("users").document(currentUser.uid)
+            val userData = hashMapOf(
+                "email" to newEmail,
+            )
+            userDocument.set(userData, SetOptions.merge()).await()
+
+            val user =
+                userDocument.get().await().toObject(User::class.java) ?: throw NullPointerException(
+                    "User is null"
+                )
+            emit(Result.Success(user))
+        } catch (e: Exception) {
+            emit(Result.Error(e))
+        }
+    }
 }

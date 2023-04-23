@@ -60,6 +60,7 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
 
                             is OperationState.Success -> {
                                 dialog.dismiss()
+                                binding.errorTV.isVisible = false
                                 val action =
                                     ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToResetFragment(
                                         binding.emailET.text.toString()

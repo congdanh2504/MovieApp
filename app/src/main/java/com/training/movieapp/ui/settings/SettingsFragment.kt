@@ -52,6 +52,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             linearLayoutChangePassword.setOnClickListener {
                 findNavController().navigate(R.id.action_settingsFragment_to_changePasswordFragment)
             }
+            linearLayoutChangeEmail.setOnClickListener {
+                findNavController().navigate(R.id.action_settingsFragment_to_changeEmailFragment)
+            }
             cardViewSignOut.setOnClickListener {
                 settingsViewModel.signOut()
             }

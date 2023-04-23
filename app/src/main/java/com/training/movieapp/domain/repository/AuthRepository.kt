@@ -14,4 +14,10 @@ interface AuthRepository {
         currentPassword: String,
         newPassword: String
     ): Flow<Result<Unit>>
+
+    suspend fun changeEmail(
+        email: String,
+        currentPassword: String,
+        newEmail: String
+    ): Flow<Result<User>>
 }

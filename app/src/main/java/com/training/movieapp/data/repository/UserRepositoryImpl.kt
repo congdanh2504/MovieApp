@@ -4,7 +4,6 @@ import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.inject.Deferred
 import com.google.firebase.storage.FirebaseStorage
 import com.training.movieapp.common.Result
 import com.training.movieapp.domain.model.User
@@ -24,8 +23,9 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun updateProfile(username: String, bio: String, imageUri: Uri?) = flow {
         try {
             val imageURL = imageUri?.let { uploadImage(imageUri) }
+            val currentUser = firebaseAuth.currentUser ?: throw NullPointerException("User is null")
             val userDocument =
-                fireStore.collection("users").document(firebaseAuth.currentUser!!.uid)
+                fireStore.collection("users").document(currentUser.uid)
             val userData = if (imageURL != null) {
                 hashMapOf(
                     "username" to username,
@@ -39,7 +39,10 @@ class UserRepositoryImpl @Inject constructor(
                 )
             }
             userDocument.set(userData, SetOptions.merge()).await()
-            val user = userDocument.get().await().toObject(User::class.java)!!
+            val user =
+                userDocument.get().await().toObject(User::class.java) ?: throw NullPointerException(
+                    "User is null"
+                )
             emit(Result.Success(user))
         } catch (e: Exception) {
             emit(Result.Error(e))
@@ -56,4 +59,12 @@ class UserRepositoryImpl @Inject constructor(
             }
         }.await()
 
+    override suspend fun checkUserIsLogged() = flow {
+        try {
+            firebaseAuth.currentUser ?: throw NullPointerException("User is null")
+            emit(true)
+        } catch (e: Exception) {
+            emit(false)
+        }
+    }
 }
