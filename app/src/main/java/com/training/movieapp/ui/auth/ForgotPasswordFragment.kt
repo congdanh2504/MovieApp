@@ -1,10 +1,8 @@
 package com.training.movieapp.ui.auth
 
-import android.app.Dialog
-import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -56,8 +54,8 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
                     .collect { state ->
                         when (state) {
                             is OperationState.Idle -> {
-                                binding.errorTV.visibility = View.INVISIBLE
                                 dialog.dismiss()
+                                binding.errorTV.isVisible = true
                             }
 
                             is OperationState.Success -> {
@@ -71,7 +69,7 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
 
                             is OperationState.Error -> {
                                 dialog.dismiss()
-                                binding.errorTV.visibility = View.VISIBLE
+                                binding.errorTV.isVisible = true
                                 binding.errorTV.text = state.message
                             }
 

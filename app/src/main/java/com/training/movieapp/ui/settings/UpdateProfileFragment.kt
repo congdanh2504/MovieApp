@@ -6,6 +6,7 @@ import android.text.Editable
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -15,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import coil.load
 import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
-import com.training.movieapp.common.setErrorText
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentUpdateProfileBinding
 import com.training.movieapp.domain.model.state.OperationState
@@ -73,8 +73,8 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
                     updateProfileViewModel.updateProfileState.collect { state ->
                         when (state) {
                             is OperationState.Idle -> {
-                                binding.textViewError.visibility = View.INVISIBLE
                                 dialog.dismiss()
+                                binding.textViewError.isVisible = false
                             }
 
                             is OperationState.Success -> {
@@ -89,7 +89,8 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
 
                             is OperationState.Error -> {
                                 dialog.dismiss()
-                                binding.textViewError.setErrorText(state.message.toString())
+                                binding.textViewError.isVisible = true
+                                binding.textViewError.text = state.message
                             }
 
                             is OperationState.Loading -> {

@@ -2,6 +2,7 @@ package com.training.movieapp.ui.auth
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -63,8 +64,8 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                     .collect { state ->
                         when (state) {
                             is OperationState.Idle -> {
-                                binding.errorTV.visibility = View.INVISIBLE
                                 dialog.dismiss()
+                                binding.errorTV.isVisible = false
                             }
 
                             is OperationState.Success -> {
@@ -74,7 +75,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
                             is OperationState.Error -> {
                                 dialog.dismiss()
-                                binding.errorTV.visibility = View.VISIBLE
+                                binding.errorTV.isVisible = true
                                 binding.errorTV.text = state.message
                             }
 

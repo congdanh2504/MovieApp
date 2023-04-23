@@ -3,6 +3,7 @@ package com.training.movieapp.ui.settings
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -11,7 +12,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
-import com.training.movieapp.common.setErrorText
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentChangePasswordBinding
 import com.training.movieapp.domain.model.User
@@ -63,8 +63,8 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
                     changePasswordViewModel.changePasswordState.collect { state ->
                         when (state) {
                             is OperationState.Idle -> {
-                                binding.textViewError.visibility = View.INVISIBLE
                                 dialog.dismiss()
+                                binding.textViewError.isVisible = false
                             }
 
                             is OperationState.Success -> {
@@ -78,7 +78,8 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
 
                             is OperationState.Error -> {
                                 dialog.dismiss()
-                                binding.textViewError.setErrorText(state.message.toString())
+                                binding.textViewError.isVisible = true
+                                binding.textViewError.text = state.message
                             }
 
                             is OperationState.Loading -> {
@@ -95,7 +96,8 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
         val password = binding.editTextNewPassword.text.toString()
         val confirmPassword = binding.editTextConfirmPassword.text.toString()
         if (password != confirmPassword) {
-            binding.textViewError.setErrorText("Password and confirm password must be the same")
+            binding.textViewError.isVisible = true
+            binding.textViewError.text = "Password and confirm password must be the same"
             return false
         } else {
             binding.textViewError.visibility = View.GONE
