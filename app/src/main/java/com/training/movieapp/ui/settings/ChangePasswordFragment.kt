@@ -69,6 +69,7 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
 
                             is OperationState.Success -> {
                                 dialog.dismiss()
+                                binding.textViewError.isVisible = false
                                 Toast.makeText(
                                     requireContext(),
                                     "Change password successfully!",

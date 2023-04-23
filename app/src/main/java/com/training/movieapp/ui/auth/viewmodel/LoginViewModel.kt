@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.training.movieapp.common.Result
 import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.model.state.OperationState
-import com.training.movieapp.domain.usecase.LoginUseCase
-import com.training.movieapp.domain.usecase.SaveUserUseCase
+import com.training.movieapp.domain.usecase.auth.LoginUseCase
+import com.training.movieapp.domain.usecase.datastore.SaveUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,7 +24,7 @@ class LoginViewModel @Inject constructor(
     val loginState: StateFlow<OperationState<User>> = _loginState.asStateFlow()
 
     fun login(email: String, password: String) = viewModelScope.launch {
-        loginUseCase.login(email, password)
+        loginUseCase.execute(email, password)
             .onStart {
                 _loginState.emit(OperationState.Loading)
             }
@@ -37,6 +37,6 @@ class LoginViewModel @Inject constructor(
     }
 
     fun saveUser(user: User) = viewModelScope.launch {
-        saveUserUseCase.saveUser(user)
+        saveUserUseCase.execute(user)
     }
 }

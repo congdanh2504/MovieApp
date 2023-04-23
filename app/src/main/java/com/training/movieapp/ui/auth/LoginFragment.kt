@@ -70,6 +70,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
                         is OperationState.Success -> {
                             dialog.dismiss()
+                            binding.errorTV.isVisible = false
                             loginViewModel.saveUser(state.data)
                             startActivity(Intent(requireActivity(), MainActivity::class.java))
                             requireActivity().finish()

@@ -1,7 +1,8 @@
-package com.training.movieapp.ui.auth
+package com.training.movieapp.ui.settings
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,17 +13,19 @@ import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
-import com.training.movieapp.databinding.FragmentRegisterBinding
+import com.training.movieapp.databinding.FragmentChangeEmailBinding
+import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.model.state.OperationState
-import com.training.movieapp.ui.auth.viewmodel.RegisterViewModel
+import com.training.movieapp.ui.settings.viewmodel.ChangeEmailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RegisterFragment : Fragment(R.layout.fragment_register) {
+class ChangeEmailFragment : Fragment(R.layout.fragment_change_email) {
 
-    private val registerViewModel: RegisterViewModel by viewModels()
-    private val binding: FragmentRegisterBinding by viewBinding(FragmentRegisterBinding::bind)
+    private val binding: FragmentChangeEmailBinding by viewBinding(FragmentChangeEmailBinding::bind)
+    private val changeEmailViewModel: ChangeEmailViewModel by viewModels()
+    private lateinit var currentUser: User
     private lateinit var dialog: LoadingDialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,46 +41,47 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     private fun initActions() {
         binding.apply {
-            back.setOnClickListener {
+            imageViewBack.setOnClickListener {
                 findNavController().popBackStack()
             }
-            login.setOnClickListener {
-                findNavController().popBackStack()
-            }
-            createAccountBtn.setOnClickListener {
-                register()
+            buttonSave.setOnClickListener {
+                changeEmail()
             }
         }
-    }
-
-    private fun register() {
-        val email = binding.emailET.text.toString()
-        val username = binding.usernameET.text.toString()
-        val password = binding.passwordET.text.toString()
-        registerViewModel.register(email, username, password)
     }
 
     private fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                registerViewModel.registerState
-                    .collect { state ->
+                launch {
+                    changeEmailViewModel.user.collect {
+                        currentUser = it
+                        binding.textViewCurrentEmail.text = it.email
+                    }
+                }
+                launch {
+                    changeEmailViewModel.changeEmailState.collect { state ->
                         when (state) {
                             is OperationState.Idle -> {
                                 dialog.dismiss()
-                                binding.errorTV.isVisible = false
+                                binding.textViewError.isVisible = false
                             }
 
                             is OperationState.Success -> {
                                 dialog.dismiss()
-                                binding.errorTV.isVisible = false
-                                findNavController().popBackStack()
+                                binding.textViewError.isVisible = false
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Change email successfully!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                changeEmailViewModel.saveUser(state.data)
                             }
 
                             is OperationState.Error -> {
                                 dialog.dismiss()
-                                binding.errorTV.isVisible = true
-                                binding.errorTV.text = state.message
+                                binding.textViewError.isVisible = true
+                                binding.textViewError.text = state.message
                             }
 
                             is OperationState.Loading -> {
@@ -85,8 +89,15 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                             }
                         }
                     }
+                }
             }
         }
     }
 
+    private fun changeEmail() {
+        val email = currentUser.email
+        val currentPassword = binding.editTextPassword.text.toString()
+        val newEmail = binding.editTextNewEmail.text.toString()
+        changeEmailViewModel.changeEmail(email, currentPassword, newEmail)
+    }
 }

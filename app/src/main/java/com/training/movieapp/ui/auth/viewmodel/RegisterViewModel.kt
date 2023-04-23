@@ -4,13 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.training.movieapp.common.Result
 import com.training.movieapp.domain.model.state.OperationState
-import com.training.movieapp.domain.usecase.RegisterUseCase
+import com.training.movieapp.domain.usecase.auth.RegisterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -23,7 +20,7 @@ class RegisterViewModel @Inject constructor(private val registerUseCase: Registe
     val registerState: StateFlow<OperationState<Unit>> = _registerState.asStateFlow()
 
     fun register(email: String, username: String, password: String) = viewModelScope.launch {
-        registerUseCase.register(email, username, password)
+        registerUseCase.execute(email, username, password)
             .onStart {
                 _registerState.emit(OperationState.Loading)
             }

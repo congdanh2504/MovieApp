@@ -79,6 +79,7 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
 
                             is OperationState.Success -> {
                                 dialog.dismiss()
+                                binding.textViewError.isVisible = false
                                 Toast.makeText(
                                     requireContext(),
                                     "Update profile successfully!",

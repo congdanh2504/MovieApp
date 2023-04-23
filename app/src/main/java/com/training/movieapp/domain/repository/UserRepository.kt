@@ -7,4 +7,5 @@ import com.training.movieapp.domain.model.User
 
 interface UserRepository {
     suspend fun updateProfile(username: String, bio: String, imageUri: Uri?): Flow<Result<User>>
+    suspend fun checkUserIsLogged(): Flow<Boolean>
 }

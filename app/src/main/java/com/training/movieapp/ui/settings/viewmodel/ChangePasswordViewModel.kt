@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.training.movieapp.common.Result
 import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.model.state.OperationState
-import com.training.movieapp.domain.usecase.ChangePasswordUseCase
-import com.training.movieapp.domain.usecase.ReadUserUseCase
+import com.training.movieapp.domain.usecase.auth.ChangePasswordUseCase
+import com.training.movieapp.domain.usecase.datastore.ReadUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,14 +35,14 @@ class ChangePasswordViewModel @Inject constructor(
     }
 
     private fun readUser() = viewModelScope.launch {
-        readUserUseCase.readUser().collect() { user ->
+        readUserUseCase.execute().collect() { user ->
             _user.emit(user)
         }
     }
 
     fun changePassword(email: String, currentPassword: String, newPassword: String) =
         viewModelScope.launch {
-            changePasswordUseCase.changePassword(email, currentPassword, newPassword)
+            changePasswordUseCase.execute(email, currentPassword, newPassword)
                 .onStart {
                     _changePasswordState.emit(OperationState.Loading)
                 }
