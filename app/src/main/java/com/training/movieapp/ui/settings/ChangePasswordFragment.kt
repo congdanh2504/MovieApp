@@ -1,24 +1,23 @@
 package com.training.movieapp.ui.settings
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
-import com.training.movieapp.common.setErrorText
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentChangePasswordBinding
 import com.training.movieapp.domain.model.User
-import com.training.movieapp.domain.model.state.ChangePasswordState
+import com.training.movieapp.domain.model.state.OperationState
 import com.training.movieapp.ui.settings.viewmodel.ChangePasswordViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -36,7 +35,6 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
     }
 
     private fun initView() {
-        binding.textViewError.visibility = View.INVISIBLE
         dialog = LoadingDialog(requireContext())
     }
 
@@ -54,29 +52,39 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
     }
 
     private fun initObservers() {
-        lifecycleScope.launchWhenStarted {
-            launch {
-                changePasswordViewModel.user.collect() {
-                    currentUser = it
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    changePasswordViewModel.user.collect {
+                        currentUser = it
+                    }
                 }
-            }
-            launch {
-                changePasswordViewModel.changePasswordState.collect() { state ->
-                    when (state) {
-                        is ChangePasswordState.Success -> {
-                            dialog.dismiss()
-                            Toast.makeText(
-                                requireContext(),
-                                "Change password successfully!",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        is ChangePasswordState.Error -> {
-                            dialog.dismiss()
-                            binding.textViewError.setErrorText(state.message.toString())
-                        }
-                        is ChangePasswordState.Loading -> {
-                            dialog.show()
+                launch {
+                    changePasswordViewModel.changePasswordState.collect { state ->
+                        when (state) {
+                            is OperationState.Idle -> {
+                                dialog.dismiss()
+                                binding.textViewError.isVisible = false
+                            }
+
+                            is OperationState.Success -> {
+                                dialog.dismiss()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Change password successfully!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+
+                            is OperationState.Error -> {
+                                dialog.dismiss()
+                                binding.textViewError.isVisible = true
+                                binding.textViewError.text = state.message
+                            }
+
+                            is OperationState.Loading -> {
+                                dialog.show()
+                            }
                         }
                     }
                 }
@@ -88,7 +96,8 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
         val password = binding.editTextNewPassword.text.toString()
         val confirmPassword = binding.editTextConfirmPassword.text.toString()
         if (password != confirmPassword) {
-            binding.textViewError.setErrorText("Password and confirm password must be the same")
+            binding.textViewError.isVisible = true
+            binding.textViewError.text = "Password and confirm password must be the same"
             return false
         } else {
             binding.textViewError.visibility = View.GONE

@@ -1,59 +1,41 @@
 package com.training.movieapp.di
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.training.movieapp.data.repository.AuthRepositoryImpl
 import com.training.movieapp.data.usecase.*
 import com.training.movieapp.domain.repository.AuthRepository
-import com.training.movieapp.domain.repository.DataStoreRepository
 import com.training.movieapp.domain.usecase.*
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AuthModule {
+abstract class AuthModule {
 
-    @Provides
-    fun provideAuthRepository(
-        auth: FirebaseAuth,
-        fireStore: FirebaseFirestore
-    ): AuthRepository = AuthRepositoryImpl(auth, fireStore)
+    @Binds
+    abstract fun bindAuthRepository(
+        impl: AuthRepositoryImpl
+    ): AuthRepository
 
-    @Provides
-    fun provideLoginUseCase(repository: AuthRepository): LoginUseCase {
-        return LoginUseCaseImpl(repository)
-    }
+    @Binds
+    abstract fun bindLoginUseCase(impl: LoginUseCaseImpl): LoginUseCase
 
-    @Provides
-    fun provideRegisterUseCase(repository: AuthRepository): RegisterUseCase {
-        return RegisterUseCaseImpl(repository)
-    }
+    @Binds
+    abstract fun bindRegisterUseCase(impl: RegisterUseCaseImpl): RegisterUseCase
 
-    @Provides
-    fun provideSignOutUseCase(repository: AuthRepository): SignOutUseCase {
-        return SignOutUseCaseImpl(repository)
-    }
+    @Binds
+    abstract fun bindSignOutUseCase(impl: SignOutUseCaseImpl): SignOutUseCase
 
-    @Provides
-    fun provideResetPasswordUseCase(repository: AuthRepository): ResetPasswordUseCase {
-        return ResetPasswordUseCaseImpl(repository)
-    }
+    @Binds
+    abstract fun bindResetPasswordUseCase(impl: ResetPasswordUseCaseImpl): ResetPasswordUseCase
 
-    @Provides
-    fun provideSaveUserUseCase(repository: DataStoreRepository): SaveUserUseCase {
-        return SaveUserUseCaseImpl(repository)
-    }
+    @Binds
+    abstract fun bindSaveUserUseCase(impl: SaveUserUseCaseImpl): SaveUserUseCase
 
-    @Provides
-    fun provideReadUserUseCase(repository: DataStoreRepository): ReadUserUseCase {
-        return ReadUserUseCaseImpl(repository)
-    }
+    @Binds
+    abstract fun bindReadUserUseCase(impl: ReadUserUseCaseImpl): ReadUserUseCase
 
-    @Provides
-    fun provideChangePasswordUseCase(repository: AuthRepository): ChangePasswordUseCase {
-        return ChangePasswordUseCaseImpl(repository)
-    }
+    @Binds
+    abstract fun bindChangePasswordUseCase(impl: ChangePasswordUseCaseImpl): ChangePasswordUseCase
 }

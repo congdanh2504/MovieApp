@@ -1,21 +1,22 @@
 package com.training.movieapp.ui.auth
 
-import android.app.Dialog
-import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentRegisterBinding
-import com.training.movieapp.domain.model.state.RegisterState
+import com.training.movieapp.domain.model.state.OperationState
 import com.training.movieapp.ui.auth.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment(R.layout.fragment_register) {
@@ -32,7 +33,6 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun initView() {
-        binding.errorTV.visibility = View.INVISIBLE
         dialog = LoadingDialog(requireContext())
     }
 
@@ -58,24 +58,33 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun initObservers() {
-        lifecycleScope.launchWhenStarted {
-            registerViewModel.registerState
-                .collect { state ->
-                    when (state) {
-                        is RegisterState.Success -> {
-                            dialog.dismiss()
-                            findNavController().popBackStack()
-                        }
-                        is RegisterState.Error -> {
-                            dialog.dismiss()
-                            binding.errorTV.visibility = View.VISIBLE
-                            binding.errorTV.text = state.message
-                        }
-                        is RegisterState.Loading -> {
-                            dialog.show()
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                registerViewModel.registerState
+                    .collect { state ->
+                        when (state) {
+                            is OperationState.Idle -> {
+                                dialog.dismiss()
+                                binding.errorTV.isVisible = false
+                            }
+
+                            is OperationState.Success -> {
+                                dialog.dismiss()
+                                findNavController().popBackStack()
+                            }
+
+                            is OperationState.Error -> {
+                                dialog.dismiss()
+                                binding.errorTV.isVisible = true
+                                binding.errorTV.text = state.message
+                            }
+
+                            is OperationState.Loading -> {
+                                dialog.show()
+                            }
                         }
                     }
-                }
+            }
         }
     }
 

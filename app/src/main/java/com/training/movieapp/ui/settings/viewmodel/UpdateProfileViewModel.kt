@@ -5,14 +5,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.training.movieapp.common.Result
 import com.training.movieapp.domain.model.User
-import com.training.movieapp.domain.model.state.UpdateProfileState
+import com.training.movieapp.domain.model.state.OperationState
 import com.training.movieapp.domain.usecase.ReadUserUseCase
 import com.training.movieapp.domain.usecase.SaveUserUseCase
 import com.training.movieapp.domain.usecase.UpdateProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,8 +31,8 @@ class UpdateProfileViewModel @Inject constructor(
     private val _user = MutableSharedFlow<User>(replay = 0)
     val user: SharedFlow<User> = _user.asSharedFlow()
 
-    private val _updateProfileState = MutableSharedFlow<UpdateProfileState>(replay = 0)
-    val updateProfileState: SharedFlow<UpdateProfileState> = _updateProfileState.asSharedFlow()
+    private val _updateProfileState = MutableStateFlow<OperationState<User>>(OperationState.Idle)
+    val updateProfileState: StateFlow<OperationState<User>> = _updateProfileState.asStateFlow()
 
     init {
         readUser()
@@ -43,14 +46,15 @@ class UpdateProfileViewModel @Inject constructor(
 
     fun updateProfile(username: String, bio: String, imageUri: Uri?) = viewModelScope.launch {
         updateProfileUseCase.updateProfile(username, bio, imageUri)
-            .onStart { _updateProfileState.emit(UpdateProfileState.Loading) }
+            .onStart { _updateProfileState.emit(OperationState.Loading) }
             .collect { result ->
                 when (result) {
                     is Result.Success -> {
-                        _updateProfileState.emit(UpdateProfileState.Success(result.data))
+                        _updateProfileState.emit(OperationState.Success(result.data))
                     }
+
                     is Result.Error -> {
-                        _updateProfileState.emit(UpdateProfileState.Error(result.exception.message))
+                        _updateProfileState.emit(OperationState.Error(result.exception.message))
                     }
                 }
             }

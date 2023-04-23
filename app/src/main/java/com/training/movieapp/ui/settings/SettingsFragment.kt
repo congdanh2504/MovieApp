@@ -6,20 +6,20 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import coil.Coil
 import coil.load
 import com.training.movieapp.R
+import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentSettingsBinding
-import com.training.movieapp.domain.model.state.SignOutState
+import com.training.movieapp.domain.model.state.OperationState
 import com.training.movieapp.ui.auth.AuthActivity
 import com.training.movieapp.ui.main.MainActivity
 import com.training.movieapp.ui.settings.viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -27,11 +27,17 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private val binding: FragmentSettingsBinding by viewBinding(FragmentSettingsBinding::bind)
     private val settingsViewModel: SettingsViewModel by viewModels()
+    private lateinit var dialog: LoadingDialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
         initActions()
         initObservers()
+    }
+
+    private fun initView() {
+        dialog = LoadingDialog(requireContext())
     }
 
     private fun initActions() {
@@ -53,27 +59,40 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun initObservers() {
-        lifecycleScope.launchWhenStarted {
-            launch {
-                settingsViewModel.signOutState.collect() { state ->
-                    when (state) {
-                        is SignOutState.Success -> {
-                            startActivity(Intent(requireContext(), AuthActivity::class.java))
-                            requireActivity().finish()
-                        }
-                        is SignOutState.Error -> {
-                            Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG)
-                                .show()
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    settingsViewModel.signOutState.collect { state ->
+                        when (state) {
+                            is OperationState.Idle -> {
+                                dialog.dismiss()
+                            }
+
+                            is OperationState.Success -> {
+                                dialog.dismiss()
+                                startActivity(Intent(requireContext(), AuthActivity::class.java))
+                                requireActivity().finish()
+                            }
+
+                            is OperationState.Error -> {
+                                dialog.dismiss()
+                                Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG)
+                                    .show()
+                            }
+
+                            is OperationState.Loading -> {
+                                dialog.show()
+                            }
                         }
                     }
                 }
-            }
-            launch {
-                settingsViewModel.user.collect() { user ->
-                    binding.apply {
-                        textViewUsername.text = user.username
-                        textViewUsername2.text = "@${user.username}"
-                        user.imageURL?.let { imageViewUserImage.load(user.imageURL) }
+                launch {
+                    settingsViewModel.user.collect { user ->
+                        binding.apply {
+                            textViewUsername.text = user.username
+                            textViewUsername2.text = "@${user.username}"
+                            user.imageURL?.let { imageViewUserImage.load(user.imageURL) }
+                        }
                     }
                 }
             }

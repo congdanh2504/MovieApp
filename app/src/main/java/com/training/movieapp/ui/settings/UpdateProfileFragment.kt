@@ -1,29 +1,24 @@
 package com.training.movieapp.ui.settings
 
-import android.app.Activity
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Editable
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import coil.load
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
-import com.training.movieapp.common.setErrorText
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentUpdateProfileBinding
-import com.training.movieapp.domain.model.state.UpdateProfileState
+import com.training.movieapp.domain.model.state.OperationState
 import com.training.movieapp.ui.settings.viewmodel.UpdateProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -44,7 +39,6 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
     }
 
     private fun initView() {
-        binding.textViewError.visibility = View.INVISIBLE
         dialog = LoadingDialog(requireContext())
     }
 
@@ -63,59 +57,60 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
     }
 
     private fun initObservers() {
-        lifecycleScope.launchWhenStarted {
-            launch {
-                updateProfileViewModel.user.collect { user ->
-                    binding.apply {
-                        editTextUsername.text =
-                            Editable.Factory.getInstance().newEditable(user.username)
-                        editTextBio.text = Editable.Factory.getInstance().newEditable(user.bio)
-                        user.imageURL?.let { imageViewChoose.load(user.imageURL) }
-                    }
-                }
-            }
-            launch {
-                updateProfileViewModel.updateProfileState.collect { state ->
-                    when (state) {
-                        is UpdateProfileState.Success -> {
-                            dialog.dismiss()
-                            Toast.makeText(
-                                requireContext(),
-                                "Update profile successfully!",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            updateProfileViewModel.saveUser(state.user)
-                        }
-                        is UpdateProfileState.Error -> {
-                            dialog.dismiss()
-                            binding.textViewError.setErrorText(state.message.toString())
-                        }
-                        is UpdateProfileState.Loading -> {
-                            dialog.show()
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    updateProfileViewModel.user.collect { user ->
+                        binding.apply {
+                            editTextUsername.text =
+                                Editable.Factory.getInstance().newEditable(user.username)
+                            editTextBio.text = Editable.Factory.getInstance().newEditable(user.bio)
+                            user.imageURL?.let { imageViewChoose.load(user.imageURL) }
                         }
                     }
                 }
-            }
+                launch {
+                    updateProfileViewModel.updateProfileState.collect { state ->
+                        when (state) {
+                            is OperationState.Idle -> {
+                                dialog.dismiss()
+                                binding.textViewError.isVisible = false
+                            }
 
+                            is OperationState.Success -> {
+                                dialog.dismiss()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Update profile successfully!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                updateProfileViewModel.saveUser(state.data)
+                            }
+
+                            is OperationState.Error -> {
+                                dialog.dismiss()
+                                binding.textViewError.isVisible = true
+                                binding.textViewError.text = state.message
+                            }
+
+                            is OperationState.Loading -> {
+                                dialog.show()
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
     private fun openImageChooser() {
-        Intent(Intent.ACTION_PICK).also {
-            it.type = "image/*"
-            val mimeTypes = arrayOf("image/jpeg", "image/png")
-            it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-            resultLauncher.launch(it)
-        }
+        getContent.launch("image/*")
     }
 
-    private var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val uri = result?.data!!.data!!
-                imageUri = uri
-                binding.imageViewChoose.setImageURI(uri)
-            }
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            imageUri = uri
+            binding.imageViewChoose.setImageURI(uri)
         }
 
     private fun updateProfile() {
