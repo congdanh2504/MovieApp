@@ -55,7 +55,7 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
                         when (state) {
                             is OperationState.Idle -> {
                                 dialog.dismiss()
-                                binding.errorTV.isVisible = true
+                                binding.errorTV.isVisible = false
                             }
 
                             is OperationState.Success -> {
