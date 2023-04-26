@@ -3,7 +3,7 @@ package com.training.movieapp.ui.main.utils
 import com.training.movieapp.ui.main.model.*
 
 object SampleData {
-    private val Movies = listOf(
+    val Movies = listOf(
         Movie(Images.imageUrl1),
         Movie(Images.imageUrl1),
         Movie(Images.imageUrl1),
