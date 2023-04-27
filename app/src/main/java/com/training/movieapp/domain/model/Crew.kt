@@ -1,8 +1,10 @@
 package com.training.movieapp.domain.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Crew(
-    val id: Int,
-    val profilePath: String?,
-    val job: String,
-    val name: String
+    @SerializedName("id") val id: Int,
+    @SerializedName("profile_path") val profilePath: String?,
+    @SerializedName("job") val job: String,
+    @SerializedName("name") val name: String
 )

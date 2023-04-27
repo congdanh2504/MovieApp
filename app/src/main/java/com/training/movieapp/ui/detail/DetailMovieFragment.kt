@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayoutMediator
 import com.training.movieapp.R
@@ -16,11 +17,15 @@ import com.training.movieapp.domain.model.Cast
 import com.training.movieapp.domain.model.Crew
 import com.training.movieapp.ui.detail.adapter.CastAndCrewAdapter
 import com.training.movieapp.ui.detail.adapter.MyPagerAdapter
+import com.training.movieapp.ui.detail.viewmodel.DetailMovieViewModel
 import com.training.movieapp.ui.main.adapter.movie.MovieAdapter
 import com.training.movieapp.ui.main.utils.SampleData
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
 
+    private val detailMovieViewModel: DetailMovieViewModel by viewModels()
     private val binding: FragmentDetailMovieBinding by viewBinding(FragmentDetailMovieBinding::bind)
     private lateinit var movieAdapter: MovieAdapter
     private lateinit var castAndCrewAdapter: CastAndCrewAdapter
@@ -31,6 +36,7 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
         binding.reyclerViewMovie.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.reyclerViewMovie.adapter = movieAdapter
         initTabLayout()
+        detailMovieViewModel.getDetailMovie(2)
     }
 
     private fun initTabLayout() {

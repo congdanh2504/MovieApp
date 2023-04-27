@@ -24,6 +24,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_loginFragment_to_detailMovieFragment"
+            app:destination="@id/detailMovieFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -59,4 +62,9 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
+    <fragment
+        android:id="@+id/detailMovieFragment"
+        android:name="com.training.movieapp.ui.detail.DetailMovieFragment"
+        android:label="fragment_detail_movie"
+        tools:layout="@layout/fragment_detail_movie" />
 </navigation>
