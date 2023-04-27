@@ -10,7 +10,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
 import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.repository.DataStoreRepository
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -22,7 +21,9 @@ class DataStoreRepositoryImpl @Inject constructor(private val context: Context) 
 
     companion object {
         private const val APP_PREFERENCES = "app_preferences"
-        private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(APP_PREFERENCES)
+        private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
+            APP_PREFERENCES
+        )
     }
 
     private object PreferenceKeys {
