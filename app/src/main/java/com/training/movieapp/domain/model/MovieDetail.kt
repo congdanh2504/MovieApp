@@ -7,7 +7,7 @@ data class MovieDetail(
     val genres: List<Genre>,
     val homepage: String?,
     val originalTitle: String,
-    val original_language: String,
+    val originalLanguage: String,
     val overview: String?,
     val popularity: String?,
     val posterPath: String?,
