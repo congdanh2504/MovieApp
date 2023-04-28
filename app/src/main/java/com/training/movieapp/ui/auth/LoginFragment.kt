@@ -44,7 +44,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
             }
             forgotPassword.setOnClickListener {
-                findNavController().navigate(R.id.action_loginFragment_to_detailMovieFragment)
+                findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
             }
             loginBtn.setOnClickListener {
                 login()

@@ -2,6 +2,7 @@ package com.training.movieapp.data.repository
 
 import com.training.movieapp.common.Result
 import com.training.movieapp.data.remote.TheMovieDbApi
+import com.training.movieapp.domain.model.MovieDetail
 import com.training.movieapp.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -10,8 +11,19 @@ class MovieRepositoryImpl @Inject constructor(private val theMovieDbApi: TheMovi
     MovieRepository {
     override suspend fun getMovieDetail(movieId: Int) = flow {
         try {
-            val movieDetail = theMovieDbApi.getMovieDetail(movieId)
-            emit(Result.Success(movieDetail))
+            val movie = theMovieDbApi.getMovie(movieId)
+            val credit = theMovieDbApi.getMovieCredit(movieId)
+            val similar = theMovieDbApi.getSimilarMovies(movieId)
+            emit(Result.Success(MovieDetail(movie, credit, similar)))
+        } catch (e: Exception) {
+            emit(Result.Error(e))
+        }
+    }
+
+    override suspend fun getMovieCredit(movieId: Int) = flow {
+        try {
+            val movieCredit = theMovieDbApi.getMovieCredit(movieId)
+            emit(Result.Success(movieCredit))
         } catch (e: Exception) {
             emit(Result.Error(e))
         }

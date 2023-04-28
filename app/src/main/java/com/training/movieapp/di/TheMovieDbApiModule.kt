@@ -1,6 +1,7 @@
 package com.training.movieapp.di
 
 import com.training.movieapp.BuildConfig
+import com.training.movieapp.common.Constant
 import com.training.movieapp.data.remote.TheMovieDbApi
 import dagger.Module
 import dagger.Provides
@@ -14,11 +15,11 @@ import retrofit2.create
 @Module
 @InstallIn(SingletonComponent::class)
 object TheMovieDbApiModule {
-    private const val TMDB_BASE_URL = "https://api.themoviedb.org/3/"
+
 
     @Provides
     fun provideTheMovieDbApi(): TheMovieDbApi = Retrofit.Builder()
-        .baseUrl(TMDB_BASE_URL)
+        .baseUrl(Constant.TMDB_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .client(OkHttpClient.Builder().addInterceptor { chain ->
             var request = chain.request()
