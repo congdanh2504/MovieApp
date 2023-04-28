@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.training.movieapp.common.Result
 import com.training.movieapp.domain.model.User
-import com.training.movieapp.domain.model.state.OperationState
+import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.domain.usecase.auth.LoginUseCase
 import com.training.movieapp.domain.usecase.datastore.SaveUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,18 +20,18 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val saveUserUseCase: SaveUserUseCase
 ) : ViewModel() {
-    private val _loginState = MutableStateFlow<OperationState<User>>(OperationState.Idle)
-    val loginState: StateFlow<OperationState<User>> = _loginState.asStateFlow()
+    private val _loginState = MutableStateFlow<DataState<User>>(DataState.Idle)
+    val loginState: StateFlow<DataState<User>> = _loginState.asStateFlow()
 
     fun login(email: String, password: String) = viewModelScope.launch {
         loginUseCase.execute(email, password)
             .onStart {
-                _loginState.emit(OperationState.Loading)
+                _loginState.emit(DataState.Loading)
             }
             .collect { result ->
                 when (result) {
-                    is Result.Success -> _loginState.emit(OperationState.Success(result.data))
-                    is Result.Error -> _loginState.emit(OperationState.Error(result.exception.message))
+                    is Result.Success -> _loginState.emit(DataState.Success(result.data))
+                    is Result.Error -> _loginState.emit(DataState.Error(result.exception.message))
                 }
             }
     }

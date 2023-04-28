@@ -15,7 +15,7 @@ import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentChangePasswordBinding
 import com.training.movieapp.domain.model.User
-import com.training.movieapp.domain.model.state.OperationState
+import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.settings.viewmodel.ChangePasswordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -55,19 +55,33 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    changePasswordViewModel.user.collect {
-                        currentUser = it
+                    changePasswordViewModel.userState.collect { state ->
+                        when (state) {
+                            is DataState.Success -> {
+                                currentUser = state.data
+                            }
+
+                            is DataState.Error -> {
+                                Toast.makeText(
+                                    requireContext(),
+                                    state.message.toString(),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+
+                            else -> {}
+                        }
                     }
                 }
                 launch {
                     changePasswordViewModel.changePasswordState.collect { state ->
                         when (state) {
-                            is OperationState.Idle -> {
+                            is DataState.Idle -> {
                                 dialog.dismiss()
                                 binding.textViewError.isVisible = false
                             }
 
-                            is OperationState.Success -> {
+                            is DataState.Success -> {
                                 dialog.dismiss()
                                 binding.textViewError.isVisible = false
                                 Toast.makeText(
@@ -77,13 +91,13 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
                                 ).show()
                             }
 
-                            is OperationState.Error -> {
+                            is DataState.Error -> {
                                 dialog.dismiss()
                                 binding.textViewError.isVisible = true
                                 binding.textViewError.text = state.message
                             }
 
-                            is OperationState.Loading -> {
+                            is DataState.Loading -> {
                                 dialog.show()
                             }
                         }

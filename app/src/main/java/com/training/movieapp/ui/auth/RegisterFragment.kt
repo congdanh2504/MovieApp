@@ -13,7 +13,7 @@ import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentRegisterBinding
-import com.training.movieapp.domain.model.state.OperationState
+import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.auth.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -63,24 +63,24 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                 registerViewModel.registerState
                     .collect { state ->
                         when (state) {
-                            is OperationState.Idle -> {
+                            is DataState.Idle -> {
                                 dialog.dismiss()
                                 binding.errorTV.isVisible = false
                             }
 
-                            is OperationState.Success -> {
+                            is DataState.Success -> {
                                 dialog.dismiss()
                                 binding.errorTV.isVisible = false
                                 findNavController().popBackStack()
                             }
 
-                            is OperationState.Error -> {
+                            is DataState.Error -> {
                                 dialog.dismiss()
                                 binding.errorTV.isVisible = true
                                 binding.errorTV.text = state.message
                             }
 
-                            is OperationState.Loading -> {
+                            is DataState.Loading -> {
                                 dialog.show()
                             }
                         }

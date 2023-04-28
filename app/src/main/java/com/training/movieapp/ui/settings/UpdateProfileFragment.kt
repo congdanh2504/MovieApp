@@ -18,7 +18,8 @@ import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentUpdateProfileBinding
-import com.training.movieapp.domain.model.state.OperationState
+import com.training.movieapp.domain.model.User
+import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.settings.viewmodel.UpdateProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -60,24 +61,33 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    updateProfileViewModel.user.collect { user ->
-                        binding.apply {
-                            editTextUsername.text =
-                                Editable.Factory.getInstance().newEditable(user.username)
-                            editTextBio.text = Editable.Factory.getInstance().newEditable(user.bio)
-                            user.imageURL?.let { imageViewChoose.load(user.imageURL) }
+                    updateProfileViewModel.userState.collect { state ->
+                        when (state) {
+                            is DataState.Success -> {
+                                setUser(state.data)
+                            }
+
+                            is DataState.Error -> {
+                                Toast.makeText(
+                                    requireContext(),
+                                    state.message.toString(),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+
+                            else -> {}
                         }
                     }
                 }
                 launch {
                     updateProfileViewModel.updateProfileState.collect { state ->
                         when (state) {
-                            is OperationState.Idle -> {
+                            is DataState.Idle -> {
                                 dialog.dismiss()
                                 binding.textViewError.isVisible = false
                             }
 
-                            is OperationState.Success -> {
+                            is DataState.Success -> {
                                 dialog.dismiss()
                                 binding.textViewError.isVisible = false
                                 Toast.makeText(
@@ -88,19 +98,28 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
                                 updateProfileViewModel.saveUser(state.data)
                             }
 
-                            is OperationState.Error -> {
+                            is DataState.Error -> {
                                 dialog.dismiss()
                                 binding.textViewError.isVisible = true
                                 binding.textViewError.text = state.message
                             }
 
-                            is OperationState.Loading -> {
+                            is DataState.Loading -> {
                                 dialog.show()
                             }
                         }
                     }
                 }
             }
+        }
+    }
+
+    private fun setUser(user: User) {
+        binding.apply {
+            editTextUsername.text =
+                Editable.Factory.getInstance().newEditable(user.username)
+            editTextBio.text = Editable.Factory.getInstance().newEditable(user.bio)
+            user.imageURL?.let { imageViewChoose.load(user.imageURL) }
         }
     }
 

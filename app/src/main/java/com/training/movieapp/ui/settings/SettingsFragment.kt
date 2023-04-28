@@ -15,7 +15,8 @@ import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentSettingsBinding
-import com.training.movieapp.domain.model.state.OperationState
+import com.training.movieapp.domain.model.User
+import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.auth.AuthActivity
 import com.training.movieapp.ui.main.MainActivity
 import com.training.movieapp.ui.settings.viewmodel.SettingsViewModel
@@ -34,6 +35,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         initView()
         initActions()
         initObservers()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        settingsViewModel.readUser()
     }
 
     private fun initView() {
@@ -67,38 +73,54 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 launch {
                     settingsViewModel.signOutState.collect { state ->
                         when (state) {
-                            is OperationState.Idle -> {
+                            is DataState.Idle -> {
                                 dialog.dismiss()
                             }
 
-                            is OperationState.Success -> {
+                            is DataState.Success -> {
                                 dialog.dismiss()
                                 startActivity(Intent(requireContext(), AuthActivity::class.java))
                                 requireActivity().finish()
                             }
 
-                            is OperationState.Error -> {
+                            is DataState.Error -> {
                                 dialog.dismiss()
                                 Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG)
                                     .show()
                             }
 
-                            is OperationState.Loading -> {
+                            is DataState.Loading -> {
                                 dialog.show()
                             }
                         }
                     }
                 }
                 launch {
-                    settingsViewModel.user.collect { user ->
-                        binding.apply {
-                            textViewUsername.text = user.username
-                            textViewUsername2.text = "@${user.username}"
-                            user.imageURL?.let { imageViewUserImage.load(user.imageURL) }
+                    settingsViewModel.userState.collect { state ->
+                        when (state) {
+                            is DataState.Success -> {
+                                setUser(state.data)
+                            }
+
+                            is DataState.Error -> {
+                                Toast.makeText(
+                                    requireContext(), state.message.toString(), Toast.LENGTH_LONG
+                                ).show()
+                            }
+
+                            else -> {}
                         }
                     }
                 }
             }
+        }
+    }
+
+    private fun setUser(user: User) {
+        binding.apply {
+            textViewUsername.text = user.username
+            textViewUsername2.text = "@${user.username}"
+            user.imageURL?.let { imageViewUserImage.load(user.imageURL) }
         }
     }
 }
