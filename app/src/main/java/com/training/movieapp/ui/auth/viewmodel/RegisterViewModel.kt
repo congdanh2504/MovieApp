@@ -3,7 +3,7 @@ package com.training.movieapp.ui.auth.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.training.movieapp.common.Result
-import com.training.movieapp.domain.model.state.OperationState
+import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.domain.usecase.auth.RegisterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,18 +16,18 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(private val registerUseCase: RegisterUseCase) :
     ViewModel() {
-    private val _registerState = MutableStateFlow<OperationState<Unit>>(OperationState.Idle)
-    val registerState: StateFlow<OperationState<Unit>> = _registerState.asStateFlow()
+    private val _registerState = MutableStateFlow<DataState<Unit>>(DataState.Idle)
+    val registerState: StateFlow<DataState<Unit>> = _registerState.asStateFlow()
 
     fun register(email: String, username: String, password: String) = viewModelScope.launch {
         registerUseCase.execute(email, username, password)
             .onStart {
-                _registerState.emit(OperationState.Loading)
+                _registerState.emit(DataState.Loading)
             }
             .collect { result ->
                 when (result) {
-                    is Result.Success -> _registerState.emit(OperationState.Success(Unit))
-                    is Result.Error -> _registerState.emit(OperationState.Error(result.exception.message))
+                    is Result.Success -> _registerState.emit(DataState.Success(Unit))
+                    is Result.Error -> _registerState.emit(DataState.Error(result.exception.message))
                 }
             }
     }

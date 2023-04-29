@@ -8,10 +8,13 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
+import com.training.movieapp.common.Result
 import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.repository.DataStoreRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
@@ -37,17 +40,20 @@ class DataStoreRepositoryImpl @Inject constructor(private val context: Context) 
         }
     }
 
-    override suspend fun readUser(): Flow<User> =
-        context.dataStore.data
-            .catch { exception ->
-                if (exception is IOException) {
-                    emit(emptyPreferences())
-                } else {
-                    throw exception
-                }
+    override suspend fun readUser() = flow {
+        try {
+            val user = context.dataStore.data.map { preference ->
+                val userJson = preference[PreferenceKeys.user] ?: ""
+                Gson().fromJson(userJson, User::class.java)
+            }.firstOrNull()
+
+            if (user == null) {
+                emit(Result.Error(Exception("User not found")))
+            } else {
+                emit(Result.Success(user))
             }
-            .map { preference ->
-                val user = preference[PreferenceKeys.user] ?: ""
-                Gson().fromJson(user, User::class.java)
-            }
+        } catch (e: Exception) {
+            emit(Result.Error(e))
+        }
+    }
 }

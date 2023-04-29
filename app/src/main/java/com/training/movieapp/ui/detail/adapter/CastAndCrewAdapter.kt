@@ -12,7 +12,7 @@ import com.training.movieapp.domain.model.Crew
 class CastAndCrewAdapter(private val casts: List<Cast>, private val crews: List<Crew>) :
     RecyclerView.Adapter<CastAndCrewAdapter.MyViewHolder>() {
     companion object {
-        private const val CAST_POSITION = 1
+        private const val CAST_POSITION = 0
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

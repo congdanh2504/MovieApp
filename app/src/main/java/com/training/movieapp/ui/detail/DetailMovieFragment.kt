@@ -1,54 +1,139 @@
 package com.training.movieapp.ui.detail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
 import com.google.android.material.tabs.TabLayoutMediator
 import com.training.movieapp.R
+import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentDetailMovieBinding
-import com.training.movieapp.domain.model.Cast
-import com.training.movieapp.domain.model.Crew
+import com.training.movieapp.domain.model.Credit
+import com.training.movieapp.domain.model.Movie
+import com.training.movieapp.domain.model.MovieDetail
+import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.detail.adapter.CastAndCrewAdapter
-import com.training.movieapp.ui.detail.adapter.MyPagerAdapter
-import com.training.movieapp.ui.main.adapter.movie.MovieAdapter
-import com.training.movieapp.ui.main.utils.SampleData
+import com.training.movieapp.ui.detail.adapter.MovieAdapter
+import com.training.movieapp.ui.detail.viewmodel.DetailMovieViewModel
+import com.training.movieapp.ui.main.utils.Images
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
 
+    private val detailMovieViewModel: DetailMovieViewModel by viewModels()
     private val binding: FragmentDetailMovieBinding by viewBinding(FragmentDetailMovieBinding::bind)
     private lateinit var movieAdapter: MovieAdapter
     private lateinit var castAndCrewAdapter: CastAndCrewAdapter
+    private lateinit var dialog: LoadingDialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        movieAdapter = MovieAdapter(SampleData.Movies)
-        binding.reyclerViewMovie.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.reyclerViewMovie.adapter = movieAdapter
-        initTabLayout()
+        initView()
+        initObservers()
+
+        detailMovieViewModel.getDetailMovie(640146)
     }
 
-    private fun initTabLayout() {
-        val casts = mutableListOf<Cast>()
-        val crews = mutableListOf<Crew>()
-        for (i in 1..10) {
-            casts.add(Cast(1, "/ln8nIx6UjxpMLVQlStCJpx6fyL7.jpg", "John", "Cong Danh"))
-            crews.add(Crew(1, "/ln8nIx6UjxpMLVQlStCJpx6fyL7.jpg", "Director", "Cong MInh"))
-        }
+    private fun initView() {
 
-        castAndCrewAdapter = CastAndCrewAdapter(casts, crews)
-        val tabTitles = listOf(getTab(casts.size, "Cast"), getTab(crews.size, "Crew"))
+        dialog = LoadingDialog(requireContext())
+    }
+
+    private fun initObservers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                detailMovieViewModel.movieDetailState.collect { state ->
+                    when (state) {
+                        is DataState.Idle -> {
+                            dialog.dismiss()
+                        }
+
+                        is DataState.Loading -> {
+                            dialog.show()
+                        }
+
+                        is DataState.Success -> {
+                            dialog.dismiss()
+                            setMovieDetail(state.data)
+                        }
+
+                        is DataState.Error -> {
+                            dialog.dismiss()
+                            Toast.makeText(
+                                requireContext(),
+                                state.message.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setMovieDetail(movieDetail: MovieDetail) {
+        setMovie(movieDetail.movie)
+        setCredit(movieDetail.credit)
+        setSimilar(movieDetail.similar.results)
+    }
+
+    private fun setMovie(movie: Movie) {
+        binding.apply {
+            movie.posterPath?.let { imageViewMovieImage.load(Images.POSTER_BASE_URL + it) }
+            textViewTitle.text = movie.title
+            textViewReleaseDate.text = movie.releaseDate
+            textViewStatus.text = movie.status
+            movie.runtime?.let { textViewRuntime.text = formatMinutesToTime(it) }
+            textViewLanguages.text = movie.originalLanguage
+            textViewGenres.text = movie.genres.joinToString(", ") { it.name }
+            textViewCompanies.text =
+                movie.productionCompanies.joinToString(", ") { it.name }
+            textViewBudget.text = "$${movie.budget}"
+            textViewRevenue.text = "$${movie.revenue}"
+            readMoreTextViewSynopsis.text = movie.overview.toString()
+        }
+    }
+
+    private fun setCredit(credit: Credit) {
+        castAndCrewAdapter = CastAndCrewAdapter(credit.casts, credit.crews)
+        val tabTitles =
+            listOf(getTab(credit.casts.size, "Cast"), getTab(credit.crews.size, "Crew"))
 
         binding.viewPager.adapter = castAndCrewAdapter
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.customView = tabTitles[position]
         }.attach()
+    }
+
+    private fun setSimilar(movies: List<Movie>) {
+        movieAdapter = MovieAdapter(movies)
+        binding.reyclerViewMovie.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.reyclerViewMovie.adapter = movieAdapter
+    }
+
+    private fun formatMinutesToTime(minutes: Int): String {
+        val hours = minutes / 60
+        val remainingMinutes = minutes % 60
+
+        return when {
+            hours > 1 -> String.format("%d hours %02d minutes", hours, remainingMinutes)
+            hours == 1 -> String.format("1 hour %02d minutes", remainingMinutes)
+            else -> String.format("%d minutes", remainingMinutes)
+        }
     }
 
     private fun getTab(number: Int, title: String): LinearLayout {

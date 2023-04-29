@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.training.movieapp.R
 import com.training.movieapp.databinding.CastAndCrewBinding
 import com.training.movieapp.domain.model.Cast
 import com.training.movieapp.ui.main.utils.Images
@@ -17,7 +18,11 @@ class CastAdapter(private val casts: List<Cast>) :
             binding.apply {
                 textViewName.text = cast.name
                 textViewRole.text = cast.character
-                imageViewProfileImage.load(Images.POSTER_BASE_URL + cast.profilePath)
+                if (cast.profilePath != null) {
+                    imageViewProfileImage.load(Images.POSTER_BASE_URL + cast.profilePath)
+                } else {
+                    imageViewProfileImage.load(R.drawable.icons8user)
+                }
             }
         }
     }
