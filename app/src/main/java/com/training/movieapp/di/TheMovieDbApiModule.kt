@@ -11,12 +11,13 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object TheMovieDbApiModule {
 
-
+    @Singleton
     @Provides
     fun provideTheMovieDbApi(): TheMovieDbApi = Retrofit.Builder()
         .baseUrl(Constant.TMDB_BASE_URL)
