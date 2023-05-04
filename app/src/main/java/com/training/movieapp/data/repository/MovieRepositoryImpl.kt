@@ -28,4 +28,15 @@ class MovieRepositoryImpl @Inject constructor(private val theMovieDbApi: TheMovi
             emit(Result.Error(e))
         }
     }
+
+    override suspend fun getMovieTrending() = flow {
+        try {
+            val movieTrending = theMovieDbApi.getMovieTrending()
+            emit(Result.Success(movieTrending))
+        }catch (e:Exception){
+            emit(Result.Error(e))
+        }
+    }
+
+
 }

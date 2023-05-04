@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.training.movieapp.R
+import com.training.movieapp.common.Constant
 import com.training.movieapp.databinding.MovieItemBinding
-import com.training.movieapp.ui.main.model.Movie
+import com.training.movieapp.domain.model.Movie
 
 class MovieAdapter(private val moviesModel: List<Movie>) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
@@ -22,7 +23,7 @@ class MovieAdapter(private val moviesModel: List<Movie>) :
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.binding.apply {
-            imgMoviePoster.load(moviesModel[position].imageUrl)
+            imgMoviePoster.load(Constant.POSTER_BASE_URL + moviesModel[position].posterPath)
         }
     }
 

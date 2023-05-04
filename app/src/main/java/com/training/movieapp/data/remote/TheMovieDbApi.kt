@@ -15,4 +15,7 @@ interface TheMovieDbApi {
 
     @GET("movie/{movie_id}/similar")
     suspend fun getSimilarMovies(@Path("movie_id") movieDd: Int): PageResponse<Movie>
+
+    @GET("movie/popular")
+    suspend fun getMovieTrending():PageResponse<Movie>
 }

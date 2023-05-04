@@ -14,14 +14,14 @@ object SampleData {
         Movie(Images.imageUrl1),
         Movie(Images.imageUrl1),
     )
-    val collections = listOf(
-        MainMovie("Trending Now", Movies,Trending.TRUE),
-        MainMovie("Popular on Letterboxd", Movies,Trending.FALSE),
-        MainMovie("In Theaters", Movies.reversed(),Trending.FALSE),
-        MainMovie("Coming Soon", Movies.shuffled(),Trending.FALSE),
-        MainMovie("Most Popular", Movies,Trending.FALSE),
-        MainMovie("Most Anticipated", Movies,Trending.FALSE),
-    )
+//    val collections = listOf(
+//        MainMovie("Trending Now", Movies,Trending.TRUE),
+//        MainMovie("Popular on Letterboxd", Movies,Trending.FALSE),
+//        MainMovie("In Theaters", Movies.reversed(),Trending.FALSE),
+//        MainMovie("Coming Soon", Movies.shuffled(),Trending.FALSE),
+//        MainMovie("Most Popular", Movies,Trending.FALSE),
+//        MainMovie("Most Anticipated", Movies,Trending.FALSE),
+//    )
     private val Series = listOf(
         Series(Images.imageUrl1),
         Series(Images.imageUrl1),
