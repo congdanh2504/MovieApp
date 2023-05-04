@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.training.movieapp.R
+import com.training.movieapp.common.Constant
 import com.training.movieapp.databinding.TrendingMovieItemBinding
-import com.training.movieapp.ui.main.model.Movie
+import com.training.movieapp.domain.model.Movie
 
 class TrendingMovieAdapter(private val moviesModel: List<Movie>) :
     RecyclerView.Adapter<TrendingMovieAdapter.MovieTrendingViewHolder>() {
@@ -26,7 +27,7 @@ class TrendingMovieAdapter(private val moviesModel: List<Movie>) :
 
     override fun onBindViewHolder(holder: MovieTrendingViewHolder, position: Int) {
         holder.binding.apply {
-            imgMoviePosterTrending.load(moviesModel[position].imageUrl)
+            imgMoviePosterTrending.load(Constant.POSTER_BASE_URL + moviesModel[position].posterPath)
         }
     }
 }

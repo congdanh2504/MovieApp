@@ -1,6 +1,5 @@
 package com.training.movieapp.di
 
-import com.training.movieapp.BuildConfig
 import com.training.movieapp.common.Constant
 import com.training.movieapp.data.remote.TheMovieDbApi
 import dagger.Module
@@ -10,7 +9,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -26,7 +24,7 @@ object TheMovieDbApiModule {
             var request = chain.request()
             val url = request.url.newBuilder().addQueryParameter(
                 "api_key",
-                BuildConfig.API_KEY
+                "7ccfc7beaffa9ce717fe88fef33a54c7"
             ).build()
             request = request.newBuilder().url(url).build()
             chain.proceed(request)
