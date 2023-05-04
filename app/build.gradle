@@ -8,8 +8,8 @@ plugins {
     id 'kotlin-parcelize'
 }
 
-def localProperties = new Properties()
-localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+def gradleProperties = new Properties()
+gradleProperties.load(new FileInputStream(rootProject.file("gradle.properties")))
 
 android {
     namespace 'com.training.movieapp'
@@ -21,7 +21,7 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-        buildConfigField("String", "API_KEY", "\"${localProperties['api_key']}\"")
+        buildConfigField("String", "API_KEY", "\"${gradleProperties['api_key']}\"")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

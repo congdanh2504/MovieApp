@@ -378,7 +378,7 @@
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/reyclerView_movie"
+            android:id="@+id/recyclerView_movie"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_170sdp"
             android:layout_marginHorizontal="@dimen/_20sdp"

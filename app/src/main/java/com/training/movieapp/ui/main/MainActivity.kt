@@ -64,15 +64,29 @@ class MainActivity : AppCompatActivity() {
                     R.id.notificationsFragment -> {
                         collapsingToolbar.title = "Notification"
                     }
+
+                    else -> {
+
+                    }
                 }
             }
         }
     }
 
     private fun initActions() {
-        binding.buttonMenu.setOnClickListener {
+        binding.toolBar.setNavigationOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
+
+        binding.toolBar.setOnMenuItemClickListener {  item ->
+            when (item.itemId) {
+                R.id.search -> {
+
+                }
+            }
+            true
+        }
+
         val headerContainer: View = binding.navigationView.getHeaderView(0)
         val settings = headerContainer.findViewById<ImageView>(R.id.imageView_settings)
 

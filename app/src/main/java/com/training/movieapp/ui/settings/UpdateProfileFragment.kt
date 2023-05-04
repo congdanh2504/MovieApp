@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import coil.load
+import com.bumptech.glide.Glide
 import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
@@ -119,7 +120,7 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
             editTextUsername.text =
                 Editable.Factory.getInstance().newEditable(user.username)
             editTextBio.text = Editable.Factory.getInstance().newEditable(user.bio)
-            user.imageURL?.let { imageViewChoose.load(user.imageURL) }
+            user.imageURL?.let { imageViewChoose.load(it) }
         }
     }
 
@@ -129,8 +130,10 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            imageUri = uri
-            binding.imageViewChoose.setImageURI(uri)
+            uri?.let {
+                imageUri = it
+                Glide.with(requireActivity()).load(it).into(binding.imageViewChoose)
+            }
         }
 
     private fun updateProfile() {

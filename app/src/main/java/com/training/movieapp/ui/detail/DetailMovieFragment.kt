@@ -120,9 +120,9 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
 
     private fun setSimilar(movies: List<Movie>) {
         movieAdapter = MovieAdapter(movies)
-        binding.reyclerViewMovie.layoutManager =
+        binding.recyclerViewMovie.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.reyclerViewMovie.adapter = movieAdapter
+        binding.recyclerViewMovie.adapter = movieAdapter
     }
 
     private fun formatMinutesToTime(minutes: Int): String {
