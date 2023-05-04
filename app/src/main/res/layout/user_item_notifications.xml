@@ -11,11 +11,15 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:padding="15dp"
-        android:weightSum="10">
+        android:weightSum="10"
+        android:background="@color/background_primary"
+        >
 
         <androidx.cardview.widget.CardView
             android:layout_width="50dp"
             android:layout_height="match_parent"
+            android:backgroundTint="@color/background_primary"
+            android:orientation="horizontal"
             >
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
