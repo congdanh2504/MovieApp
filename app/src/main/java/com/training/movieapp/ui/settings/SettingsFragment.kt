@@ -1,6 +1,5 @@
 package com.training.movieapp.ui.settings
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -17,8 +16,6 @@ import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentSettingsBinding
 import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.model.state.DataState
-import com.training.movieapp.ui.auth.AuthActivity
-import com.training.movieapp.ui.main.MainActivity
 import com.training.movieapp.ui.settings.viewmodel.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -49,8 +46,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private fun initActions() {
         binding.apply {
             imageViewBack.setOnClickListener {
-                startActivity(Intent(requireContext(), MainActivity::class.java))
-                requireActivity().finish()
+                findNavController().popBackStack()
             }
             cardViewProfile.setOnClickListener {
                 findNavController().navigate(R.id.action_settingsFragment_to_updateProfileFragment)
@@ -79,8 +75,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
                             is DataState.Success -> {
                                 dialog.dismiss()
-                                startActivity(Intent(requireContext(), AuthActivity::class.java))
-                                requireActivity().finish()
+                                findNavController().navigate(R.id.action_settingsFragment_to_loginFragment)
                             }
 
                             is DataState.Error -> {

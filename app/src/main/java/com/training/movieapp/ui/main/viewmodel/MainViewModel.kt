@@ -1,11 +1,14 @@
 package com.training.movieapp.ui.main.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.training.movieapp.common.Result
 import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.domain.usecase.datastore.ReadUserUseCase
+import com.training.movieapp.domain.usecase.user.CheckUserLoggedInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,16 +18,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val readUserUseCase: ReadUserUseCase) :
+class MainViewModel @Inject constructor(
+    private val readUserUseCase: ReadUserUseCase,
+    private val checkUserLoggedInUseCase: CheckUserLoggedInUseCase
+) :
     ViewModel() {
     private val _userState = MutableStateFlow<DataState<User>>(DataState.Idle)
     val userState: StateFlow<DataState<User>> = _userState.asStateFlow()
 
-    init {
-        readUser()
-    }
+    private val _isUserLoggedIn = MutableLiveData<Boolean>()
+    val isUserLoggedIn: LiveData<Boolean>
+        get() = _isUserLoggedIn
 
-    private fun readUser() = viewModelScope.launch {
+    fun readUser() = viewModelScope.launch {
         readUserUseCase.execute()
             .onStart { _userState.emit(DataState.Loading) }
             .collect() { result ->
@@ -38,5 +44,11 @@ class MainViewModel @Inject constructor(private val readUserUseCase: ReadUserUse
                     }
                 }
             }
+    }
+
+    fun checkUserLoggedIn() = viewModelScope.launch {
+        checkUserLoggedInUseCase.execute().collect { isUserLoggedIn ->
+            _isUserLoggedIn.value = isUserLoggedIn
+        }
     }
 }

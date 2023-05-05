@@ -36,7 +36,5 @@ class LoginViewModel @Inject constructor(
             }
     }
 
-    fun saveUser(user: User) = viewModelScope.launch {
-        saveUserUseCase.execute(user)
-    }
+    suspend fun saveUser(user: User) = saveUserUseCase.execute(user)
 }

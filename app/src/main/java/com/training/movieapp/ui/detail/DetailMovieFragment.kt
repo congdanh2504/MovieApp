@@ -11,6 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.google.android.material.tabs.TabLayoutMediator
@@ -23,8 +25,8 @@ import com.training.movieapp.domain.model.Movie
 import com.training.movieapp.domain.model.MovieDetail
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.detail.adapter.CastAndCrewAdapter
-import com.training.movieapp.ui.detail.adapter.MovieAdapter
 import com.training.movieapp.ui.detail.viewmodel.DetailMovieViewModel
+import com.training.movieapp.ui.main.adapter.movie.MovieAdapter
 import com.training.movieapp.ui.main.utils.Images
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -37,17 +39,18 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
     private lateinit var movieAdapter: MovieAdapter
     private lateinit var castAndCrewAdapter: CastAndCrewAdapter
     private lateinit var dialog: LoadingDialog
+    private val args: DetailMovieFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
         initObservers()
+        initActions()
 
-        detailMovieViewModel.getDetailMovie(640146)
+        detailMovieViewModel.getDetailMovie(args.movieId)
     }
 
     private fun initView() {
-
         dialog = LoadingDialog(requireContext())
     }
 
@@ -79,6 +82,14 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private fun initActions() {
+        binding.apply {
+            imageViewBack.setOnClickListener {
+                findNavController().popBackStack()
             }
         }
     }
@@ -119,19 +130,24 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
     }
 
     private fun setSimilar(movies: List<Movie>) {
-        movieAdapter = MovieAdapter(movies)
+        movieAdapter = MovieAdapter(movies, onMovieClick)
         binding.recyclerViewMovie.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewMovie.adapter = movieAdapter
     }
 
-    private fun formatMinutesToTime(minutes: Int): String {
+    private val onMovieClick: (movie: Movie) -> Unit = { movie ->
+        val action = DetailMovieFragmentDirections.actionDetailMovieFragmentSelf(movieId = movie.id)
+        findNavController().navigate(action)
+    }
+
+    private fun formatMinutesToTime(minutes: Long): String {
         val hours = minutes / 60
         val remainingMinutes = minutes % 60
 
         return when {
             hours > 1 -> String.format("%d hours %02d minutes", hours, remainingMinutes)
-            hours == 1 -> String.format("1 hour %02d minutes", remainingMinutes)
+            hours == 1L -> String.format("1 hour %02d minutes", remainingMinutes)
             else -> String.format("%d minutes", remainingMinutes)
         }
     }

@@ -10,7 +10,10 @@ import com.training.movieapp.common.Constant
 import com.training.movieapp.databinding.MovieItemBinding
 import com.training.movieapp.domain.model.Movie
 
-class MovieAdapter(private val moviesModel: List<Movie>) :
+class MovieAdapter(
+    private val moviesModel: List<Movie>,
+    private val onMovieClick: (Movie) -> Unit
+) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = MovieItemBinding.bind(itemView)
@@ -24,6 +27,9 @@ class MovieAdapter(private val moviesModel: List<Movie>) :
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.binding.apply {
             imgMoviePoster.load(Constant.POSTER_BASE_URL + moviesModel[position].posterPath)
+            imgMoviePoster.setOnClickListener {
+                onMovieClick(moviesModel[position])
+            }
         }
     }
 
