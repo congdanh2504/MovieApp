@@ -14,7 +14,6 @@ import com.training.movieapp.ui.detail.adapter.MyPagerAdapter
 import com.training.movieapp.ui.detail.model.MovieItems
 import com.training.movieapp.ui.detail.model.UserItems
 
-
 class DetailPersonFragment : Fragment(R.layout.fragment_detail_person) {
 
     private val binding: FragmentDetailPersonBinding by viewBinding(FragmentDetailPersonBinding::bind)
@@ -40,5 +39,4 @@ class DetailPersonFragment : Fragment(R.layout.fragment_detail_person) {
             tab.customView = tabTitles[position]
         }.attach()
     }
-
 }

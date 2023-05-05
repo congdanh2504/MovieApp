@@ -3,11 +3,10 @@ package com.training.movieapp.ui.detail.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.marginBottom
 import androidx.recyclerview.widget.RecyclerView
 import com.training.movieapp.databinding.UserItemBinding
 
-class UserListAdapter(private val users: List<String>, private val  context: Context) : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
+class UserListAdapter(private val users: List<String>, private val context: Context) : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: UserItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindUser(user: String, position: Int) {

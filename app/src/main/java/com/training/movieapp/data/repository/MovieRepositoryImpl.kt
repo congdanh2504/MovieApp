@@ -33,10 +33,8 @@ class MovieRepositoryImpl @Inject constructor(private val theMovieDbApi: TheMovi
         try {
             val movieTrending = theMovieDbApi.getMovieTrending()
             emit(Result.Success(movieTrending))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             emit(Result.Error(e))
         }
     }
-
-
 }

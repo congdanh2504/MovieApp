@@ -2,7 +2,6 @@ package com.training.movieapp.ui.main.adapter.explore
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.training.movieapp.databinding.MainCompaniesItemBinding
 import com.training.movieapp.databinding.MainNetworksItemBinding
@@ -13,7 +12,6 @@ import com.training.movieapp.ui.main.adapter.explore.ExploreAdapter.Const.NETWOR
 import com.training.movieapp.ui.main.adapter.explore.ExploreAdapter.Const.PERFORMER_VIEW
 import com.training.movieapp.ui.main.adapter.explore.ExploreAdapter.Const.USER_VIEW
 import com.training.movieapp.ui.main.utils.SampleData
-import kotlinx.coroutines.withContext
 
 class ExploreAdapter(private val listView: List<Int>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -56,36 +54,36 @@ class ExploreAdapter(private val listView: List<Int>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType){
-            PERFORMER_VIEW-> {
-                val view = MainPerformerItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return when (viewType) {
+            PERFORMER_VIEW -> {
+                val view = MainPerformerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return MainPerformerViewHolder(view)
             }
-            NETWORK_VIEW ->{
-                val view = MainNetworksItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+            NETWORK_VIEW -> {
+                val view = MainNetworksItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return MainNetworkViewHolder(view)
             }
-            COMPANIES_VIEW->{
-                val view = MainCompaniesItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+            COMPANIES_VIEW -> {
+                val view = MainCompaniesItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return MainCompaniesViewHolder(view)
             }
-            USER_VIEW ->{
-                val view = MainUserItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+            USER_VIEW -> {
+                val view = MainUserItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return MainUserViewHolder(view)
             }
-            else->{throw  IllegalArgumentException("invalid item type")}
+            else -> { throw IllegalArgumentException("invalid item type") }
         }
     }
 
     override fun getItemCount() = listView.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        return when(listView[position]){
-            PERFORMER_VIEW->(holder as MainPerformerViewHolder).bind()
-            NETWORK_VIEW->(holder as MainNetworkViewHolder).bind()
-            COMPANIES_VIEW->(holder as MainCompaniesViewHolder).bind()
+        return when (listView[position]) {
+            PERFORMER_VIEW -> (holder as MainPerformerViewHolder).bind()
+            NETWORK_VIEW -> (holder as MainNetworkViewHolder).bind()
+            COMPANIES_VIEW -> (holder as MainCompaniesViewHolder).bind()
             USER_VIEW -> (holder as MainUserViewHolder).bind()
-            else-> throw IllegalArgumentException("invalid item type")
+            else -> throw IllegalArgumentException("invalid item type")
         }
     }
 

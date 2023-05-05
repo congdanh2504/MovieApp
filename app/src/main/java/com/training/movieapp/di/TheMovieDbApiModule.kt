@@ -21,14 +21,16 @@ object TheMovieDbApiModule {
     fun provideTheMovieDbApi(): TheMovieDbApi = Retrofit.Builder()
         .baseUrl(Constant.TMDB_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
-        .client(OkHttpClient.Builder().addInterceptor { chain ->
-            var request = chain.request()
-            val url = request.url.newBuilder().addQueryParameter(
-                "api_key",
-                BuildConfig.API_KEY
-            ).build()
-            request = request.newBuilder().url(url).build()
-            chain.proceed(request)
-        }.build())
+        .client(
+            OkHttpClient.Builder().addInterceptor { chain ->
+                var request = chain.request()
+                val url = request.url.newBuilder().addQueryParameter(
+                    "api_key",
+                    BuildConfig.API_KEY
+                ).build()
+                request = request.newBuilder().url(url).build()
+                chain.proceed(request)
+            }.build()
+        )
         .build().create(TheMovieDbApi::class.java)
 }

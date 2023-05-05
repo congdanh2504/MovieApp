@@ -24,7 +24,7 @@ class UserAdapter(private val userModel: List<User>) :
         holder.binding.apply {
             userImage.load(userModel[position].imageUrl)
             tvUserName.text = userModel[position].name
-            tvUserNickName.text = "@"+userModel[position].name
+            tvUserNickName.text = "@" + userModel[position].name
         }
     }
     override fun getItemCount() = userModel.size

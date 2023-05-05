@@ -1,6 +1,12 @@
 package com.training.movieapp.ui.main.utils
 
-import com.training.movieapp.ui.main.model.*
+import com.training.movieapp.ui.main.model.Companies
+import com.training.movieapp.ui.main.model.MainSeries
+import com.training.movieapp.ui.main.model.Movie
+import com.training.movieapp.ui.main.model.Network
+import com.training.movieapp.ui.main.model.Performer
+import com.training.movieapp.ui.main.model.Series
+import com.training.movieapp.ui.main.model.User
 
 object SampleData {
     val Movies = listOf(
@@ -35,27 +41,27 @@ object SampleData {
         Series(Images.imageUrl1),
     )
     val collectionsSeries = listOf(
-        MainSeries("Trending Now", Series,Trending.TRUE),
-        MainSeries("On the Air", Series,Trending.FALSE),
-        MainSeries("Airing Today", Series,Trending.FALSE),
-        MainSeries("Most Popular", Series,Trending.FALSE),
-        MainSeries("Most Anticipated", Series,Trending.FALSE),
+        MainSeries("Trending Now", Series, Trending.TRUE),
+        MainSeries("On the Air", Series, Trending.FALSE),
+        MainSeries("Airing Today", Series, Trending.FALSE),
+        MainSeries("Most Popular", Series, Trending.FALSE),
+        MainSeries("Most Anticipated", Series, Trending.FALSE),
     )
     val User = listOf(
-        User(Images.imageUrl1,"Ngoc Khanh"),
-        User(Images.imageUrl1,"Khanh Le"),
-        User(Images.imageUrl1,"Thuy Hai"),
-        User(Images.imageUrl1,"Ngoc Hau"),
-        User(Images.imageUrl1,"aasd zzxc"),
-        User(Images.imageUrl1,"bzxc aasd")
+        User(Images.imageUrl1, "Ngoc Khanh"),
+        User(Images.imageUrl1, "Khanh Le"),
+        User(Images.imageUrl1, "Thuy Hai"),
+        User(Images.imageUrl1, "Ngoc Hau"),
+        User(Images.imageUrl1, "aasd zzxc"),
+        User(Images.imageUrl1, "bzxc aasd")
     )
     val Performer = listOf(
-        Performer(Images.imageUrl1,"Le Min Ho"),
-        Performer(Images.imageUrl1,"Le Min Ho"),
-        Performer(Images.imageUrl1,"Le Min Ho"),
-        Performer(Images.imageUrl1,"Le Min Ho"),
-        Performer(Images.imageUrl1,"Le Min Ho"),
-        Performer(Images.imageUrl1,"Le Min Ho"),
+        Performer(Images.imageUrl1, "Le Min Ho"),
+        Performer(Images.imageUrl1, "Le Min Ho"),
+        Performer(Images.imageUrl1, "Le Min Ho"),
+        Performer(Images.imageUrl1, "Le Min Ho"),
+        Performer(Images.imageUrl1, "Le Min Ho"),
+        Performer(Images.imageUrl1, "Le Min Ho"),
     )
     val Network = listOf(
         Network(Images.imageUrl1),
@@ -75,6 +81,6 @@ object SampleData {
         Companies(Images.imageUrl1),
     )
     val listView = listOf<Int>(
-        0,1,2,3
+        0, 1, 2, 3
     )
 }

@@ -56,5 +56,4 @@ class DetailUserFragment : Fragment(R.layout.fragment_detail_user) {
 //            findNavController().navigate(R.id.action_detailUserFragment_to_followFragment)
         }
     }
-
 }

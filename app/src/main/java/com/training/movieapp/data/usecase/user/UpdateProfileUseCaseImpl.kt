@@ -12,5 +12,4 @@ class UpdateProfileUseCaseImpl @Inject constructor(private val userRepository: U
         bio: String,
         imageUri: Uri?
     ) = userRepository.updateProfile(username, bio, imageUri)
-
 }

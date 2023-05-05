@@ -23,7 +23,7 @@ class SeriesAdapter(private val seriesModel: List<Series>) :
     override fun getItemCount() = seriesModel.size
 
     override fun onBindViewHolder(holder: SeriesViewHolder, position: Int) {
-        holder.binding.apply{
+        holder.binding.apply {
             imgSeriesPoster.load(seriesModel[position].imageUrl)
         }
     }

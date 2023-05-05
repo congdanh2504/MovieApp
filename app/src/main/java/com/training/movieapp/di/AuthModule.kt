@@ -1,7 +1,6 @@
 package com.training.movieapp.di
 
 import com.training.movieapp.data.repository.AuthRepositoryImpl
-import com.training.movieapp.data.usecase.*
 import com.training.movieapp.data.usecase.auth.ChangeEmailUseCaseImpl
 import com.training.movieapp.data.usecase.auth.ChangePasswordUseCaseImpl
 import com.training.movieapp.data.usecase.auth.LoginUseCaseImpl
@@ -11,7 +10,6 @@ import com.training.movieapp.data.usecase.auth.SignOutUseCaseImpl
 import com.training.movieapp.data.usecase.datastore.ReadUserUseCaseImpl
 import com.training.movieapp.data.usecase.datastore.SaveUserUseCaseImpl
 import com.training.movieapp.domain.repository.AuthRepository
-import com.training.movieapp.domain.usecase.*
 import com.training.movieapp.domain.usecase.auth.ChangeEmailUseCase
 import com.training.movieapp.domain.usecase.auth.ChangePasswordUseCase
 import com.training.movieapp.domain.usecase.auth.LoginUseCase

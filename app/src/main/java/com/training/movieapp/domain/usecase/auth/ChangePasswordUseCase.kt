@@ -1,7 +1,7 @@
 package com.training.movieapp.domain.usecase.auth
 
-import kotlinx.coroutines.flow.Flow
 import com.training.movieapp.common.Result
+import kotlinx.coroutines.flow.Flow
 
 interface ChangePasswordUseCase {
     suspend fun execute(

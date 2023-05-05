@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.training.movieapp.databinding.MovieItem2Binding
 
-class MovieListAdapter(private val movies: List<String>, private val  context: Context) : RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
+class MovieListAdapter(private val movies: List<String>, private val context: Context) : RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: MovieItem2Binding) : RecyclerView.ViewHolder(binding.root) {
         fun bindMovie(movie: String) {
             Glide.with(context)
                 .load(movie)
-                .into(binding.image);
+                .into(binding.image)
         }
     }
 

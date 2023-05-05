@@ -9,13 +9,13 @@ import com.training.movieapp.R
 import com.training.movieapp.databinding.NetworkAndCompaniesItemBinding
 import com.training.movieapp.ui.main.model.Companies
 
-class CompaniesAdapter(private val companiesModel:List<Companies>):RecyclerView.Adapter<CompaniesAdapter.CompaniesViewHolder>() {
-    inner class CompaniesViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
+class CompaniesAdapter(private val companiesModel: List<Companies>) : RecyclerView.Adapter<CompaniesAdapter.CompaniesViewHolder>() {
+    inner class CompaniesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = NetworkAndCompaniesItemBinding.bind(itemView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CompaniesViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.network_and_companies_item,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.network_and_companies_item, parent, false)
         return CompaniesViewHolder(view)
     }
 

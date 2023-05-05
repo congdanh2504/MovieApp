@@ -11,6 +11,6 @@ import javax.inject.Inject
 class GetTrendingMovieUseCaseImpl @Inject constructor(private val movieRepository: MovieRepository) :
     GetTrendingMovieUseCase {
     override suspend fun execute(): Flow<Result<PageResponse<Movie>>> {
-        return  movieRepository.getMovieTrending()
+        return movieRepository.getMovieTrending()
     }
 }

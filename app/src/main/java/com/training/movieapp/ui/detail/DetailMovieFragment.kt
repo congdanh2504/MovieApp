@@ -159,5 +159,4 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
         tab.findViewById<TextView>(R.id.title).text = title
         return tab
     }
-
 }

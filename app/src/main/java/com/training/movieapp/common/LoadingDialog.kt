@@ -6,7 +6,7 @@ import android.graphics.drawable.AnimationDrawable
 import android.widget.ImageView
 import com.training.movieapp.R
 
-class LoadingDialog(context: Context): Dialog(context, R.style.ProgressHUD) {
+class LoadingDialog(context: Context) : Dialog(context, R.style.ProgressHUD) {
 
     override fun onStart() {
         super.onStart()

@@ -3,7 +3,6 @@ package com.training.movieapp.ui.detail.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.training.movieapp.common.Result
-import com.training.movieapp.domain.model.Credit
 import com.training.movieapp.domain.model.MovieDetail
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.domain.usecase.movie.GetDetailMovieUseCase

@@ -88,5 +88,4 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             }
         }
     }
-
 }

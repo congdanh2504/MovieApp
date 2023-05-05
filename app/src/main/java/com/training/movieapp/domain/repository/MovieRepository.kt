@@ -11,5 +11,5 @@ interface MovieRepository {
     suspend fun getMovieDetail(movieId: Int): Flow<Result<MovieDetail>>
     suspend fun getMovieCredit(movieId: Int): Flow<Result<Credit>>
 
-    suspend fun getMovieTrending():Flow<Result<PageResponse<Movie>>>
+    suspend fun getMovieTrending(): Flow<Result<PageResponse<Movie>>>
 }

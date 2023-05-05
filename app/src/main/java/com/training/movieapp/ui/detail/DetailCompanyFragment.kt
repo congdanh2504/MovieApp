@@ -39,5 +39,4 @@ class DetailCompanyFragment : Fragment(R.layout.fragment_detail_company) {
             tab.customView = tabTitles[position]
         }.attach()
     }
-
 }

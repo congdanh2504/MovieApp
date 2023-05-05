@@ -126,5 +126,4 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
         val newPassword = binding.editTextNewPassword.text.toString()
         changePasswordViewModel.changePassword(email, currentPassword, newPassword)
     }
-
 }
