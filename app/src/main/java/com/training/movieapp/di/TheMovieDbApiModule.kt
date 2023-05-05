@@ -1,5 +1,6 @@
 package com.training.movieapp.di
 
+import com.training.movieapp.BuildConfig
 import com.training.movieapp.common.Constant
 import com.training.movieapp.data.remote.TheMovieDbApi
 import dagger.Module
@@ -24,7 +25,7 @@ object TheMovieDbApiModule {
             var request = chain.request()
             val url = request.url.newBuilder().addQueryParameter(
                 "api_key",
-                "7ccfc7beaffa9ce717fe88fef33a54c7"
+                BuildConfig.API_KEY
             ).build()
             request = request.newBuilder().url(url).build()
             chain.proceed(request)

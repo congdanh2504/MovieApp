@@ -6,63 +6,239 @@
     app:startDestination="@id/moviesFragment">
 
     <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.training.movieapp.ui.settings.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" />
+    <fragment
+        android:id="@+id/changeEmailFragment"
+        android:name="com.training.movieapp.ui.settings.ChangeEmailFragment"
+        android:label="fragment_change_email"
+        tools:layout="@layout/fragment_change_email" />
+    <action
+        android:id="@+id/action_settingsFragment_to_changePasswordFragment"
+        app:destination="@id/changePasswordFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.training.movieapp.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_updateProfileFragment"
+            app:destination="@id/updateProfileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_changeEmailFragment"
+            app:destination="@id/changeEmailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_settingsFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <action
+        android:id="@+id/action_settingsFragment_to_changeEmailFragment"
+        app:destination="@id/changeEmailFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+    <action
+        android:id="@+id/action_settingsFragment_to_updateProfileFragment"
+        app:destination="@id/updateProfileFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="com.training.movieapp.ui.settings.UpdateProfileFragment"
+        android:label="fragment_update_profile"
+        tools:layout="@layout/fragment_update_profile" />
+    <action
+        android:id="@+id/action_resetFragment_to_loginFragment"
+        app:destination="@id/loginFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/slide_out_right"
+        app:popUpTo="@+id/loginFragment"
+        app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.training.movieapp.ui.auth.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_loginFragment_to_moviesFragment"
+            app:destination="@id/moviesFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <action
+        android:id="@+id/action_loginFragment_to_registerFragment"
+        app:destination="@id/registerFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.training.movieapp.ui.auth.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
+
+    <fragment
         android:id="@+id/seriesFragment"
         android:name="com.training.movieapp.ui.main.SeriesFragment"
         android:label="fragment_series"
-        tools:layout="@layout/fragment_series" >
+        tools:layout="@layout/fragment_series">
         <action
-            android:id="@+id/action_seriesFragment_to_moviesFragment2"
-            app:destination="@id/moviesFragment" />
-        <action
-            android:id="@+id/action_seriesFragment_to_exploreFragment2"
+            android:id="@+id/action_seriesFragment_to_exploreFragment"
             app:destination="@id/exploreFragment" />
         <action
-            android:id="@+id/action_seriesFragment_to_notificationsFragment2"
-            app:destination="@id/notificationsFragment" />
+            android:id="@+id/action_seriesFragment_self"
+            app:destination="@id/seriesFragment" />
+        <action
+            android:id="@+id/action_seriesFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_seriesFragment_to_detailMovieFragment"
+            app:destination="@id/detailMovieFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/moviesFragment"
         android:name="com.training.movieapp.ui.main.MoviesFragment"
         android:label="fragment_movies"
-        tools:layout="@layout/fragment_movies" >
+        tools:layout="@layout/fragment_movies">
+        <action
+            android:id="@+id/action_moviesFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_moviesFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_moviesFragment_to_seriesFragment"
             app:destination="@id/seriesFragment" />
         <action
-            android:id="@+id/action_moviesFragment_to_exploreFragment"
-            app:destination="@id/exploreFragment" />
-        <action
-            android:id="@+id/action_moviesFragment_to_notificationsFragment"
-            app:destination="@id/notificationsFragment" />
+            android:id="@+id/action_moviesFragment_to_detailMovieFragment"
+            app:destination="@id/detailMovieFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/exploreFragment"
         android:name="com.training.movieapp.ui.main.ExploreFragment"
         android:label="fragment_explore"
-        tools:layout="@layout/fragment_explore" >
-        <action
-            android:id="@+id/action_exploreFragment_to_moviesFragment2"
-            app:destination="@id/moviesFragment" />
-        <action
-            android:id="@+id/action_exploreFragment_to_seriesFragment2"
-            app:destination="@id/seriesFragment" />
+        tools:layout="@layout/fragment_explore">
         <action
             android:id="@+id/action_exploreFragment_to_notificationsFragment"
             app:destination="@id/notificationsFragment" />
+        <action
+            android:id="@+id/action_exploreFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/notificationsFragment"
         android:name="com.training.movieapp.ui.main.NotificationsFragment"
         android:label="fragment_notifications"
-        tools:layout="@layout/fragment_notifications" >
+        tools:layout="@layout/fragment_notifications">
         <action
-            android:id="@+id/action_notificationsFragment_to_seriesFragment"
-            app:destination="@id/seriesFragment" />
+            android:id="@+id/action_notificationsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.training.movieapp.ui.auth.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password">
         <action
-            android:id="@+id/action_notificationsFragment_to_exploreFragment2"
-            app:destination="@id/exploreFragment" />
+            android:id="@+id/action_forgotPasswordFragment_to_resetFragment"
+            app:destination="@id/resetFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/resetFragment"
+        android:name="com.training.movieapp.ui.auth.ResetFragment"
+        android:label="fragment_reset"
+        tools:layout="@layout/fragment_reset">
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailMovieFragment"
+        android:name="com.training.movieapp.ui.detail.DetailMovieFragment"
+        android:label="fragment_detail_movie"
+        tools:layout="@layout/fragment_detail_movie">
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
         <action
-            android:id="@+id/action_notificationsFragment_to_moviesFragment"
-            app:destination="@id/moviesFragment" />
+            android:id="@+id/action_detailMovieFragment_self"
+            app:destination="@id/detailMovieFragment"
+            app:popUpTo="@id/detailMovieFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

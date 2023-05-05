@@ -1,6 +1,5 @@
 package com.training.movieapp.ui.auth
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -16,7 +15,6 @@ import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentLoginBinding
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.auth.viewmodel.LoginViewModel
-import com.training.movieapp.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -72,8 +70,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                             dialog.dismiss()
                             binding.errorTV.isVisible = false
                             loginViewModel.saveUser(state.data)
-                            startActivity(Intent(requireActivity(), MainActivity::class.java))
-                            requireActivity().finish()
+                            findNavController().navigate(R.id.action_loginFragment_to_moviesFragment)
                         }
 
                         is DataState.Error -> {

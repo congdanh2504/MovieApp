@@ -10,7 +10,10 @@ import com.training.movieapp.common.Constant
 import com.training.movieapp.databinding.TrendingMovieItemBinding
 import com.training.movieapp.domain.model.Movie
 
-class TrendingMovieAdapter(private val moviesModel: List<Movie>) :
+class TrendingMovieAdapter(
+    private val moviesModel: List<Movie>,
+    private val onMovieClick: (Movie) -> Unit
+) :
     RecyclerView.Adapter<TrendingMovieAdapter.MovieTrendingViewHolder>() {
 
     inner class MovieTrendingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -28,6 +31,9 @@ class TrendingMovieAdapter(private val moviesModel: List<Movie>) :
     override fun onBindViewHolder(holder: MovieTrendingViewHolder, position: Int) {
         holder.binding.apply {
             imgMoviePosterTrending.load(Constant.POSTER_BASE_URL + moviesModel[position].posterPath)
+            imgMoviePosterTrending.setOnClickListener {
+                onMovieClick(moviesModel[position])
+            }
         }
     }
 }

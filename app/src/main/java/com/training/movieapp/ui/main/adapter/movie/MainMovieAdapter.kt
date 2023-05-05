@@ -5,12 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.training.movieapp.databinding.MovieParentItemBinding
 import com.training.movieapp.databinding.TrendingMovieParentItemBinding
+import com.training.movieapp.domain.model.Movie
 import com.training.movieapp.ui.main.adapter.movie.MainMovieAdapter.Const.TRENDING
 import com.training.movieapp.ui.main.adapter.movie.MainMovieAdapter.Const.noTRENDING
 import com.training.movieapp.ui.main.model.MainMovie
 import com.training.movieapp.ui.main.utils.Trending
 
-class MainMovieAdapter(private val collection: List<MainMovie>) :
+class MainMovieAdapter(
+    private val collection: List<MainMovie>,
+    private val onMovieClick: (Movie) -> Unit
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     object Const {
         const val TRENDING = 0
@@ -21,7 +25,7 @@ class MainMovieAdapter(private val collection: List<MainMovie>) :
         RecyclerView.ViewHolder(movieParent.root) {
         fun bind(collection: MainMovie) {
             movieParent.tvGenreMovie.text = collection.title
-            val movieAdapter = MovieAdapter(collection.movieModels)
+            val movieAdapter = MovieAdapter(collection.movieModels, onMovieClick)
             movieParent.rvMovie.adapter = movieAdapter
         }
     }
@@ -30,7 +34,7 @@ class MainMovieAdapter(private val collection: List<MainMovie>) :
         RecyclerView.ViewHolder(trendingParent.root) {
         fun bind(collection: MainMovie) {
             trendingParent.tvGenreMovie.text = collection.title
-            val trendingAdapter = TrendingMovieAdapter(collection.movieModels)
+            val trendingAdapter = TrendingMovieAdapter(collection.movieModels, onMovieClick)
             trendingParent.rvMovieTrending.adapter = trendingAdapter
         }
     }
