@@ -18,11 +18,10 @@ class CastAdapter(private val casts: List<Cast>) :
             binding.apply {
                 textViewName.text = cast.name
                 textViewRole.text = cast.character
-                if (cast.profilePath != null) {
-                    imageViewProfileImage.load(Images.POSTER_BASE_URL + cast.profilePath)
-                } else {
-                    imageViewProfileImage.load(R.drawable.icons8user)
-                }
+                imageViewProfileImage.load(
+                    if (cast.profilePath == null) R.drawable.icons8user
+                    else Images.POSTER_BASE_URL + cast.profilePath
+                )
             }
         }
     }

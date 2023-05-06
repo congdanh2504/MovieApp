@@ -15,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import coil.load
@@ -77,6 +78,8 @@ class MainActivity : AppCompatActivity() {
         binding.toolBar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.search -> {
+                    navController.navigateUp()
+                    navController.navigate(R.id.searchFragment)
                 }
             }
             true
@@ -87,14 +90,15 @@ class MainActivity : AppCompatActivity() {
 
         settings.setOnClickListener {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
-            val actionResId = when (navController.currentDestination?.id) {
-                R.id.moviesFragment -> R.id.action_moviesFragment_to_settingsFragment
-                R.id.seriesFragment -> R.id.action_seriesFragment_to_settingsFragment
-                R.id.exploreFragment -> R.id.action_exploreFragment_to_settingsFragment
-                R.id.notificationsFragment -> R.id.action_notificationsFragment_to_settingsFragment
-                else -> null
-            }
-            actionResId?.let { navController.navigate(it) }
+            navController.navigateUp()
+            val navOptions = NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_right)
+                .setExitAnim(R.anim.slide_out_left)
+                .setPopEnterAnim(R.anim.slide_in_left)
+                .setPopExitAnim(R.anim.slide_out_right)
+                .build()
+
+            navController.navigate(R.id.settingsFragment, null, navOptions)
         }
     }
 

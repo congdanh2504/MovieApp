@@ -14,4 +14,7 @@
         \nAfter you confirm click <b>Continue</b></string>
     <string name="contact">Contact us for feature requests, bug reports or anything else.</string>
 
+    <string name="search_title">Start Searching</string>
+    <string name="search_des">Search all of Konsensus for Movies, People</string>
+
 </resources>

@@ -130,7 +130,8 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
     }
 
     private fun setSimilar(movies: List<Movie>) {
-        movieAdapter = MovieAdapter(movies, onMovieClick)
+        movieAdapter = MovieAdapter(onMovieClick)
+        movieAdapter.setMovies(movies)
         binding.recyclerViewMovie.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewMovie.adapter = movieAdapter

@@ -11,6 +11,7 @@ import com.training.movieapp.ui.main.utils.SampleData
 
 class ExploreFragment : Fragment(R.layout.fragment_explore) {
     private val binding: FragmentExploreBinding by viewBinding(FragmentExploreBinding::bind)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
