@@ -1,7 +1,6 @@
 package com.training.movieapp.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -20,8 +19,8 @@ import com.training.movieapp.domain.model.Movie
 import com.training.movieapp.domain.model.PageResponse
 import com.training.movieapp.domain.model.People
 import com.training.movieapp.domain.model.state.DataState
-import com.training.movieapp.ui.main.adapter.movie.MovieAdapter
-import com.training.movieapp.ui.main.adapter.movie.PeopleAdapter
+import com.training.movieapp.ui.main.adapter.movie.PaginationMovieAdapter
+import com.training.movieapp.ui.main.adapter.movie.PaginationPeopleAdapter
 import com.training.movieapp.ui.main.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -33,8 +32,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private val binding: FragmentSearchBinding by viewBinding(FragmentSearchBinding::bind)
     private val searchViewModel: SearchViewModel by viewModels()
-    private lateinit var movieAdapter: MovieAdapter
-    private lateinit var peopleAdapter: PeopleAdapter
+    private lateinit var movieAdapter: PaginationMovieAdapter
+    private lateinit var peopleAdapter: PaginationPeopleAdapter
     private var queryText: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -77,8 +76,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             recyclerViewPeoples.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            movieAdapter = MovieAdapter(onMovieClick)
-            peopleAdapter = PeopleAdapter(onPeopleClick)
+            movieAdapter = PaginationMovieAdapter(onMovieClick, onLoadMoreMovies)
+            peopleAdapter = PaginationPeopleAdapter(onPeopleClick, onLoadMorePeoples)
             recyclerViewMovies.adapter = movieAdapter
             recyclerViewPeoples.adapter = peopleAdapter
         }
@@ -91,8 +90,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     searchViewModel.searchPeoplesState.collect { state ->
                         when (state) {
                             is DataState.Success -> {
-                                setPeoples(state.data)
-                                checkNull()
+                                if (state.data.page == 1) {
+                                    peopleAdapter.totalResult = state.data.totalResults
+                                    setPeoples(state.data)
+                                    checkNull()
+                                } else {
+                                    peopleAdapter.addPeoples(state.data.results)
+                                }
                             }
 
                             is DataState.Error -> Toast.makeText(
@@ -109,8 +113,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     searchViewModel.searchMoviesState.collect { state ->
                         when (state) {
                             is DataState.Success -> {
-                                setMovies(state.data)
-                                checkNull()
+                                if (state.data.page == 1) {
+                                    movieAdapter.totalResult = state.data.totalResults
+                                    setMovies(state.data)
+                                    checkNull()
+                                } else {
+                                    movieAdapter.addMovies(state.data.results)
+                                }
                             }
 
                             is DataState.Error -> Toast.makeText(
@@ -135,6 +144,14 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private val onPeopleClick: (people: People) -> Unit = { people ->
 
+    }
+
+    private val onLoadMoreMovies: (page: Int) -> Unit = { page ->
+        searchViewModel.searchMovies(queryText, page = page)
+    }
+
+    private val onLoadMorePeoples: (page: Int) -> Unit = { page ->
+        searchViewModel.searchPeoples(queryText, page = page)
     }
 
     private fun setPeoples(peoplesResponse: PageResponse<People>) {

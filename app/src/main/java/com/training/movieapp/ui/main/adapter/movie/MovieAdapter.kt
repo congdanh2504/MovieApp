@@ -11,12 +11,12 @@ import com.training.movieapp.common.Constant
 import com.training.movieapp.databinding.MovieItemBinding
 import com.training.movieapp.domain.model.Movie
 
-class MovieAdapter(
+open class MovieAdapter(
     private val onMovieClick: (Movie) -> Unit
 ) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-    private val movies: ArrayList<Movie> = arrayListOf()
+    protected val movies: ArrayList<Movie> = arrayListOf()
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = MovieItemBinding.bind(itemView)
@@ -54,7 +54,7 @@ class MovieAdapter(
 
     override fun getItemCount() = movies.size
 
-    fun setMovies(newList: List<Movie>) {
+    open fun setMovies(newList: List<Movie>) {
         val diffCallback = MovieCallback(movies, newList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         movies.clear()

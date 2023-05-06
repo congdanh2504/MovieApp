@@ -11,12 +11,12 @@ import com.training.movieapp.databinding.PeopleItemBinding
 import com.training.movieapp.domain.model.People
 import com.training.movieapp.ui.main.utils.Images
 
-class PeopleAdapter(
+open class PeopleAdapter(
     private val onPeopleClick: (People) -> Unit
 ) :
     RecyclerView.Adapter<PeopleAdapter.PeopleViewHolder>() {
 
-    private val peoples: ArrayList<People> = arrayListOf()
+    protected val peoples: ArrayList<People> = arrayListOf()
 
     inner class PeopleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = PeopleItemBinding.bind(itemView)
@@ -58,7 +58,7 @@ class PeopleAdapter(
 
     override fun getItemCount() = peoples.size
 
-    fun setPeoples(newList: List<People>) {
+    open fun setPeoples(newList: List<People>) {
         val diffCallback = PeopleCallback(peoples, newList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         peoples.clear()
