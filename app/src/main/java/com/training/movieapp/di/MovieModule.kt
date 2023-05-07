@@ -2,11 +2,11 @@ package com.training.movieapp.di
 
 import com.training.movieapp.data.repository.MovieRepositoryImpl
 import com.training.movieapp.data.usecase.movie.GetDetailMovieUseCaseImpl
-import com.training.movieapp.data.usecase.movie.GetTrendingMovieUseCaseImpl
+import com.training.movieapp.data.usecase.movie.GetMoviesUseCaseImpl
 import com.training.movieapp.data.usecase.movie.SearchMoviesUseCaseImpl
 import com.training.movieapp.domain.repository.MovieRepository
 import com.training.movieapp.domain.usecase.movie.GetDetailMovieUseCase
-import com.training.movieapp.domain.usecase.movie.GetTrendingMovieUseCase
+import com.training.movieapp.domain.usecase.movie.GetMoviesUseCase
 import com.training.movieapp.domain.usecase.movie.SearchMoviesUseCase
 import dagger.Binds
 import dagger.Module
@@ -24,7 +24,7 @@ abstract class MovieModule {
     abstract fun bindGetDetailMovieUseCase(impl: GetDetailMovieUseCaseImpl): GetDetailMovieUseCase
 
     @Binds
-    abstract fun bindGetTrendingMovieUseCase(impl: GetTrendingMovieUseCaseImpl): GetTrendingMovieUseCase
+    abstract fun bindGetMovieUseCase(impl: GetMoviesUseCaseImpl): GetMoviesUseCase
 
     @Binds
     abstract fun bindSearchMoviesUseCase(impl: SearchMoviesUseCaseImpl): SearchMoviesUseCase

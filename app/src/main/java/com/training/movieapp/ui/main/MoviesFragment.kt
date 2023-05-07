@@ -15,19 +15,19 @@ import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentMoviesBinding
 import com.training.movieapp.domain.model.Movie
-import com.training.movieapp.domain.model.PageResponse
+import com.training.movieapp.domain.model.Movies
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.main.adapter.movie.MainMovieAdapter
 import com.training.movieapp.ui.main.model.MainMovie
 import com.training.movieapp.ui.main.utils.Trending
 import com.training.movieapp.ui.main.viewmodel.MainViewModel
-import com.training.movieapp.ui.main.viewmodel.TrendingMovieViewModel
+import com.training.movieapp.ui.main.viewmodel.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MoviesFragment : Fragment(R.layout.fragment_movies) {
-    private val trendingMovieViewModel: TrendingMovieViewModel by viewModels()
+    private val moviesViewModel: MoviesViewModel by viewModels()
     private val binding: FragmentMoviesBinding by viewBinding(FragmentMoviesBinding::bind)
     private lateinit var dialog: LoadingDialog
     private val mainViewModel: MainViewModel by activityViewModels()
@@ -36,14 +36,14 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
         super.onViewCreated(view, savedInstanceState)
 //        dialog = LoadingDialog(requireContext())
         mainViewModel.readUser()
-        trendingMovieViewModel.getTrendingMovie()
+        moviesViewModel.getMovies()
         initObservers()
     }
 
     private fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                trendingMovieViewModel.movieTrendingState.collect { state ->
+                moviesViewModel.moviesState.collect { state ->
                     when (state) {
                         is DataState.Idle -> {
 //                            dialog.dismiss()
@@ -55,7 +55,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
 
                         is DataState.Success -> {
 //                            dialog.dismiss()
-                            setMovieTrending(state.data)
+                            setMovies(state.data)
                         }
 
                         is DataState.Error -> {
@@ -72,24 +72,16 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
         }
     }
 
-    private fun setMovieTrending(pageResponse: PageResponse<Movie>) {
-        setListMovie(pageResponse.results)
-    }
-
-    private fun setListMovie(movies: List<Movie>) {
-        val collections = listOf(
-            MainMovie("Trending Now", movies, Trending.TRUE),
-            MainMovie("Popular on Letterboxd", movies, Trending.FALSE),
-            MainMovie("In Theaters", movies, Trending.FALSE),
-            MainMovie("Coming Soon", movies, Trending.FALSE),
-            MainMovie("Most Popular", movies, Trending.FALSE),
-            MainMovie("Most Anticipated", movies, Trending.FALSE),
-        )
+    private fun setMovies(data: Movies) {
+        val colections = ArrayList<MainMovie>()
+        colections.add(MainMovie("Trending Mow", data.trendingMovies.results, Trending.TRUE))
+        colections.add(MainMovie("Now Playing", data.nowPlayingMovies.results, Trending.FALSE))
+        colections.add(MainMovie("Up Coming", data.upComingMovies.results, Trending.FALSE))
+        colections.add(MainMovie("Top Rated", data.topRatedMovies.results, Trending.FALSE))
         binding.apply {
-            rvMainMovie.adapter = MainMovieAdapter(collections, onMovieClick)
+            rvMainMovie.adapter = MainMovieAdapter(colections,onMovieClick)
         }
     }
-
     private val onMovieClick: (movie: Movie) -> Unit = { movie ->
         val action = MoviesFragmentDirections.actionMoviesFragmentToDetailMovieFragment(
             movieId = movie.id

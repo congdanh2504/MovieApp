@@ -20,7 +20,12 @@ interface TheMovieDbApi {
 
     @GET("movie/popular")
     suspend fun getMovieTrending(): PageResponse<Movie>
-
+    @GET("movie/now_playing")
+    suspend fun getMovieNowPlaying():PageResponse<Movie>
+    @GET("movie/now_playing")
+    suspend fun getMovieTopRated():PageResponse<Movie>
+    @GET("movie/upcoming")
+    suspend fun getMovieUpcoming():PageResponse<Movie>
     @GET("search/movie")
     suspend fun searchMovies(
         @Query("query") query: String,
