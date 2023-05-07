@@ -3,6 +3,7 @@ package com.training.movieapp.data.repository
 import com.training.movieapp.common.Result
 import com.training.movieapp.data.remote.TheMovieDbApi
 import com.training.movieapp.domain.model.MovieDetail
+import com.training.movieapp.domain.model.Movies
 import com.training.movieapp.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -19,7 +20,6 @@ class MovieRepositoryImpl @Inject constructor(private val theMovieDbApi: TheMovi
             emit(Result.Error(e))
         }
     }
-
     override suspend fun getMovieCredit(movieId: Int) = flow {
         try {
             val movieCredit = theMovieDbApi.getMovieCredit(movieId)
@@ -29,14 +29,15 @@ class MovieRepositoryImpl @Inject constructor(private val theMovieDbApi: TheMovi
         }
     }
 
-    override suspend fun getMovieTrending() = flow {
+    override suspend fun getMovies()= flow {
         try {
             val movieTrending = theMovieDbApi.getMovieTrending()
-            emit(Result.Success(movieTrending))
-        }catch (e:Exception){
+            val movieNowPlaying = theMovieDbApi.getMovieNowPlaying()
+            val movieTopRated = theMovieDbApi.getMovieTopRated()
+            val movieUpcoming = theMovieDbApi.getMovieUpcoming()
+            emit(Result.Success(Movies(movieTrending,movieNowPlaying,movieTopRated,movieUpcoming)))
+        }catch (e: Exception) {
             emit(Result.Error(e))
         }
     }
-
-
 }
