@@ -18,11 +18,10 @@ class CrewAdapter(private val crews: List<Crew>) :
             binding.apply {
                 textViewName.text = crew.name
                 textViewRole.text = crew.job
-                if (crew.profilePath != null) {
-                    imageViewProfileImage.load(Images.POSTER_BASE_URL + crew.profilePath)
-                } else {
-                    imageViewProfileImage.load(R.drawable.icons8user)
-                }
+                imageViewProfileImage.load(
+                    if (crew.profilePath == null) R.drawable.icons8user
+                    else Images.POSTER_BASE_URL + crew.profilePath
+                )
             }
         }
     }

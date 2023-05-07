@@ -25,7 +25,8 @@ class MainMovieAdapter(
         RecyclerView.ViewHolder(movieParent.root) {
         fun bind(collection: MainMovie) {
             movieParent.tvGenreMovie.text = collection.title
-            val movieAdapter = MovieAdapter(collection.movieModels, onMovieClick)
+            val movieAdapter = MovieAdapter(onMovieClick)
+            movieAdapter.setMovies(collection.movieModels)
             movieParent.rvMovie.adapter = movieAdapter
         }
     }
