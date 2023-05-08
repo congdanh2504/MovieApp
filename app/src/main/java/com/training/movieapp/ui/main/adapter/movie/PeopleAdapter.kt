@@ -50,7 +50,7 @@ open class PeopleAdapter(
                 else Images.POSTER_BASE_URL + peoples[position].profilePath
             )
             textViewName.text = peoples[position].name
-            imageViewProfileImage.setOnClickListener {
+            linearLayoutPeople.setOnClickListener {
                 onPeopleClick(peoples[position])
             }
         }

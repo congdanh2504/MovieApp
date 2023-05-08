@@ -24,23 +24,23 @@ class FollowFragment : Fragment(R.layout.fragment_follow) {
         binding.back.setOnClickListener {
             findNavController().popBackStack()
         }
-        adapter = MyPagerAdapter(listOf(UserItems(listOf()), UserItems(listOf())))
-
-        val tabOne = LayoutInflater.from(requireContext())
-            .inflate(R.layout.custom_tab_title, null) as LinearLayout
-        tabOne.findViewById<TextView>(R.id.number).text = "11"
-        tabOne.findViewById<TextView>(R.id.title).text = "Following"
-        val tabTwo = LayoutInflater.from(requireContext())
-            .inflate(R.layout.custom_tab_title, null) as LinearLayout
-        tabTwo.findViewById<TextView>(R.id.number).text = "3"
-        tabTwo.findViewById<TextView>(R.id.title).text = "Followers"
-
-        binding.viewPager.adapter = adapter
-
-        val tabTitles = listOf(tabOne, tabTwo)
-
-        TabLayoutMediator(binding.tab, binding.viewPager) { tab, position ->
-            tab.customView = tabTitles[position]
-        }.attach()
+//        adapter = MyPagerAdapter(listOf(UserItems(listOf()), UserItems(listOf())))
+//
+//        val tabOne = LayoutInflater.from(requireContext())
+//            .inflate(R.layout.custom_tab_title, null) as LinearLayout
+//        tabOne.findViewById<TextView>(R.id.number).text = "11"
+//        tabOne.findViewById<TextView>(R.id.title).text = "Following"
+//        val tabTwo = LayoutInflater.from(requireContext())
+//            .inflate(R.layout.custom_tab_title, null) as LinearLayout
+//        tabTwo.findViewById<TextView>(R.id.number).text = "3"
+//        tabTwo.findViewById<TextView>(R.id.title).text = "Followers"
+//
+//        binding.viewPager.adapter = adapter
+//
+//        val tabTitles = listOf(tabOne, tabTwo)
+//
+//        TabLayoutMediator(binding.tab, binding.viewPager) { tab, position ->
+//            tab.customView = tabTitles[position]
+//        }.attach()
     }
 }

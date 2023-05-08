@@ -143,7 +143,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private val onPeopleClick: (people: People) -> Unit = { people ->
-
+        val action =
+            SearchFragmentDirections.actionSearchFragmentToDetailPersonFragment(peopleId = people.id)
+        findNavController().navigate(action)
     }
 
     private val onLoadMoreMovies: (page: Int) -> Unit = { page ->

@@ -175,7 +175,7 @@
         android:id="@+id/notificationsFragment"
         android:name="com.training.movieapp.ui.main.NotificationsFragment"
         android:label="fragment_notifications"
-        tools:layout="@layout/fragment_notifications"/>
+        tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.training.movieapp.ui.auth.ForgotPasswordFragment"
@@ -211,17 +211,50 @@
             app:destination="@id/detailMovieFragment"
             app:popUpTo="@id/detailMovieFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_detailMovieFragment_to_detailPersonFragment"
+            app:destination="@id/detailPersonFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.training.movieapp.ui.main.SearchFragment"
-        android:label="SearchFragment" >
+        android:label="SearchFragment">
         <action
             android:id="@+id/action_searchFragment_to_detailMovieFragment"
             app:destination="@id/detailMovieFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="peopleId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_searchFragment_to_detailPersonFragment"
+            app:destination="@id/detailPersonFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailPersonFragment"
+        android:name="com.training.movieapp.ui.detail.DetailPersonFragment"
+        android:label="fragment_detail_person"
+        tools:layout="@layout/fragment_detail_person">
+        <argument
+            android:name="peopleId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_detailPersonFragment_to_detailMovieFragment"
+            app:destination="@id/detailMovieFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

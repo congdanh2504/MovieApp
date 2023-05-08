@@ -380,7 +380,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_movie"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_170sdp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginVertical="@dimen/_10sdp"
             tools:listitem="@layout/movie_item" />

@@ -1,19 +1,26 @@
 package com.training.movieapp.ui.detail.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import com.training.movieapp.databinding.MovieItem2Binding
+import com.training.movieapp.domain.model.MovieCredit
+import com.training.movieapp.ui.main.utils.Images
 
-class MovieListAdapter(private val movies: List<String>, private val context: Context) : RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
+class MovieListAdapter(
+    private val movies: List<MovieCredit>,
+    private val onMovieClick: (Int) -> Unit
+) :
+    RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
 
-    inner class ViewHolder(private val binding: MovieItem2Binding) : RecyclerView.ViewHolder(binding.root) {
-        fun bindMovie(movie: String) {
-            Glide.with(context)
-                .load(movie)
-                .into(binding.image)
+    inner class ViewHolder(private val binding: MovieItem2Binding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bindMovie(movie: MovieCredit) {
+            binding.image.load(Images.POSTER_BASE_URL + movie.backdropPath)
+            binding.image.setOnClickListener {
+                onMovieClick(movie.id)
+            }
         }
     }
 

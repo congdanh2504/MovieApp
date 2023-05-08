@@ -4,6 +4,7 @@
     android:layout_width="@dimen/_70sdp"
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/_10sdp"
+    android:id="@+id/linearLayout_people"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView

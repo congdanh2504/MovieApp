@@ -21,22 +21,22 @@ class DetailListFragment : Fragment(R.layout.fragment_detail_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MyPagerAdapter(listOf(MovieItems(listOf()), UserItems(listOf())))
-        val tabOne = LayoutInflater.from(requireContext())
-            .inflate(R.layout.custom_tab_title, null) as LinearLayout
-        tabOne.findViewById<TextView>(R.id.number).text = "24"
-        tabOne.findViewById<TextView>(R.id.title).text = "Items"
-        val tabTwo = LayoutInflater.from(requireContext())
-            .inflate(R.layout.custom_tab_title, null) as LinearLayout
-        tabTwo.findViewById<TextView>(R.id.number).text = "21"
-        tabTwo.findViewById<TextView>(R.id.title).text = "Followers"
-
-        binding.viewPager.adapter = adapter
-
-        val tabTitles = listOf(tabOne, tabTwo)
-
-        TabLayoutMediator(binding.tab, binding.viewPager) { tab, position ->
-            tab.customView = tabTitles[position]
-        }.attach()
+//        adapter = MyPagerAdapter(listOf(MovieItems(listOf()), UserItems(listOf())))
+//        val tabOne = LayoutInflater.from(requireContext())
+//            .inflate(R.layout.custom_tab_title, null) as LinearLayout
+//        tabOne.findViewById<TextView>(R.id.number).text = "24"
+//        tabOne.findViewById<TextView>(R.id.title).text = "Items"
+//        val tabTwo = LayoutInflater.from(requireContext())
+//            .inflate(R.layout.custom_tab_title, null) as LinearLayout
+//        tabTwo.findViewById<TextView>(R.id.number).text = "21"
+//        tabTwo.findViewById<TextView>(R.id.title).text = "Followers"
+//
+//        binding.viewPager.adapter = adapter
+//
+//        val tabTitles = listOf(tabOne, tabTwo)
+//
+//        TabLayoutMediator(binding.tab, binding.viewPager) { tab, position ->
+//            tab.customView = tabTitles[position]
+//        }.attach()
     }
 }

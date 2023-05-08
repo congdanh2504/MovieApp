@@ -9,10 +9,10 @@ import com.training.movieapp.databinding.CastAndCrewBinding
 import com.training.movieapp.domain.model.Crew
 import com.training.movieapp.ui.main.utils.Images
 
-class CrewAdapter(private val crews: List<Crew>) :
+class CrewAdapter(private val crews: List<Crew>, private val onPeopleClick: (Int) -> Unit) :
     RecyclerView.Adapter<CrewAdapter.MyViewHolder>() {
 
-    class MyViewHolder(private val binding: CastAndCrewBinding) :
+    inner class MyViewHolder(private val binding: CastAndCrewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(crew: Crew) {
             binding.apply {
@@ -22,6 +22,9 @@ class CrewAdapter(private val crews: List<Crew>) :
                     if (crew.profilePath == null) R.drawable.icons8user
                     else Images.POSTER_BASE_URL + crew.profilePath
                 )
+                linearLayoutPeople.setOnClickListener {
+                    onPeopleClick(crew.id)
+                }
             }
         }
     }

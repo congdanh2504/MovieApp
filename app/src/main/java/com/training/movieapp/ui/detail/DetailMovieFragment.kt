@@ -3,6 +3,7 @@ package com.training.movieapp.ui.detail
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -23,9 +24,11 @@ import com.training.movieapp.databinding.FragmentDetailMovieBinding
 import com.training.movieapp.domain.model.Credit
 import com.training.movieapp.domain.model.Movie
 import com.training.movieapp.domain.model.MovieDetail
+import com.training.movieapp.domain.model.People
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.detail.adapter.CastAndCrewAdapter
 import com.training.movieapp.ui.detail.viewmodel.DetailMovieViewModel
+import com.training.movieapp.ui.main.SearchFragmentDirections
 import com.training.movieapp.ui.main.adapter.movie.MovieAdapter
 import com.training.movieapp.ui.main.utils.Images
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,13 +44,17 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
     private lateinit var dialog: LoadingDialog
     private val args: DetailMovieFragmentArgs by navArgs()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        detailMovieViewModel.getDetailMovie(args.movieId)
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
         initObservers()
         initActions()
-
-        detailMovieViewModel.getDetailMovie(args.movieId)
     }
 
     private fun initView() {
@@ -118,7 +125,7 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
     }
 
     private fun setCredit(credit: Credit) {
-        castAndCrewAdapter = CastAndCrewAdapter(credit.casts, credit.crews)
+        castAndCrewAdapter = CastAndCrewAdapter(credit.casts, credit.crews, onPeopleClick)
         val tabTitles =
             listOf(getTab(credit.casts.size, "Cast"), getTab(credit.crews.size, "Crew"))
 
@@ -139,6 +146,12 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
 
     private val onMovieClick: (movie: Movie) -> Unit = { movie ->
         val action = DetailMovieFragmentDirections.actionDetailMovieFragmentSelf(movieId = movie.id)
+        findNavController().navigate(action)
+    }
+
+    private val onPeopleClick: (peopleId: Int) -> Unit = { peopleId ->
+        val action =
+            DetailMovieFragmentDirections.actionDetailMovieFragmentToDetailPersonFragment(peopleId)
         findNavController().navigate(action)
     }
 
