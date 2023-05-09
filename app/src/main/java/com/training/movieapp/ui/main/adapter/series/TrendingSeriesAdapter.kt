@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.training.movieapp.R
+import com.training.movieapp.common.Constant
 import com.training.movieapp.databinding.TrendingSeriesItemBinding
-import com.training.movieapp.ui.main.model.Series
+import com.training.movieapp.domain.model.Serie
 
-class TrendingSeriesAdapter(private val seriesModel: List<Series>) :
+class TrendingSeriesAdapter(private val seriesModel: List<Serie>) :
     RecyclerView.Adapter<TrendingSeriesAdapter.TrendingSeriesViewHolder>() {
     inner class TrendingSeriesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = TrendingSeriesItemBinding.bind(itemView)
@@ -25,7 +26,7 @@ class TrendingSeriesAdapter(private val seriesModel: List<Series>) :
 
     override fun onBindViewHolder(holder: TrendingSeriesViewHolder, position: Int) {
         holder.binding.apply {
-            imgSeriesPosterTrending.load(seriesModel[position].imageUrl)
+            imgSeriesPosterTrending.load(Constant.POSTER_BASE_URL +seriesModel[position].poster_path)
         }
     }
 }

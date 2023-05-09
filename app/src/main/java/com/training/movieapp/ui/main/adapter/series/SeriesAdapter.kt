@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.training.movieapp.R
+import com.training.movieapp.common.Constant
 import com.training.movieapp.databinding.SeriesItemBinding
-import com.training.movieapp.ui.main.model.Series
+import com.training.movieapp.domain.model.Serie
 
-class SeriesAdapter(private val seriesModel: List<Series>) :
+class SeriesAdapter(private val seriesModel: List<Serie>) :
     RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder>() {
 
     inner class SeriesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -24,7 +25,7 @@ class SeriesAdapter(private val seriesModel: List<Series>) :
 
     override fun onBindViewHolder(holder: SeriesViewHolder, position: Int) {
         holder.binding.apply {
-            imgSeriesPoster.load(seriesModel[position].imageUrl)
+            imgSeriesPoster.load(Constant.POSTER_BASE_URL +seriesModel[position].poster_path)
         }
     }
 }
