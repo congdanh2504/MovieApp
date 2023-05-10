@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/_70sdp"
     android:layout_height="wrap_content"
+    android:id="@+id/linearLayout_people"
     android:layout_marginEnd="@dimen/_10sdp"
     android:orientation="vertical">
 

@@ -2,8 +2,10 @@ package com.training.movieapp.data.remote
 
 import com.training.movieapp.domain.model.Credit
 import com.training.movieapp.domain.model.Movie
+import com.training.movieapp.domain.model.MovieCredits
 import com.training.movieapp.domain.model.PageResponse
 import com.training.movieapp.domain.model.People
+import com.training.movieapp.domain.model.PeopleDetail
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -20,12 +22,16 @@ interface TheMovieDbApi {
 
     @GET("movie/popular")
     suspend fun getMovieTrending(): PageResponse<Movie>
+
     @GET("movie/now_playing")
-    suspend fun getMovieNowPlaying():PageResponse<Movie>
-    @GET("movie/now_playing")
-    suspend fun getMovieTopRated():PageResponse<Movie>
+    suspend fun getMovieNowPlaying(): PageResponse<Movie>
+
+    @GET("movie/top_rated")
+    suspend fun getMovieTopRated(): PageResponse<Movie>
+
     @GET("movie/upcoming")
-    suspend fun getMovieUpcoming():PageResponse<Movie>
+    suspend fun getMovieUpcoming(): PageResponse<Movie>
+
     @GET("search/movie")
     suspend fun searchMovies(
         @Query("query") query: String,
@@ -37,4 +43,10 @@ interface TheMovieDbApi {
         @Query("query") query: String,
         @Query("page") page: Int
     ): PageResponse<People>
+
+    @GET("person/{person_id}")
+    suspend fun getPeopleDetails(@Path("person_id") peopleId: Int): PeopleDetail
+
+    @GET("person/{person_id}/movie_credits")
+    suspend fun getMovieCredits(@Path("person_id") peopleId: Int): MovieCredits
 }

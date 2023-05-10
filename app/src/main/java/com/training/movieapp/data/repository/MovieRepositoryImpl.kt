@@ -27,7 +27,16 @@ class MovieRepositoryImpl @Inject constructor(private val theMovieDbApi: TheMovi
             val movieNowPlaying = theMovieDbApi.getMovieNowPlaying()
             val movieTopRated = theMovieDbApi.getMovieTopRated()
             val movieUpcoming = theMovieDbApi.getMovieUpcoming()
-            emit(Result.Success(Movies(movieTrending,movieNowPlaying,movieTopRated,movieUpcoming)))
+            emit(
+                Result.Success(
+                    Movies(
+                        movieTrending,
+                        movieNowPlaying,
+                        movieTopRated,
+                        movieUpcoming
+                    )
+                )
+            )
         } catch (e: Exception) {
             emit(Result.Error(e))
         }

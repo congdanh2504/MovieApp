@@ -13,13 +13,14 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="20dp"
-            android:padding="2dp"
-            android:src="@drawable/baseline_arrow_back_ios_24" />
+            android:id="@+id/imageView_back"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:padding="@dimen/_2sdp"
+            android:src="@drawable/baseline_arrow_back_ios_24"
+            app:tint="@color/tint_secondary" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="120dp"
@@ -29,6 +30,7 @@
             app:cardCornerRadius="20dp">
 
             <ImageView
+                android:id="@+id/imageView_profileImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_launcher_background" />
@@ -36,23 +38,25 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/textView_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
             android:gravity="center"
             android:text="Pedro Pascal"
             android:textColor="@color/tint_primary"
-            android:textSize="28sp"
+            android:textSize="@dimen/_20ssp"
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/textView_role"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
             android:gravity="center"
             android:text="Actor"
             android:textColor="@color/tint_tertiary"
-            android:textSize="28sp"
+            android:textSize="@dimen/_20ssp"
             android:textStyle="bold" />
 
         <TextView
@@ -67,9 +71,10 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/background_grouped_primary"
             app:cardCornerRadius="20dp">
 
             <LinearLayout
@@ -83,13 +88,16 @@
                     android:layout_height="wrap_content"
                     android:text="AGE"
                     android:textColor="@color/tint_tertiary"
+                    android:textSize="@dimen/_12ssp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/textView_age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="45"
-                    android:textColor="@color/tint_secondary" />
+                    android:text="None"
+                    android:textColor="@color/tint_secondary"
+                    android:textSize="@dimen/_12ssp" />
 
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"
@@ -101,13 +109,16 @@
                     android:layout_height="wrap_content"
                     android:text="BORN"
                     android:textColor="@color/tint_tertiary"
+                    android:textSize="@dimen/_12ssp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/textView_born"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Apr 2, 1975 in Santiago, Chile"
-                    android:textColor="@color/tint_secondary" />
+                    android:text="None"
+                    android:textColor="@color/tint_secondary"
+                    android:textSize="@dimen/_12ssp" />
 
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"
@@ -119,12 +130,16 @@
                     android:layout_height="wrap_content"
                     android:text="BIOGRAPHY"
                     android:textColor="@color/tint_tertiary"
+                    android:textSize="@dimen/_12ssp"
                     android:textStyle="bold" />
 
                 <kr.co.prnd.readmore.ReadMoreTextView
+                    android:id="@+id/textView_bio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="A Chilean-born Amercian stage ans screen director and actor, best known for his character in HBO series Game of Thr A Chilean-born Amercian stage ans screen director and actor, best known for his character in HBO series Game of Thr"
+                    android:textColor="@color/tint_secondary"
+                    android:textSize="@dimen/_12ssp"
                     app:readMoreMaxLine="3"
                     app:readMoreText="Read More" />
 
@@ -133,26 +148,26 @@
         </androidx.cardview.widget.CardView>
 
         <Button
-            android:id="@+id/createAccountBtn"
+            android:id="@+id/button_follow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/rounded_rectangle"
-            android:padding="10dp"
+            android:padding="@dimen/_8sdp"
             android:text="Follow"
             android:textAllCaps="false"
             android:textColor="@color/tint_secondary"
-            android:textSize="18sp"
+            android:textSize="@dimen/_14ssp"
             android:textStyle="bold" />
 
         <com.google.android.material.tabs.TabLayout
-            android:backgroundTint="@color/background_primary"
             android:id="@+id/tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:backgroundTint="@color/background_primary"
             app:tabGravity="center"
             app:tabIndicator="@drawable/tab_indicator"
             app:tabIndicatorAnimationMode="elastic"
@@ -163,7 +178,8 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="500dp" />
+            android:layout_height="@dimen/_400sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp" />
 
     </LinearLayout>
 

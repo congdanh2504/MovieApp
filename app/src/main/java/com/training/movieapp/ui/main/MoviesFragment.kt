@@ -32,11 +32,15 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
     private lateinit var dialog: LoadingDialog
     private val mainViewModel: MainViewModel by activityViewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        dialog = LoadingDialog(requireContext())
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         mainViewModel.readUser()
         moviesViewModel.getMovies()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dialog = LoadingDialog(requireContext())
         initObservers()
     }
 
@@ -46,20 +50,20 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
                 moviesViewModel.moviesState.collect { state ->
                     when (state) {
                         is DataState.Idle -> {
-//                            dialog.dismiss()
+                            dialog.dismiss()
                         }
 
                         is DataState.Loading -> {
-//                            dialog.show()
+                            dialog.show()
                         }
 
                         is DataState.Success -> {
-//                            dialog.dismiss()
+                            dialog.dismiss()
                             setMovies(state.data)
                         }
 
                         is DataState.Error -> {
-//                            dialog.dismiss()
+                            dialog.dismiss()
                             Toast.makeText(
                                 requireContext(),
                                 state.message.toString(),
@@ -73,15 +77,16 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
     }
 
     private fun setMovies(data: Movies) {
-        val colections = ArrayList<MainMovie>()
-        colections.add(MainMovie("Trending Mow", data.trendingMovies.results, Trending.TRUE))
-        colections.add(MainMovie("Now Playing", data.nowPlayingMovies.results, Trending.FALSE))
-        colections.add(MainMovie("Up Coming", data.upComingMovies.results, Trending.FALSE))
-        colections.add(MainMovie("Top Rated", data.topRatedMovies.results, Trending.FALSE))
+        val collections = ArrayList<MainMovie>()
+        collections.add(MainMovie("Trending Mow", data.trendingMovies.results, Trending.TRUE))
+        collections.add(MainMovie("Now Playing", data.nowPlayingMovies.results, Trending.FALSE))
+        collections.add(MainMovie("Up Coming", data.upComingMovies.results, Trending.FALSE))
+        collections.add(MainMovie("Top Rated", data.topRatedMovies.results, Trending.FALSE))
         binding.apply {
-            rvMainMovie.adapter = MainMovieAdapter(colections,onMovieClick)
+            rvMainMovie.adapter = MainMovieAdapter(collections, onMovieClick)
         }
     }
+
     private val onMovieClick: (movie: Movie) -> Unit = { movie ->
         val action = MoviesFragmentDirections.actionMoviesFragmentToDetailMovieFragment(
             movieId = movie.id

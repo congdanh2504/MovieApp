@@ -21,39 +21,39 @@ class DetailUserFragment : Fragment(R.layout.fragment_detail_user) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MyPagerAdapter(
-            listOf(
-                MovieItems(listOf()),
-                MovieItems(listOf()),
-                MovieItems(listOf()),
-                UserItems(listOf())
-            )
-        )
-        val tabOne = LayoutInflater.from(requireContext())
-            .inflate(R.layout.custom_tab_title, null) as LinearLayout
-        tabOne.findViewById<TextView>(R.id.number).text = "24"
-        tabOne.findViewById<TextView>(R.id.title).text = "Watch List"
-        val tabTwo = LayoutInflater.from(requireContext())
-            .inflate(R.layout.custom_tab_title, null) as LinearLayout
-        tabTwo.findViewById<TextView>(R.id.number).text = "185"
-        tabTwo.findViewById<TextView>(R.id.title).text = "Watched List"
-        val tabThree = LayoutInflater.from(requireContext())
-            .inflate(R.layout.custom_tab_title, null) as LinearLayout
-        tabThree.findViewById<TextView>(R.id.number).text = "52"
-        tabThree.findViewById<TextView>(R.id.title).text = "Watching List"
-        val tabFour = LayoutInflater.from(requireContext())
-            .inflate(R.layout.custom_tab_title, null) as LinearLayout
-        tabFour.findViewById<TextView>(R.id.number).text = "21"
-        tabFour.findViewById<TextView>(R.id.title).text = "User Reviews"
-        binding.viewPager.adapter = adapter
-
-        val tabTitles = listOf(tabOne, tabTwo, tabThree, tabFour)
-
-        TabLayoutMediator(binding.tab, binding.viewPager) { tab, position ->
-            tab.customView = tabTitles[position]
-        }.attach()
-        binding.follow.setOnClickListener {
-//            findNavController().navigate(R.id.action_detailUserFragment_to_followFragment)
-        }
+//        adapter = MyPagerAdapter(
+//            listOf(
+//                MovieItems(listOf()),
+//                MovieItems(listOf()),
+//                MovieItems(listOf()),
+//                UserItems(listOf())
+//            )
+//        )
+//        val tabOne = LayoutInflater.from(requireContext())
+//            .inflate(R.layout.custom_tab_title, null) as LinearLayout
+//        tabOne.findViewById<TextView>(R.id.number).text = "24"
+//        tabOne.findViewById<TextView>(R.id.title).text = "Watch List"
+//        val tabTwo = LayoutInflater.from(requireContext())
+//            .inflate(R.layout.custom_tab_title, null) as LinearLayout
+//        tabTwo.findViewById<TextView>(R.id.number).text = "185"
+//        tabTwo.findViewById<TextView>(R.id.title).text = "Watched List"
+//        val tabThree = LayoutInflater.from(requireContext())
+//            .inflate(R.layout.custom_tab_title, null) as LinearLayout
+//        tabThree.findViewById<TextView>(R.id.number).text = "52"
+//        tabThree.findViewById<TextView>(R.id.title).text = "Watching List"
+//        val tabFour = LayoutInflater.from(requireContext())
+//            .inflate(R.layout.custom_tab_title, null) as LinearLayout
+//        tabFour.findViewById<TextView>(R.id.number).text = "21"
+//        tabFour.findViewById<TextView>(R.id.title).text = "User Reviews"
+//        binding.viewPager.adapter = adapter
+//
+//        val tabTitles = listOf(tabOne, tabTwo, tabThree, tabFour)
+//
+//        TabLayoutMediator(binding.tab, binding.viewPager) { tab, position ->
+//            tab.customView = tabTitles[position]
+//        }.attach()
+//        binding.follow.setOnClickListener {
+////            findNavController().navigate(R.id.action_detailUserFragment_to_followFragment)
+//        }
     }
 }
