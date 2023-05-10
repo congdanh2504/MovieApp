@@ -49,27 +49,19 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 moviesViewModel.moviesState.collect { state ->
                     when (state) {
-                        is DataState.Idle -> {
-                            dialog.dismiss()
-                        }
-
-                        is DataState.Loading -> {
-                            dialog.show()
-                        }
-
                         is DataState.Success -> {
-                            dialog.dismiss()
                             setMovies(state.data)
                         }
 
                         is DataState.Error -> {
-                            dialog.dismiss()
                             Toast.makeText(
                                 requireContext(),
                                 state.message.toString(),
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+
+                        else -> {}
                     }
                 }
             }

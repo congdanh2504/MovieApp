@@ -1,6 +1,5 @@
 package com.training.movieapp.di
 
-
 import com.training.movieapp.BuildConfig
 import com.training.movieapp.common.Constant
 import com.training.movieapp.data.remote.TheSeriesDbApi
@@ -8,7 +7,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

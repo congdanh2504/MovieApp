@@ -7,16 +7,16 @@ import com.training.movieapp.domain.repository.SeriesRepository
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class SeriesRepositoryImpl @Inject constructor(private val theSeriesDbApi: TheSeriesDbApi):
+class SeriesRepositoryImpl @Inject constructor(private val theSeriesDbApi: TheSeriesDbApi) :
     SeriesRepository {
-    override suspend fun getSeries() = flow{
+    override suspend fun getSeries() = flow {
         try {
-            val seriesTrending =  theSeriesDbApi.getSeriesTrending()
-            val seriesPopular =  theSeriesDbApi.getSeriesPopular()
-            val seriesAiringToday =  theSeriesDbApi.getSeriesAiringToday()
-            val seriesOnTheAir =  theSeriesDbApi.getSeriesOnTheAir()
-            emit(Result.Success(Series(seriesTrending,seriesAiringToday,seriesOnTheAir,seriesPopular)))
-        }catch (e: Exception){
+            val seriesTrending = theSeriesDbApi.getSeriesTrending()
+            val seriesPopular = theSeriesDbApi.getSeriesPopular()
+            val seriesAiringToday = theSeriesDbApi.getSeriesAiringToday()
+            val seriesOnTheAir = theSeriesDbApi.getSeriesOnTheAir()
+            emit(Result.Success(Series(seriesTrending, seriesAiringToday, seriesOnTheAir, seriesPopular)))
+        } catch (e: Exception) {
             emit(Result.Error(e))
         }
     }

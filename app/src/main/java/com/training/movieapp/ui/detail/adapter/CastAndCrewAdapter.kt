@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.training.movieapp.R
 import com.training.movieapp.domain.model.Cast
 import com.training.movieapp.domain.model.Crew
-import com.training.movieapp.domain.model.People
 
 class CastAndCrewAdapter(
     private val casts: List<Cast>,

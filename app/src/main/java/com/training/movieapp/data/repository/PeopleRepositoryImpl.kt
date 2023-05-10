@@ -42,5 +42,4 @@ class PeopleRepositoryImpl @Inject constructor(private val theMovieDbApi: TheMov
             emit(Result.Error(e))
         }
     }
-
 }

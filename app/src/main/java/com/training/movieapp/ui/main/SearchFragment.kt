@@ -57,13 +57,16 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 override fun onQueryTextChange(newText: String?): Boolean {
                     searchTimer?.cancel()
                     searchTimer = Timer()
-                    searchTimer?.schedule(object : TimerTask() {
-                        override fun run() {
-                            queryText = newText.toString()
-                            searchViewModel.searchPeoples(queryText)
-                            searchViewModel.searchMovies(queryText)
-                        }
-                    }, 600)
+                    searchTimer?.schedule(
+                        object : TimerTask() {
+                            override fun run() {
+                                queryText = newText.toString()
+                                searchViewModel.searchPeoples(queryText)
+                                searchViewModel.searchMovies(queryText)
+                            }
+                        },
+                        600
+                    )
                     return true
                 }
             })

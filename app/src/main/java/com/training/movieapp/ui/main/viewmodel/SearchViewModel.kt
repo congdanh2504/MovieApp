@@ -6,7 +6,6 @@ import com.training.movieapp.common.Result
 import com.training.movieapp.domain.model.Movie
 import com.training.movieapp.domain.model.PageResponse
 import com.training.movieapp.domain.model.People
-import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.domain.usecase.movie.SearchMoviesUseCase
 import com.training.movieapp.domain.usecase.people.SearchPeoplesUseCase
@@ -61,5 +60,4 @@ class SearchViewModel @Inject constructor(
                 }
             }
     }
-
 }

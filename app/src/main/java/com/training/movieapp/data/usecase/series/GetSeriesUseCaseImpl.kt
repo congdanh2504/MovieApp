@@ -7,8 +7,8 @@ import com.training.movieapp.domain.usecase.series.GetSeriesUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetSeriesUseCaseImpl @Inject constructor(private val seriesRepository: SeriesRepository)
-    :GetSeriesUseCase {
+class GetSeriesUseCaseImpl @Inject constructor(private val seriesRepository: SeriesRepository) :
+    GetSeriesUseCase {
     override suspend fun execute(): Flow<Result<Series>> {
         return seriesRepository.getSeries()
     }

@@ -26,7 +26,7 @@ class TrendingSeriesAdapter(private val seriesModel: List<Serie>) :
 
     override fun onBindViewHolder(holder: TrendingSeriesViewHolder, position: Int) {
         holder.binding.apply {
-            imgSeriesPosterTrending.load(Constant.POSTER_BASE_URL +seriesModel[position].poster_path)
+            imgSeriesPosterTrending.load(Constant.POSTER_BASE_URL + seriesModel[position].poster_path)
         }
     }
 }

@@ -8,5 +8,4 @@ class SearchPeoplesUseCaseImpl @Inject constructor(private val peopleRepository:
     SearchPeoplesUseCase {
     override suspend fun execute(query: String, page: Int) =
         peopleRepository.searchPeoples(query, page)
-
 }

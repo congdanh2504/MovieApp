@@ -25,7 +25,7 @@ class SeriesAdapter(private val seriesModel: List<Serie>) :
 
     override fun onBindViewHolder(holder: SeriesViewHolder, position: Int) {
         holder.binding.apply {
-            imgSeriesPoster.load(Constant.POSTER_BASE_URL +seriesModel[position].poster_path)
+            imgSeriesPoster.load(Constant.POSTER_BASE_URL + seriesModel[position].poster_path)
         }
     }
 }

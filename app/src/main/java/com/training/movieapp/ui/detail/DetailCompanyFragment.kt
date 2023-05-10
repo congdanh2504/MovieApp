@@ -1,18 +1,12 @@
 package com.training.movieapp.ui.detail
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayoutMediator
 import com.training.movieapp.R
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentDetailCompanyBinding
 import com.training.movieapp.ui.detail.adapter.MyPagerAdapter
-import com.training.movieapp.ui.detail.model.MovieItems
-import com.training.movieapp.ui.detail.model.UserItems
 
 class DetailCompanyFragment : Fragment(R.layout.fragment_detail_company) {
 

@@ -8,5 +8,4 @@ class SearchMoviesUseCaseImpl @Inject constructor(private val movieRepository: M
     SearchMoviesUseCase {
     override suspend fun execute(query: String, page: Int) =
         movieRepository.searchMovies(query, page)
-
 }

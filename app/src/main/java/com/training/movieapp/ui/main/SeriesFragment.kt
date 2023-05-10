@@ -60,13 +60,13 @@ class SeriesFragment : Fragment(R.layout.fragment_series) {
     }
 
     private fun setSeries(data: Series) {
-        val colections = ArrayList<MainSeries>()
-        colections.add(MainSeries("Trending Mow", data.trendingSeries.results, Trending.TRUE))
-        colections.add(MainSeries("Popular", data.popularSeries.results.sortedBy { it.id }, Trending.FALSE))
-        colections.add(MainSeries("Airing Today", data.airingTodaySeries.results, Trending.FALSE))
-        colections.add(MainSeries("On The Air", data.onTheAirSeries.results.shuffled(), Trending.FALSE))
+        val collections = ArrayList<MainSeries>()
+        collections.add(MainSeries("Trending Mow", data.trendingSeries.results, Trending.TRUE))
+        collections.add(MainSeries("Popular", data.popularSeries.results.sortedBy { it.id }, Trending.FALSE))
+        collections.add(MainSeries("Airing Today", data.airingTodaySeries.results, Trending.FALSE))
+        collections.add(MainSeries("On The Air", data.onTheAirSeries.results.shuffled(), Trending.FALSE))
         binding.apply {
-            rvMainSeries.adapter = MainSeriesAdapter(colections)
+            rvMainSeries.adapter = MainSeriesAdapter(collections)
         }
     }
 }
