@@ -4,7 +4,7 @@ import com.training.movieapp.domain.model.PageResponse
 import com.training.movieapp.domain.model.Serie
 import retrofit2.http.GET
 
-interface TheSeriesDbApi {
+interface SeriesApi {
     @GET("tv/popular")
     suspend fun getSeriesPopular(): PageResponse<Serie>
     @GET("tv/top_rated")

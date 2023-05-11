@@ -1,20 +1,20 @@
 package com.training.movieapp.data.repository
 
 import com.training.movieapp.common.Result
-import com.training.movieapp.data.remote.TheMovieDbApi
+import com.training.movieapp.data.remote.MovieApi
 import com.training.movieapp.domain.model.MovieDetail
 import com.training.movieapp.domain.model.Movies
 import com.training.movieapp.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class MovieRepositoryImpl @Inject constructor(private val theMovieDbApi: TheMovieDbApi) :
+class MovieRepositoryImpl @Inject constructor(private val movieApi: MovieApi) :
     MovieRepository {
     override suspend fun getMovieDetail(movieId: Int) = flow {
         try {
-            val movie = theMovieDbApi.getMovie(movieId)
-            val credit = theMovieDbApi.getMovieCredit(movieId)
-            val similar = theMovieDbApi.getSimilarMovies(movieId)
+            val movie = movieApi.getMovie(movieId)
+            val credit = movieApi.getMovieCredit(movieId)
+            val similar = movieApi.getSimilarMovies(movieId)
             emit(Result.Success(MovieDetail(movie, credit, similar)))
         } catch (e: Exception) {
             emit(Result.Error(e))
@@ -23,10 +23,10 @@ class MovieRepositoryImpl @Inject constructor(private val theMovieDbApi: TheMovi
 
     override suspend fun getMovies() = flow {
         try {
-            val movieTrending = theMovieDbApi.getMovieTrending()
-            val movieNowPlaying = theMovieDbApi.getMovieNowPlaying()
-            val movieTopRated = theMovieDbApi.getMovieTopRated()
-            val movieUpcoming = theMovieDbApi.getMovieUpcoming()
+            val movieTrending = movieApi.getMovieTrending()
+            val movieNowPlaying = movieApi.getMovieNowPlaying()
+            val movieTopRated = movieApi.getMovieTopRated()
+            val movieUpcoming = movieApi.getMovieUpcoming()
             emit(
                 Result.Success(
                     Movies(
@@ -44,7 +44,7 @@ class MovieRepositoryImpl @Inject constructor(private val theMovieDbApi: TheMovi
 
     override suspend fun searchMovies(query: String, page: Int) = flow {
         try {
-            val movies = theMovieDbApi.searchMovies(query, page)
+            val movies = movieApi.searchMovies(query, page)
             emit(Result.Success(movies))
         } catch (e: Exception) {
             emit(Result.Error(e))
