@@ -36,7 +36,7 @@ class MainSeriesAdapter(private val collectionSeries: List<MainSeries>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == MainSeriesAdapter.Const.TRENDING) {
+        return if (viewType == TRENDING) {
             val view =
                 TrendingSeriesParentItemBinding.inflate(
                     LayoutInflater.from(parent.context),

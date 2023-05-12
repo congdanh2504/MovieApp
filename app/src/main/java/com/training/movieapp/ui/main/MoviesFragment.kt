@@ -34,13 +34,13 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainViewModel.readUser()
         moviesViewModel.getMovies()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog = LoadingDialog(requireContext())
+        mainViewModel.readUser()
         initObservers()
     }
 

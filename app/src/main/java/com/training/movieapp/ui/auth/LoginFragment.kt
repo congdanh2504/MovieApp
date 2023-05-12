@@ -2,6 +2,7 @@ package com.training.movieapp.ui.auth
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,6 +31,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         initView()
         initActions()
         initObservers()
+        disableOnBackPressed()
     }
 
     private fun initView() {
@@ -48,12 +50,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 login()
             }
         }
-    }
-
-    private fun login() {
-        val email = binding.emailET.text.toString()
-        val password = binding.passwordET.text.toString()
-        loginViewModel.login(email, password)
     }
 
     private fun initObservers() {
@@ -86,5 +82,21 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 }
             }
         }
+    }
+
+    private fun login() {
+        val email = binding.emailET.text.toString()
+        val password = binding.passwordET.text.toString()
+        loginViewModel.login(email, password)
+    }
+
+    private fun disableOnBackPressed() {
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // do nothing
+                }
+            })
     }
 }

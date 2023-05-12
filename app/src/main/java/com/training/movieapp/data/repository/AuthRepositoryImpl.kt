@@ -18,14 +18,10 @@ class AuthRepositoryImpl @Inject constructor(
     AuthRepository {
     override suspend fun login(email: String, password: String) = flow {
         try {
-            firebaseAuth.signInWithEmailAndPassword(email, password).await()
-            val currentUser = firebaseAuth.currentUser ?: throw NullPointerException("User is null")
-            val userDocument =
-                fireStore.collection("users").document(currentUser.uid)
-            val user =
-                userDocument.get().await().toObject(User::class.java) ?: throw NullPointerException(
-                    "User is null"
-                )
+            val currentUser = firebaseAuth.signInWithEmailAndPassword(email, password).await().user
+                ?: throw NullPointerException("User is null")
+            val user = fireStore.collection("users").document(currentUser.uid).get().await()
+                .toObject(User::class.java) ?: throw NullPointerException("User is null")
             emit(Result.Success(user))
         } catch (e: Exception) {
             emit(Result.Error(e))
@@ -34,17 +30,17 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun register(email: String, username: String, password: String) = flow {
         try {
-            val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-            val user = authResult.user ?: throw NullPointerException("User is null")
-            val userDocument = fireStore.collection("users").document(user.uid)
-            val userData = hashMapOf(
+            val user = firebaseAuth.createUserWithEmailAndPassword(email, password).await().user
+                ?: throw NullPointerException("User is null")
+            val userData = mapOf(
                 "id" to user.uid,
                 "email" to email,
                 "username" to username,
                 "imageURL" to null,
                 "bio" to ""
             )
-            userDocument.set(userData, SetOptions.merge()).await()
+            fireStore.collection("users").document(user.uid).set(userData, SetOptions.merge())
+                .await()
             emit(Result.Success(Unit))
             firebaseAuth.signOut()
         } catch (e: Exception) {
@@ -95,16 +91,9 @@ class AuthRepositoryImpl @Inject constructor(
             val credential = EmailAuthProvider.getCredential(email, currentPassword)
             val currentUser = firebaseAuth.currentUser ?: throw NullPointerException("User is null")
             currentUser.reauthenticate(credential).await()
-
             currentUser.updateEmail(newEmail).await()
-
-            val userDocument =
-                fireStore.collection("users").document(currentUser.uid)
-            val userData = hashMapOf(
-                "email" to newEmail,
-            )
-            userDocument.set(userData, SetOptions.merge()).await()
-
+            val userDocument = fireStore.collection("users").document(currentUser.uid)
+            userDocument.update("email", newEmail).await()
             val user =
                 userDocument.get().await().toObject(User::class.java) ?: throw NullPointerException(
                     "User is null"

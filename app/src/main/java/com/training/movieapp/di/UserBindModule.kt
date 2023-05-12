@@ -2,9 +2,11 @@ package com.training.movieapp.di
 
 import com.training.movieapp.data.repository.UserRepositoryImpl
 import com.training.movieapp.data.usecase.user.CheckUserLoggedInUseCaseImpl
+import com.training.movieapp.data.usecase.user.GetUsersUseCaseImpl
 import com.training.movieapp.data.usecase.user.UpdateProfileUseCaseImpl
 import com.training.movieapp.domain.repository.UserRepository
 import com.training.movieapp.domain.usecase.user.CheckUserLoggedInUseCase
+import com.training.movieapp.domain.usecase.user.GetUsersUseCase
 import com.training.movieapp.domain.usecase.user.UpdateProfileUseCase
 import dagger.Binds
 import dagger.Module
@@ -25,4 +27,7 @@ abstract class UserBindModule {
 
     @Binds
     abstract fun bindCheckUserIsLoggedUseCase(impl: CheckUserLoggedInUseCaseImpl): CheckUserLoggedInUseCase
+
+    @Binds
+    abstract fun bindGetUsersUseCase(impl: GetUsersUseCaseImpl): GetUsersUseCase
 }
