@@ -10,7 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface TheMovieDbApi {
+interface MovieApi {
     @GET("movie/{movie_id}")
     suspend fun getMovie(@Path("movie_id") movieDd: Int): Movie
 
@@ -37,16 +37,4 @@ interface TheMovieDbApi {
         @Query("query") query: String,
         @Query("page") page: Int
     ): PageResponse<Movie>
-
-    @GET("search/person")
-    suspend fun searchPeoples(
-        @Query("query") query: String,
-        @Query("page") page: Int
-    ): PageResponse<People>
-
-    @GET("person/{person_id}")
-    suspend fun getPeopleDetails(@Path("person_id") peopleId: Int): PeopleDetail
-
-    @GET("person/{person_id}/movie_credits")
-    suspend fun getMovieCredits(@Path("person_id") peopleId: Int): MovieCredits
 }

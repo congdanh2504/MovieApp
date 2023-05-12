@@ -218,6 +218,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_detailMovieFragment_to_detailCompanyFragment"
+            app:destination="@id/detailCompanyFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -256,5 +263,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailCompanyFragment"
+        android:name="com.training.movieapp.ui.detail.DetailCompanyFragment"
+        android:label="fragment_detail_company"
+        tools:layout="@layout/fragment_detail_company" >
+        <argument android:name="companyId"
+            app:argType="integer" />
     </fragment>
 </navigation>

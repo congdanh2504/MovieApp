@@ -2,7 +2,10 @@ package com.training.movieapp.di
 
 import com.training.movieapp.BuildConfig
 import com.training.movieapp.common.Constant
-import com.training.movieapp.data.remote.TheMovieDbApi
+import com.training.movieapp.data.remote.CompanyApi
+import com.training.movieapp.data.remote.MovieApi
+import com.training.movieapp.data.remote.PeopleApi
+import com.training.movieapp.data.remote.SeriesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +21,7 @@ object TheMovieDbApiModule {
 
     @Singleton
     @Provides
-    fun provideTheMovieDbApi(): TheMovieDbApi = Retrofit.Builder()
+    fun provideRetrofitBuilder(): Retrofit = Retrofit.Builder()
         .baseUrl(Constant.TMDB_BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .client(
@@ -32,5 +35,25 @@ object TheMovieDbApiModule {
                 chain.proceed(request)
             }.build()
         )
-        .build().create(TheMovieDbApi::class.java)
+        .build()
+
+    @Singleton
+    @Provides
+    fun provideMovieApi(retrofitBuilder: Retrofit): MovieApi =
+        retrofitBuilder.create(MovieApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideSeriesApi(retrofitBuilder: Retrofit): SeriesApi =
+        retrofitBuilder.create(SeriesApi::class.java)
+
+    @Singleton
+    @Provides
+    fun providePeopleApi(retrofitBuilder: Retrofit): PeopleApi =
+        retrofitBuilder.create(PeopleApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideCompanyApi(retrofitBuilder: Retrofit): CompanyApi =
+        retrofitBuilder.create(CompanyApi::class.java)
 }

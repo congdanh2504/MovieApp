@@ -2,35 +2,97 @@ package com.training.movieapp.ui.detail
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import coil.load
 import com.training.movieapp.R
+import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentDetailCompanyBinding
-import com.training.movieapp.ui.detail.adapter.MyPagerAdapter
+import com.training.movieapp.domain.model.CompanyDetail
+import com.training.movieapp.domain.model.state.DataState
+import com.training.movieapp.ui.detail.viewmodel.DetailCompanyViewModel
+import com.training.movieapp.ui.main.utils.Images
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class DetailCompanyFragment : Fragment(R.layout.fragment_detail_company) {
 
     private val binding: FragmentDetailCompanyBinding by viewBinding(FragmentDetailCompanyBinding::bind)
-    private lateinit var adapter: MyPagerAdapter
+    private val detailCompanyViewModel: DetailCompanyViewModel by viewModels()
+    private val args: DetailCompanyFragmentArgs by navArgs()
+    private lateinit var loadingDialog: LoadingDialog
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        detailCompanyViewModel.getCompanyDetail(args.companyId)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        adapter = MyPagerAdapter(listOf(MovieItems(listOf()), UserItems(listOf())))
-//        val tabOne = LayoutInflater.from(requireContext())
-//            .inflate(R.layout.custom_tab_title, null) as LinearLayout
-//        tabOne.findViewById<TextView>(R.id.number).text = "24"
-//        tabOne.findViewById<TextView>(R.id.title).text = "Items"
-//        val tabTwo = LayoutInflater.from(requireContext())
-//            .inflate(R.layout.custom_tab_title, null) as LinearLayout
-//        tabTwo.findViewById<TextView>(R.id.number).text = "21"
-//        tabTwo.findViewById<TextView>(R.id.title).text = "Followers"
-//
-//        binding.viewPager.adapter = adapter
-//
-//        val tabTitles = listOf(tabOne, tabTwo)
-//
-//        TabLayoutMediator(binding.tab, binding.viewPager) { tab, position ->
-//            tab.customView = tabTitles[position]
-//        }.attach()
+        initView()
+        initActions()
+        initObservers()
+    }
+
+    private fun initView() {
+        loadingDialog = LoadingDialog(requireContext())
+    }
+
+    private fun initActions() {
+        binding.apply {
+            imageViewBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
+        }
+    }
+
+    private fun initObservers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                detailCompanyViewModel.companiesState.collect { state ->
+                    when (state) {
+                        is DataState.Idle -> {
+                            loadingDialog.dismiss()
+                        }
+
+                        is DataState.Loading -> {
+                            loadingDialog.show()
+                        }
+
+                        is DataState.Success -> {
+                            loadingDialog.dismiss()
+                            setCompany(state.data)
+                        }
+
+                        is DataState.Error -> {
+                            loadingDialog.dismiss()
+                            Toast.makeText(
+                                requireContext(),
+                                state.message.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setCompany(company: CompanyDetail) {
+        binding.apply {
+            textViewName.text = company.name
+            textViewHomepage.text = company.homepage
+            imageViewLogoImage.load(Images.POSTER_BASE_URL + company.logoPath)
+            textViewCountry.text = company.originCountry
+            textViewHeadquarters.text = company.headquarters
+        }
     }
 }

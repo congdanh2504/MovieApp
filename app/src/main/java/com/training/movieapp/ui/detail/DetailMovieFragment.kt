@@ -20,11 +20,13 @@ import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentDetailMovieBinding
+import com.training.movieapp.domain.model.Company
 import com.training.movieapp.domain.model.Credit
 import com.training.movieapp.domain.model.Movie
 import com.training.movieapp.domain.model.MovieDetail
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.detail.adapter.CastAndCrewAdapter
+import com.training.movieapp.ui.detail.adapter.CompanyAdapter
 import com.training.movieapp.ui.detail.viewmodel.DetailMovieViewModel
 import com.training.movieapp.ui.main.adapter.movie.MovieAdapter
 import com.training.movieapp.ui.main.utils.Images
@@ -37,6 +39,7 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
     private val detailMovieViewModel: DetailMovieViewModel by viewModels()
     private val binding: FragmentDetailMovieBinding by viewBinding(FragmentDetailMovieBinding::bind)
     private lateinit var movieAdapter: MovieAdapter
+    private lateinit var companyAdapter: CompanyAdapter
     private lateinit var castAndCrewAdapter: CastAndCrewAdapter
     private lateinit var dialog: LoadingDialog
     private val args: DetailMovieFragmentArgs by navArgs()
@@ -100,6 +103,7 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
     private fun setMovieDetail(movieDetail: MovieDetail) {
         setMovie(movieDetail.movie)
         setCredit(movieDetail.credit)
+        setCompanies(movieDetail.movie.productionCompanies)
         setSimilar(movieDetail.similar.results)
     }
 
@@ -112,8 +116,6 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
             movie.runtime?.let { textViewRuntime.text = formatMinutesToTime(it) }
             textViewLanguages.text = movie.originalLanguage
             textViewGenres.text = movie.genres.joinToString(", ") { it.name }
-            textViewCompanies.text =
-                movie.productionCompanies.joinToString(", ") { it.name }
             textViewBudget.text = "$${movie.budget}"
             textViewRevenue.text = "$${movie.revenue}"
             readMoreTextViewSynopsis.text = movie.overview.toString()
@@ -132,6 +134,14 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
         }.attach()
     }
 
+    private fun setCompanies(companies: List<Company>) {
+        companyAdapter = CompanyAdapter(companies, onCompanyClick)
+        binding.numberCompanies.text = companies.size.toString()
+        binding.recyclerViewCompanies.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerViewCompanies.adapter = companyAdapter
+    }
+
     private fun setSimilar(movies: List<Movie>) {
         movieAdapter = MovieAdapter(onMovieClick)
         movieAdapter.setMovies(movies)
@@ -141,7 +151,13 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
     }
 
     private val onMovieClick: (movie: Movie) -> Unit = { movie ->
-        val action = DetailMovieFragmentDirections.actionDetailMovieFragmentSelf(movieId = movie.id)
+        val action = DetailMovieFragmentDirections.actionDetailMovieFragmentSelf(movie.id)
+        findNavController().navigate(action)
+    }
+
+    private val onCompanyClick: (companyId: Int) -> Unit = { companyId ->
+        val action =
+            DetailMovieFragmentDirections.actionDetailMovieFragmentToDetailCompanyFragment(companyId = companyId)
         findNavController().navigate(action)
     }
 
