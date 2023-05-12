@@ -26,18 +26,12 @@ class UserRepositoryImpl @Inject constructor(
             val currentUser = firebaseAuth.currentUser ?: throw NullPointerException("User is null")
             val userDocument =
                 fireStore.collection("users").document(currentUser.uid)
-            val userData = if (imageURL != null) {
-                hashMapOf(
-                    "username" to username,
-                    "imageURL" to imageURL,
-                    "bio" to bio
-                )
-            } else {
-                hashMapOf(
-                    "username" to username,
-                    "bio" to bio
-                )
-            }
+
+            val userData = mapOf(
+                "username" to username,
+                "imageURL" to (imageURL ?: userDocument.get().await().getString("imageURL")),
+                "bio" to bio
+            )
             userDocument.set(userData, SetOptions.merge()).await()
             val user =
                 userDocument.get().await().toObject(User::class.java) ?: throw NullPointerException(
@@ -65,6 +59,16 @@ class UserRepositoryImpl @Inject constructor(
             emit(true)
         } catch (e: Exception) {
             emit(false)
+        }
+    }
+
+    override suspend fun getUsers() = flow {
+        try {
+            val users =
+                fireStore.collection("users").get().await().map { it.toObject(User::class.java) }
+            emit(Result.Success(users))
+        } catch (e: Exception) {
+            emit(Result.Error(e))
         }
     }
 }

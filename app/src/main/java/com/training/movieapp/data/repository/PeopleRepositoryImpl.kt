@@ -1,7 +1,6 @@
 package com.training.movieapp.data.repository
 
 import com.training.movieapp.common.Result
-import com.training.movieapp.data.remote.MovieApi
 import com.training.movieapp.data.remote.PeopleApi
 import com.training.movieapp.domain.repository.PeopleRepository
 import com.training.movieapp.ui.detail.model.PeopleDetail

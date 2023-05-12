@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import coil.load
@@ -145,6 +146,6 @@ class MainActivity : AppCompatActivity() {
         val headerView = binding.navigationView.getHeaderView(0)
         headerView.findViewById<TextView>(R.id.textView_username).text = user.username
         headerView.findViewById<TextView>(R.id.textView_username2).text = "@${user.username}"
-        user.imageURL?.let { headerView.findViewById<ImageView>(R.id.imageView_userImage).load(it) }
+        headerView.findViewById<ImageView>(R.id.imageView_userImage).load(user.imageURL ?: R.drawable.icons8user)
     }
 }

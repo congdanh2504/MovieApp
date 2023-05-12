@@ -51,6 +51,10 @@
         <action
             android:id="@+id/action_settingsFragment_to_loginFragment"
             app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -95,7 +99,11 @@
         <action
             android:id="@+id/action_loginFragment_to_moviesFragment"
             app:destination="@id/moviesFragment"
-            app:popUpTo="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/moviesFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
@@ -268,8 +276,9 @@
         android:id="@+id/detailCompanyFragment"
         android:name="com.training.movieapp.ui.detail.DetailCompanyFragment"
         android:label="fragment_detail_company"
-        tools:layout="@layout/fragment_detail_company" >
-        <argument android:name="companyId"
+        tools:layout="@layout/fragment_detail_company">
+        <argument
+            android:name="companyId"
             app:argType="integer" />
     </fragment>
 </navigation>

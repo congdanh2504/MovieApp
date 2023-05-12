@@ -2,10 +2,7 @@ package com.training.movieapp.data.remote
 
 import com.training.movieapp.domain.model.Credit
 import com.training.movieapp.domain.model.Movie
-import com.training.movieapp.domain.model.MovieCredits
 import com.training.movieapp.domain.model.PageResponse
-import com.training.movieapp.domain.model.People
-import com.training.movieapp.domain.model.PeopleDetail
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
