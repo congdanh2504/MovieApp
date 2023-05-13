@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.training.movieapp.R
 import com.training.movieapp.databinding.PerformerItemBinding
-import com.training.movieapp.ui.main.model.Performer
+import com.training.movieapp.domain.model.People
+import com.training.movieapp.ui.main.utils.Images
 
-class PerformerAdapter(private val performerModel: List<Performer>) :
+class PerformerAdapter(private val performerModel: List<People>) :
     RecyclerView.Adapter<PerformerAdapter.PerformerViewHolder>() {
     inner class PerformerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = PerformerItemBinding.bind(itemView)
@@ -26,7 +27,7 @@ class PerformerAdapter(private val performerModel: List<Performer>) :
     override fun onBindViewHolder(holder: PerformerViewHolder, position: Int) {
         holder.binding.apply {
             tvNamePerformer.text = performerModel[position].name
-            imgPerformer.load(performerModel[position].imageUrl)
+            imgPerformer.load(Images.POSTER_BASE_URL + performerModel[position].profilePath)
         }
     }
 }

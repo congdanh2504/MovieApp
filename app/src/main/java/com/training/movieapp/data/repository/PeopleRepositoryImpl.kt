@@ -42,4 +42,12 @@ class PeopleRepositoryImpl @Inject constructor(private val peopleApi: PeopleApi)
             emit(Result.Error(e))
         }
     }
+    override suspend fun getPeoplePopular()= flow{
+        try {
+            val peoplesPopular = peopleApi.getPeoplePopular()
+            emit(Result.Success(peoplesPopular))
+        }catch (e:Exception){
+            emit(Result.Error(e))
+        }
+    }
 }

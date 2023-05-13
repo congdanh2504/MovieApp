@@ -21,4 +21,7 @@ interface PeopleApi {
 
     @GET("person/{person_id}/movie_credits")
     suspend fun getMovieCredits(@Path("person_id") peopleId: Int): MovieCredits
+
+    @GET("person/popular")
+    suspend fun getPeoplePopular(): PageResponse<People>
 }
