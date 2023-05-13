@@ -32,5 +32,5 @@ This app uses the following libraries:
 - [Retrofit](https://square.github.io/retrofit/) - for network requests
 - [Gson](https://github.com/google/gson) - for JSON parsing
 - [Coil](https://coil-kt.github.io/coil/) - for image loading
-- [YouTube Player API](https://developers.google.com/youtube/android/player) - for playing trailers
+- [Android Youtube Player](https://github.com/PierfrancescoSoffritti/android-youtube-player) - for playing trailers
 - [Material Components](https://material.io/develop/android) - for UI design
