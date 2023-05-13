@@ -10,4 +10,6 @@ interface PeopleRepository {
     suspend fun searchPeoples(query: String, page: Int): Flow<Result<PageResponse<People>>>
 
     suspend fun getPeopleDetail(peopleId: Int): Flow<Result<PeopleDetail>>
+
+    suspend fun getPeoplePopular(): Flow<Result<PageResponse<People>>>
 }
