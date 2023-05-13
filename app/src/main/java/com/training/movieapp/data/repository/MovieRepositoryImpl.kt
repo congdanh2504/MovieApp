@@ -50,4 +50,13 @@ class MovieRepositoryImpl @Inject constructor(private val movieApi: MovieApi) :
             emit(Result.Error(e))
         }
     }
+
+    override suspend fun getVideos(movieId: Int) = flow {
+        try {
+            val videoResponse = movieApi.getVideos(movieId)
+            emit(Result.Success(videoResponse))
+        } catch (e: Exception) {
+            emit(Result.Error(e))
+        }
+    }
 }

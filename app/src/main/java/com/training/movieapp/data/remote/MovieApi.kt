@@ -3,6 +3,7 @@ package com.training.movieapp.data.remote
 import com.training.movieapp.domain.model.Credit
 import com.training.movieapp.domain.model.Movie
 import com.training.movieapp.domain.model.PageResponse
+import com.training.movieapp.domain.model.VideoResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -34,4 +35,7 @@ interface MovieApi {
         @Query("query") query: String,
         @Query("page") page: Int
     ): PageResponse<Movie>
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getVideos(@Path("movie_id") movieDd: Int): VideoResponse
 }

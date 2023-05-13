@@ -5,10 +5,12 @@ import com.training.movieapp.domain.model.Movie
 import com.training.movieapp.domain.model.MovieDetail
 import com.training.movieapp.domain.model.Movies
 import com.training.movieapp.domain.model.PageResponse
+import com.training.movieapp.domain.model.VideoResponse
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
     suspend fun getMovieDetail(movieId: Int): Flow<Result<MovieDetail>>
     suspend fun getMovies(): Flow<Result<Movies>>
     suspend fun searchMovies(query: String, page: Int): Flow<Result<PageResponse<Movie>>>
+    suspend fun getVideos(movieId: Int): Flow<Result<VideoResponse>>
 }
