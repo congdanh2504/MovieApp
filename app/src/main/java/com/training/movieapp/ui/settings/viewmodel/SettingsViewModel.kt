@@ -1,8 +1,7 @@
 package com.training.movieapp.ui.settings.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.training.movieapp.common.Result
+import com.training.movieapp.common.BaseViewModel
 import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.domain.usecase.auth.SignOutUseCase
@@ -11,7 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,7 +18,7 @@ class SettingsViewModel @Inject constructor(
     private val signOutUseCase: SignOutUseCase,
     private val readUserUseCase: ReadUserUseCase
 ) :
-    ViewModel() {
+    BaseViewModel() {
     private val _signOutState = MutableStateFlow<DataState<Unit>>(DataState.Idle)
     val signOutState: StateFlow<DataState<Unit>> = _signOutState.asStateFlow()
 
@@ -28,28 +26,10 @@ class SettingsViewModel @Inject constructor(
     val userState: StateFlow<DataState<User>> = _userState.asStateFlow()
 
     fun readUser() = viewModelScope.launch {
-        readUserUseCase.execute()
-            .onStart { _userState.emit(DataState.Loading) }
-            .collect() { result ->
-                when (result) {
-                    is Result.Success -> {
-                        _userState.emit(DataState.Success(result.data))
-                    }
-
-                    is Result.Error -> {
-                        _userState.emit(DataState.Error(result.exception.message))
-                    }
-                }
-            }
+        handleState(_userState, readUserUseCase.execute())
     }
 
     fun signOut() = viewModelScope.launch {
-        signOutUseCase.execute()
-            .collect { result ->
-                when (result) {
-                    is Result.Success -> _signOutState.emit(DataState.Success(Unit))
-                    is Result.Error -> _signOutState.emit(DataState.Error(result.exception.message))
-                }
-            }
+        handleState(_signOutState, signOutUseCase.execute())
     }
 }

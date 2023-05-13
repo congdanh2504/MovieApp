@@ -11,6 +11,7 @@ import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -131,6 +132,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupDrawerLayout() {
+        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         binding.navigationView.layoutParams.width = (applicationContext.getWidth() * 0.8).toInt()
         binding.navigationView.requestLayout()
     }

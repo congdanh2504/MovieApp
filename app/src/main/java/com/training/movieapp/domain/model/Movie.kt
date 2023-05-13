@@ -12,6 +12,7 @@ data class Movie(
     @SerializedName("original_title") val originalTitle: String,
     @SerializedName("original_language") val originalLanguage: String,
     @SerializedName("overview") val overview: String?,
+    @SerializedName("video") val video: Boolean,
     @SerializedName("popularity") val popularity: String?,
     @SerializedName("poster_path") val posterPath: String?,
     @SerializedName("production_companies") val productionCompanies: List<Company>,

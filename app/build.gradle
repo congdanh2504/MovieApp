@@ -52,25 +52,39 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-    implementation 'com.google.firebase:firebase-auth-ktx:21.0.3'
-    implementation 'com.google.firebase:firebase-firestore-ktx:24.5.0'
-    implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // Coroutines play services
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
+
+    // Firebase
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.3'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.5.0'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
+
+    // Splash screen
     implementation 'androidx.core:core-splashscreen:1.0.0'
+
+    // Read more textview
     implementation 'kr.co.prnd:readmore-textview:1.0.0'
+
+    // Glide
     implementation 'com.github.bumptech.glide:glide:4.13.2'
+
+    // Size
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
     implementation 'com.intuit.ssp:ssp-android:1.1.0'
+
+    // Coil
     implementation 'io.coil-kt:coil:2.1.0'
 
+    // Hilt
     implementation "com.google.dagger:hilt-android:2.44.2"
     kapt "com.google.dagger:hilt-compiler:2.44.2"
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
-
-    //datastore
+    // Datastore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
 
     // Retrofit
@@ -78,4 +92,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation "com.squareup.okhttp3:okhttp:4.9.2"
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+
+    // Youtube Player
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:12.0.0'
 }
