@@ -17,7 +17,7 @@ class MovieListAdapter(
     inner class ViewHolder(private val binding: MovieItem2Binding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindMovie(movie: MovieCredit) {
-            binding.image.load(Images.POSTER_BASE_URL + movie.backdropPath)
+            binding.image.load(Images.POSTER_BASE_URL + movie.posterPath)
             binding.image.setOnClickListener {
                 onMovieClick(movie.id)
             }

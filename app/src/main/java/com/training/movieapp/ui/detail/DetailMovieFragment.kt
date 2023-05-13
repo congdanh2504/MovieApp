@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -16,6 +17,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.google.android.material.tabs.TabLayoutMediator
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
@@ -24,6 +27,7 @@ import com.training.movieapp.domain.model.Company
 import com.training.movieapp.domain.model.Credit
 import com.training.movieapp.domain.model.Movie
 import com.training.movieapp.domain.model.MovieDetail
+import com.training.movieapp.domain.model.VideoResponse
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.detail.adapter.CastAndCrewAdapter
 import com.training.movieapp.ui.detail.adapter.CompanyAdapter
@@ -32,6 +36,7 @@ import com.training.movieapp.ui.main.adapter.movie.MovieAdapter
 import com.training.movieapp.ui.main.utils.Images
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
@@ -63,28 +68,49 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
     private fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                detailMovieViewModel.movieDetailState.collect { state ->
-                    when (state) {
-                        is DataState.Idle -> {
-                            dialog.dismiss()
-                        }
+                launch {
+                    detailMovieViewModel.movieDetailState.collect { state ->
+                        when (state) {
+                            is DataState.Idle -> {
+                                dialog.dismiss()
+                            }
 
-                        is DataState.Loading -> {
-                            dialog.show()
-                        }
+                            is DataState.Loading -> {
+                                dialog.show()
+                            }
 
-                        is DataState.Success -> {
-                            dialog.dismiss()
-                            setMovieDetail(state.data)
-                        }
+                            is DataState.Success -> {
+                                dialog.dismiss()
+                                setMovieDetail(state.data)
+                            }
 
-                        is DataState.Error -> {
-                            dialog.dismiss()
-                            Toast.makeText(
-                                requireContext(),
-                                state.message.toString(),
-                                Toast.LENGTH_LONG
-                            ).show()
+                            is DataState.Error -> {
+                                dialog.dismiss()
+                                Toast.makeText(
+                                    requireContext(),
+                                    state.message.toString(),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+                    }
+                }
+                launch {
+                    detailMovieViewModel.videosState.collect { state ->
+                        when (state) {
+                            is DataState.Success -> {
+                                setVideo(state.data)
+                            }
+
+                            is DataState.Error -> {
+                                Toast.makeText(
+                                    requireContext(),
+                                    state.message.toString(),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+
+                            else -> {}
                         }
                     }
                 }
@@ -105,6 +131,7 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
         setCredit(movieDetail.credit)
         setCompanies(movieDetail.movie.productionCompanies)
         setSimilar(movieDetail.similar.results)
+        detailMovieViewModel.getVideos(args.movieId)
     }
 
     private fun setMovie(movie: Movie) {
@@ -150,6 +177,21 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
         binding.recyclerViewMovie.adapter = movieAdapter
     }
 
+    private fun setVideo(videoResponse: VideoResponse) {
+        val videos = videoResponse.videos
+        val trailerVideo =
+            videos.firstOrNull { video -> video.type == "Trailer" && video.site == "YouTube" }
+        trailerVideo?.let {
+            binding.youtubePlayerView.getYouTubePlayerWhenReady(object : YouTubePlayerCallback {
+                override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
+                    binding.youtubePlayerView.isGone = false
+                    val videoId = it.key
+                    youTubePlayer.loadVideo(videoId, 0f)
+                }
+            })
+        }
+    }
+
     private val onMovieClick: (movie: Movie) -> Unit = { movie ->
         val action = DetailMovieFragmentDirections.actionDetailMovieFragmentSelf(movie.id)
         findNavController().navigate(action)
@@ -157,13 +199,17 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
 
     private val onCompanyClick: (companyId: Int) -> Unit = { companyId ->
         val action =
-            DetailMovieFragmentDirections.actionDetailMovieFragmentToDetailCompanyFragment(companyId = companyId)
+            DetailMovieFragmentDirections.actionDetailMovieFragmentToDetailCompanyFragment(
+                companyId = companyId
+            )
         findNavController().navigate(action)
     }
 
     private val onPeopleClick: (peopleId: Int) -> Unit = { peopleId ->
         val action =
-            DetailMovieFragmentDirections.actionDetailMovieFragmentToDetailPersonFragment(peopleId)
+            DetailMovieFragmentDirections.actionDetailMovieFragmentToDetailPersonFragment(
+                peopleId
+            )
         findNavController().navigate(action)
     }
 
