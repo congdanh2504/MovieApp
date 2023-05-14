@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.training.movieapp.R
 import com.training.movieapp.databinding.UserItemBinding
-import com.training.movieapp.ui.main.model.User
+import com.training.movieapp.domain.model.User
 
 class UserAdapter(private val userModel: List<User>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
@@ -22,9 +22,9 @@ class UserAdapter(private val userModel: List<User>) :
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.binding.apply {
-            userImage.load(userModel[position].imageUrl)
-            tvUserName.text = userModel[position].name
-            tvUserNickName.text = "@" + userModel[position].name
+            userImage.load(userModel[position].imageURL)
+            tvUserName.text = userModel[position].username
+            tvUserNickName.text = "@" + userModel[position].bio
         }
     }
     override fun getItemCount() = userModel.size

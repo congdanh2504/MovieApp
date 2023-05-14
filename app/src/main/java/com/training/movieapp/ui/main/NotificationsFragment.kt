@@ -6,8 +6,6 @@ import androidx.fragment.app.Fragment
 import com.training.movieapp.R
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentNotificationsBinding
-import com.training.movieapp.ui.main.adapter.notifications.NotificationsAdapter
-import com.training.movieapp.ui.main.utils.SampleData
 
 class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
     private val binding: FragmentNotificationsBinding by viewBinding(FragmentNotificationsBinding::bind)
@@ -15,7 +13,7 @@ class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            rvNotifications.adapter = NotificationsAdapter(SampleData.User)
+//            rvNotifications.adapter = NotificationsAdapter(SampleData.User)
         }
     }
 }

@@ -12,12 +12,14 @@ import com.training.movieapp.R
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentExploreBinding
 import com.training.movieapp.domain.model.People
+import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.main.adapter.explore.ExploreAdapter
 import com.training.movieapp.ui.main.utils.SampleData
 import com.training.movieapp.ui.main.viewmodel.ExploreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 @AndroidEntryPoint
 class ExploreFragment : Fragment(R.layout.fragment_explore) {
     private val exploreViewModel: ExploreViewModel by viewModels()
@@ -25,14 +27,16 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         exploreViewModel.getPeoplePopular()
+        exploreViewModel.getUsers()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initObservers()
+        initObserversPeople()
+        initObserversUsers()
     }
 
-    private fun initObservers() {
+    private fun initObserversPeople() {
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 exploreViewModel.peoplePopularState.collect { state ->
@@ -56,8 +60,36 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
         }
     }
 
+    private fun initObserversUsers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                exploreViewModel.usersState.collect { state ->
+                    when (state) {
+                        is DataState.Success -> {
+                            setUsers(state.data)
+                        }
+
+                        is DataState.Error -> {
+                            Toast.makeText(
+                                requireContext(),
+                                state.message.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                        else -> {}
+                    }
+                }
+            }
+        }
+    }
+
     private fun setPeople(data: List<People>) {
-        SampleData.Performer = data;
+        SampleData.Performer = data
+    }
+
+    private fun setUsers(data: List<User>) {
+        SampleData.User = data
         binding.apply {
             rvMainExplore.adapter = ExploreAdapter(SampleData.listView)
         }
