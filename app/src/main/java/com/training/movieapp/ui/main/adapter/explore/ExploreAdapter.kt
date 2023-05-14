@@ -45,6 +45,7 @@ class ExploreAdapter(private val listView: List<Int>) :
             mainCompanies.rvCompanies.adapter = companiesAdapter
         }
     }
+
     inner class MainUserViewHolder(private val mainUser: MainUserItemBinding) :
         RecyclerView.ViewHolder(mainUser.root) {
         fun bind() {
@@ -56,22 +57,41 @@ class ExploreAdapter(private val listView: List<Int>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             PERFORMER_VIEW -> {
-                val view = MainPerformerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val view = MainPerformerItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 return MainPerformerViewHolder(view)
             }
+
             NETWORK_VIEW -> {
-                val view = MainNetworksItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val view = MainNetworksItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 return MainNetworkViewHolder(view)
             }
+
             COMPANIES_VIEW -> {
-                val view = MainCompaniesItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val view = MainCompaniesItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 return MainCompaniesViewHolder(view)
             }
+
             USER_VIEW -> {
-                val view = MainUserItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val view =
+                    MainUserItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 return MainUserViewHolder(view)
             }
-            else -> { throw IllegalArgumentException("invalid item type") }
+
+            else -> {
+                throw IllegalArgumentException("invalid item type")
+            }
         }
     }
 

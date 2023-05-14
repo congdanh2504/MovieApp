@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.training.movieapp.R
-import com.training.movieapp.common.Constant
 import com.training.movieapp.databinding.MovieItemBinding
 import com.training.movieapp.domain.model.Movie
+import com.training.movieapp.ui.main.utils.Images
 
 open class MovieAdapter(
     private val onMovieClick: (Movie) -> Unit
@@ -45,7 +45,11 @@ open class MovieAdapter(
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.binding.apply {
-            imgMoviePoster.load(Constant.POSTER_BASE_URL + movies[position].posterPath)
+            imgMoviePoster.load(
+                if (movies[position].posterPath != null)
+                    Images.POSTER_BASE_URL + movies[position].posterPath
+                else R.drawable.noimage
+            )
             imgMoviePoster.setOnClickListener {
                 onMovieClick(movies[position])
             }

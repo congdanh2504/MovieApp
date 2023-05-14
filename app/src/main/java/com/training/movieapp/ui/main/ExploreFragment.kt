@@ -18,10 +18,12 @@ import com.training.movieapp.ui.main.utils.SampleData
 import com.training.movieapp.ui.main.viewmodel.ExploreViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 @AndroidEntryPoint
 class ExploreFragment : Fragment(R.layout.fragment_explore) {
     private val exploreViewModel: ExploreViewModel by viewModels()
     private val binding: FragmentExploreBinding by viewBinding(FragmentExploreBinding::bind)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         exploreViewModel.getPeoplePopular()
