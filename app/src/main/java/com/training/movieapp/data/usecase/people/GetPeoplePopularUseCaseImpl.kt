@@ -13,5 +13,4 @@ class GetPeoplePopularUseCaseImpl@Inject constructor(private val peopleRepositor
     override suspend fun execute(): Flow<Result<PageResponse<People>>> {
         return peopleRepository.getPeoplePopular()
     }
-
 }

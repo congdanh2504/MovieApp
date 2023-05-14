@@ -93,10 +93,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun disableOnBackPressed() {
         requireActivity()
             .onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    // do nothing
+            .addCallback(
+                viewLifecycleOwner,
+                object : OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+                        // do nothing
+                    }
                 }
-            })
+            )
     }
 }

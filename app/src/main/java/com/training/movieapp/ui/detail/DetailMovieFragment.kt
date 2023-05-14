@@ -37,7 +37,6 @@ import com.training.movieapp.ui.main.utils.Images
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
 @AndroidEntryPoint
 class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
 

@@ -17,7 +17,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import coil.load
@@ -132,7 +131,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupDrawerLayout() {
-        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         binding.navigationView.layoutParams.width = (applicationContext.getWidth() * 0.8).toInt()
         binding.navigationView.requestLayout()
     }

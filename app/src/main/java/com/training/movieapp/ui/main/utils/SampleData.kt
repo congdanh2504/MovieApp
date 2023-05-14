@@ -34,7 +34,7 @@ object SampleData {
         Companies("https://image.tmdb.org/t/p/w200/IuAlhI9eVC9Z8UQWOIDdWRKSEJ.png"),
         Companies("https://image.tmdb.org/t/p/w200/iiHe9y7Qbbts4agxQGQ81nLzrB9.png"),
         Companies("https://image.tmdb.org/t/p/w200/hUzeosd33nzE5MCNsZxCGEKTXaQ.png"),
-        )
+    )
     val listView = listOf<Int>(
         0, 1, 2, 3
     )

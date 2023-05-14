@@ -57,7 +57,7 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
     }
 
     private fun setPeople(data: List<People>) {
-        SampleData.Performer = data;
+        SampleData.Performer = data
         binding.apply {
             rvMainExplore.adapter = ExploreAdapter(SampleData.listView)
         }

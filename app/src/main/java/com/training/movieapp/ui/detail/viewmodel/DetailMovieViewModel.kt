@@ -34,5 +34,4 @@ class DetailMovieViewModel @Inject constructor(
     fun getVideos(movieId: Int) = viewModelScope.launch {
         handleState(_videosState, getVideosUseCase.execute(movieId))
     }
-
 }
