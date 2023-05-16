@@ -1,19 +1,12 @@
 package com.training.movieapp.ui.main.utils
 
 import com.training.movieapp.domain.model.People
+import com.training.movieapp.domain.model.User
 import com.training.movieapp.ui.main.model.Companies
 import com.training.movieapp.ui.main.model.Network
-import com.training.movieapp.ui.main.model.User
 
 object SampleData {
-    val User = listOf(
-        User(Images.imageUrl1, "Ngoc Khanh"),
-        User(Images.imageUrl1, "Khanh Le"),
-        User(Images.imageUrl1, "Thuy Hai"),
-        User(Images.imageUrl1, "Ngoc Hau"),
-        User(Images.imageUrl1, "aasd zzxc"),
-        User(Images.imageUrl1, "bzxc aasd")
-    )
+    var User = listOf<User>()
     var Performer = listOf<People>()
     val Network = listOf(
         Network("https://image.tmdb.org/t/p/w200/1dtumlarEVXeYX1BrUFS9qLoG2Z.png"),

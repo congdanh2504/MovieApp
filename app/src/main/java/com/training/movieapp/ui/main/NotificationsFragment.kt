@@ -15,7 +15,7 @@ class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
-            rvNotifications.adapter = NotificationsAdapter(SampleData.User)
+//            rvNotifications.adapter = NotificationsAdapter(SampleData.User)
         }
     }
 }
