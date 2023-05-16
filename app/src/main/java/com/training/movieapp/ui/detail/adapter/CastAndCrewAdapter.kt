@@ -1,6 +1,7 @@
 package com.training.movieapp.ui.detail.adapter
 
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager

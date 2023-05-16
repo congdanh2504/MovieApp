@@ -10,18 +10,13 @@
         android:name="com.training.movieapp.ui.settings.ChangePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" />
+
     <fragment
         android:id="@+id/changeEmailFragment"
         android:name="com.training.movieapp.ui.settings.ChangeEmailFragment"
         android:label="fragment_change_email"
         tools:layout="@layout/fragment_change_email" />
-    <action
-        android:id="@+id/action_settingsFragment_to_changePasswordFragment"
-        app:destination="@id/changePasswordFragment"
-        app:enterAnim="@anim/slide_in_right"
-        app:exitAnim="@anim/slide_out_left"
-        app:popEnterAnim="@anim/slide_in_left"
-        app:popExitAnim="@anim/slide_out_right" />
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.training.movieapp.ui.settings.SettingsFragment"
@@ -58,32 +53,13 @@
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <action
-        android:id="@+id/action_settingsFragment_to_changeEmailFragment"
-        app:destination="@id/changeEmailFragment"
-        app:enterAnim="@anim/slide_in_right"
-        app:exitAnim="@anim/slide_out_left"
-        app:popEnterAnim="@anim/slide_in_left"
-        app:popExitAnim="@anim/slide_out_right" />
-    <action
-        android:id="@+id/action_settingsFragment_to_updateProfileFragment"
-        app:destination="@id/updateProfileFragment"
-        app:enterAnim="@anim/slide_in_right"
-        app:exitAnim="@anim/slide_out_left"
-        app:popEnterAnim="@anim/slide_in_left"
-        app:popExitAnim="@anim/slide_out_right" />
+
     <fragment
         android:id="@+id/updateProfileFragment"
         android:name="com.training.movieapp.ui.settings.UpdateProfileFragment"
         android:label="fragment_update_profile"
         tools:layout="@layout/fragment_update_profile" />
-    <action
-        android:id="@+id/action_resetFragment_to_loginFragment"
-        app:destination="@id/loginFragment"
-        app:enterAnim="@anim/slide_in_left"
-        app:exitAnim="@anim/slide_out_right"
-        app:popUpTo="@+id/loginFragment"
-        app:popUpToInclusive="true" />
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.training.movieapp.ui.auth.LoginFragment"
@@ -113,13 +89,6 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
-    <action
-        android:id="@+id/action_loginFragment_to_registerFragment"
-        app:destination="@id/registerFragment"
-        app:enterAnim="@anim/slide_in_right"
-        app:exitAnim="@anim/slide_out_left"
-        app:popEnterAnim="@anim/slide_in_left"
-        app:popExitAnim="@anim/slide_out_right" />
 
     <fragment
         android:id="@+id/registerFragment"
@@ -141,6 +110,13 @@
         <action
             android:id="@+id/action_seriesFragment_to_detailMovieFragment"
             app:destination="@id/detailMovieFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_seriesFragment_to_seriesDetailFragment"
+            app:destination="@id/seriesDetailFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -184,6 +160,7 @@
         android:name="com.training.movieapp.ui.main.NotificationsFragment"
         android:label="fragment_notifications"
         tools:layout="@layout/fragment_notifications" />
+
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.training.movieapp.ui.auth.ForgotPasswordFragment"
@@ -197,15 +174,24 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/resetFragment"
         android:name="com.training.movieapp.ui.auth.ResetFragment"
         android:label="fragment_reset"
         tools:layout="@layout/fragment_reset">
+        <action
+            android:id="@+id/action_resetFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/loginFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="email"
             app:argType="string" />
     </fragment>
+
     <fragment
         android:id="@+id/detailMovieFragment"
         android:name="com.training.movieapp.ui.detail.DetailMovieFragment"
@@ -217,8 +203,10 @@
         <action
             android:id="@+id/action_detailMovieFragment_self"
             app:destination="@id/detailMovieFragment"
-            app:popUpTo="@id/detailMovieFragment"
-            app:popUpToInclusive="true" />
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_detailMovieFragment_to_detailPersonFragment"
             app:destination="@id/detailPersonFragment"
@@ -234,6 +222,7 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.training.movieapp.ui.main.SearchFragment"
@@ -256,6 +245,7 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/detailPersonFragment"
         android:name="com.training.movieapp.ui.detail.DetailPersonFragment"
@@ -272,6 +262,7 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
         android:id="@+id/detailCompanyFragment"
         android:name="com.training.movieapp.ui.detail.DetailCompanyFragment"
@@ -281,4 +272,36 @@
             android:name="companyId"
             app:argType="integer" />
     </fragment>
+
+    <fragment
+        android:id="@+id/seriesDetailFragment"
+        android:name="com.training.movieapp.ui.detail.DetailSeriesFragment"
+        android:label="fragment_series_detail"
+        tools:layout="@layout/fragment_detail_series">
+        <argument
+            android:name="seriesId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_seriesDetailFragment_to_detailCompanyFragment"
+            app:destination="@id/detailCompanyFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_seriesDetailFragment_to_detailPersonFragment"
+            app:destination="@id/detailPersonFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_seriesDetailFragment_self"
+            app:destination="@id/seriesDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
 </navigation>

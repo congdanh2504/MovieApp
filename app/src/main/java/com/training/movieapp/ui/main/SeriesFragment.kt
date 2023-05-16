@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.training.movieapp.R
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentSeriesBinding
-import com.training.movieapp.domain.model.Series
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.main.adapter.series.MainSeriesAdapter
 import com.training.movieapp.ui.main.model.MainSeries
@@ -23,12 +24,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SeriesFragment : Fragment(R.layout.fragment_series) {
     private val binding: FragmentSeriesBinding by viewBinding(FragmentSeriesBinding::bind)
-    private val seriesViewModel: SeriesViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        seriesViewModel.getSeries()
-    }
+    private val seriesViewModel: SeriesViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,7 +34,7 @@ class SeriesFragment : Fragment(R.layout.fragment_series) {
     private fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                seriesViewModel.seriesState.collect { state ->
+                seriesViewModel.mainSeriesState.collect { state ->
                     when (state) {
                         is DataState.Success -> {
                             setSeries(state.data)
@@ -59,7 +55,7 @@ class SeriesFragment : Fragment(R.layout.fragment_series) {
         }
     }
 
-    private fun setSeries(data: Series) {
+    private fun setSeries(data: com.training.movieapp.domain.model.TopSeries) {
         val collections = ArrayList<MainSeries>()
         collections.add(MainSeries("Trending Mow", data.trendingSeries.results, Trending.TRUE))
         collections.add(
@@ -78,7 +74,12 @@ class SeriesFragment : Fragment(R.layout.fragment_series) {
             )
         )
         binding.apply {
-            rvMainSeries.adapter = MainSeriesAdapter(collections)
+            rvMainSeries.adapter = MainSeriesAdapter(collections, onSeriesClick)
         }
+    }
+
+    private val onSeriesClick : (seriesId: Int) -> Unit = {seriesId ->
+        val action = SeriesFragmentDirections.actionSeriesFragmentToSeriesDetailFragment(seriesId)
+        findNavController().navigate(action)
     }
 }

@@ -12,7 +12,7 @@ import com.training.movieapp.domain.model.Movie
 
 class TrendingMovieAdapter(
     private val moviesModel: List<Movie>,
-    private val onMovieClick: (Movie) -> Unit
+    private val onMovieClick: (Int) -> Unit
 ) :
     RecyclerView.Adapter<TrendingMovieAdapter.MovieTrendingViewHolder>() {
 
@@ -32,7 +32,7 @@ class TrendingMovieAdapter(
         holder.binding.apply {
             imgMoviePosterTrending.load(Constant.POSTER_BASE_URL + moviesModel[position].posterPath)
             imgMoviePosterTrending.setOnClickListener {
-                onMovieClick(moviesModel[position])
+                onMovieClick(moviesModel[position].id)
             }
         }
     }

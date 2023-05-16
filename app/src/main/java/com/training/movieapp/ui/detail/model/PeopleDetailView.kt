@@ -2,7 +2,7 @@ package com.training.movieapp.ui.detail.model
 
 import com.training.movieapp.domain.model.MovieCredits
 
-data class PeopleDetail(
+data class PeopleDetailView(
     val id: Int,
     val birthday: String?,
     val name: String,

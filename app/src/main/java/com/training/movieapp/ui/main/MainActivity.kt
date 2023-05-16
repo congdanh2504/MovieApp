@@ -27,6 +27,8 @@ import com.training.movieapp.databinding.ActivityMainBinding
 import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.main.viewmodel.MainViewModel
+import com.training.movieapp.ui.main.viewmodel.MoviesViewModel
+import com.training.movieapp.ui.main.viewmodel.SeriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -35,6 +37,8 @@ class MainActivity : AppCompatActivity() {
 
     private val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::inflate)
     private val mainViewModel: MainViewModel by viewModels()
+    private val moviesViewModel: MoviesViewModel by viewModels()
+    private val seriesViewModel: SeriesViewModel by viewModels()
     private lateinit var splashScreen: SplashScreen
     private lateinit var navController: NavController
 
@@ -49,6 +53,8 @@ class MainActivity : AppCompatActivity() {
         setupDrawerLayout()
 
         mainViewModel.checkUserLoggedIn()
+        moviesViewModel.getMovies()
+        seriesViewModel.getSeries()
     }
 
     private fun initNavController() {
@@ -147,6 +153,7 @@ class MainActivity : AppCompatActivity() {
         val headerView = binding.navigationView.getHeaderView(0)
         headerView.findViewById<TextView>(R.id.textView_username).text = user.username
         headerView.findViewById<TextView>(R.id.textView_username2).text = "@${user.username}"
-        headerView.findViewById<ImageView>(R.id.imageView_userImage).load(user.imageURL ?: R.drawable.icons8user)
+        headerView.findViewById<ImageView>(R.id.imageView_userImage)
+            .load(user.imageURL ?: R.drawable.icons8user)
     }
 }

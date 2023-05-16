@@ -22,7 +22,7 @@ import com.training.movieapp.databinding.FragmentDetailPersonBinding
 import com.training.movieapp.domain.model.MovieCredits
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.detail.adapter.MyPagerAdapter
-import com.training.movieapp.ui.detail.model.PeopleDetail
+import com.training.movieapp.ui.detail.model.PeopleDetailView
 import com.training.movieapp.ui.detail.viewmodel.DetailPeopleViewModel
 import com.training.movieapp.ui.main.utils.Images
 import dagger.hilt.android.AndroidEntryPoint
@@ -96,7 +96,7 @@ class DetailPersonFragment : Fragment(R.layout.fragment_detail_person) {
         }
     }
 
-    private fun setPeopleDetail(peopleDetail: PeopleDetail) {
+    private fun setPeopleDetail(peopleDetail: PeopleDetailView) {
         binding.apply {
             imageViewProfileImage.load(
                 if (peopleDetail.profilePath == null) R.drawable.icons8user

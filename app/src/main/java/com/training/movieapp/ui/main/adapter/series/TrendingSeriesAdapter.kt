@@ -8,9 +8,12 @@ import coil.load
 import com.training.movieapp.R
 import com.training.movieapp.common.Constant
 import com.training.movieapp.databinding.TrendingSeriesItemBinding
-import com.training.movieapp.domain.model.Serie
+import com.training.movieapp.domain.model.SeriesDetail
 
-class TrendingSeriesAdapter(private val seriesModel: List<Serie>) :
+class TrendingSeriesAdapter(
+    private val seriesModel: List<SeriesDetail>,
+    private val onSeriesClick: (Int) -> Unit
+) :
     RecyclerView.Adapter<TrendingSeriesAdapter.TrendingSeriesViewHolder>() {
     inner class TrendingSeriesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = TrendingSeriesItemBinding.bind(itemView)
@@ -26,7 +29,10 @@ class TrendingSeriesAdapter(private val seriesModel: List<Serie>) :
 
     override fun onBindViewHolder(holder: TrendingSeriesViewHolder, position: Int) {
         holder.binding.apply {
-            imgSeriesPosterTrending.load(Constant.POSTER_BASE_URL + seriesModel[position].poster_path)
+            imgSeriesPosterTrending.load(Constant.POSTER_BASE_URL + seriesModel[position].posterPath)
+            imgSeriesPosterTrending.setOnClickListener {
+                onSeriesClick(seriesModel[position].id)
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.training.movieapp.R
 import com.training.movieapp.databinding.CompanyItemBinding
 import com.training.movieapp.domain.model.Company
 import com.training.movieapp.ui.main.utils.Images
@@ -19,7 +20,9 @@ class CompanyAdapter(
         fun bind(company: Company) {
             binding.apply {
                 imageViewCompanyImage.load(
-                    Images.POSTER_BASE_URL + company.logoPath
+                    if (company.logoPath != null)
+                        Images.POSTER_BASE_URL + company.logoPath
+                    else R.drawable.noimage
                 )
                 imageViewCompanyImage.setOnClickListener {
                     onCompanyClick(company.id)

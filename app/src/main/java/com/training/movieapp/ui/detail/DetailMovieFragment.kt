@@ -21,6 +21,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
+import com.training.movieapp.common.reduceDragSensitivity
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentDetailMovieBinding
 import com.training.movieapp.domain.model.Company
@@ -61,6 +62,8 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
     }
 
     private fun initView() {
+        lifecycle.addObserver(binding.youtubePlayerView)
+        binding.viewPager.reduceDragSensitivity()
         dialog = LoadingDialog(requireContext())
     }
 
@@ -135,7 +138,10 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
 
     private fun setMovie(movie: Movie) {
         binding.apply {
-            movie.posterPath?.let { imageViewMovieImage.load(Images.POSTER_BASE_URL + it) }
+            imageViewMovieImage.load(
+                if (movie.posterPath != null) Images.POSTER_BASE_URL + movie.posterPath
+                else R.drawable.noimage
+            )
             textViewTitle.text = movie.title
             textViewReleaseDate.text = movie.releaseDate
             textViewStatus.text = movie.status
@@ -191,15 +197,15 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
         }
     }
 
-    private val onMovieClick: (movie: Movie) -> Unit = { movie ->
-        val action = DetailMovieFragmentDirections.actionDetailMovieFragmentSelf(movie.id)
+    private val onMovieClick: (movieId: Int) -> Unit = { movieId ->
+        val action = DetailMovieFragmentDirections.actionDetailMovieFragmentSelf(movieId)
         findNavController().navigate(action)
     }
 
     private val onCompanyClick: (companyId: Int) -> Unit = { companyId ->
         val action =
             DetailMovieFragmentDirections.actionDetailMovieFragmentToDetailCompanyFragment(
-                companyId = companyId
+                companyId
             )
         findNavController().navigate(action)
     }

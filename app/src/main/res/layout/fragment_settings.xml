@@ -291,7 +291,7 @@
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:layout_weight="1"
-                            android:text="Change Email"
+                            android:text="Email"
                             android:textColor="@color/tint_primary"
                             android:textSize="@dimen/_12ssp" />
 
