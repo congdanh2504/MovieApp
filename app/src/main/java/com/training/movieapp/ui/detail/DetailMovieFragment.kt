@@ -1,7 +1,6 @@
 package com.training.movieapp.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
@@ -16,14 +15,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import coil.load
 import com.google.android.material.tabs.TabLayoutMediator
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
+import com.training.movieapp.common.reduceDragSensitivity
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentDetailMovieBinding
 import com.training.movieapp.domain.model.Company
@@ -64,6 +62,7 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
     }
 
     private fun initView() {
+        lifecycle.addObserver(binding.youtubePlayerView)
         binding.viewPager.reduceDragSensitivity()
         dialog = LoadingDialog(requireContext())
     }
@@ -157,8 +156,6 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
 
     private fun setCredit(credit: Credit) {
         castAndCrewAdapter = CastAndCrewAdapter(credit.casts, credit.crews, onPeopleClick)
-        Log.d("AAA", credit.casts.size.toString())
-        Log.d("AAA", credit.crews.size.toString())
         val tabTitles =
             listOf(getTab(credit.casts.size, "Cast"), getTab(credit.crews.size, "Crew"))
 
@@ -200,15 +197,15 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
         }
     }
 
-    private val onMovieClick: (movie: Movie) -> Unit = { movie ->
-        val action = DetailMovieFragmentDirections.actionDetailMovieFragmentSelf(movie.id)
+    private val onMovieClick: (movieId: Int) -> Unit = { movieId ->
+        val action = DetailMovieFragmentDirections.actionDetailMovieFragmentSelf(movieId)
         findNavController().navigate(action)
     }
 
     private val onCompanyClick: (companyId: Int) -> Unit = { companyId ->
         val action =
             DetailMovieFragmentDirections.actionDetailMovieFragmentToDetailCompanyFragment(
-                companyId = companyId
+                companyId
             )
         findNavController().navigate(action)
     }
@@ -238,17 +235,5 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
         tab.findViewById<TextView>(R.id.number).text = number.toString()
         tab.findViewById<TextView>(R.id.title).text = title
         return tab
-    }
-
-    fun ViewPager2.reduceDragSensitivity() {
-        val recyclerViewField = ViewPager2::class.java.getDeclaredField("mRecyclerView")
-        recyclerViewField.isAccessible = true
-        val recyclerView = recyclerViewField.get(this) as RecyclerView
-
-        val touchSlopField = RecyclerView::class.java.getDeclaredField("mTouchSlop")
-        touchSlopField.isAccessible = true
-        val touchSlop = touchSlopField.get(recyclerView) as Int
-
-        touchSlopField.set(recyclerView, touchSlop*8)       // "8" was obtained experimentally
     }
 }

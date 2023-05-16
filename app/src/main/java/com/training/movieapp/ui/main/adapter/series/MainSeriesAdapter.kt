@@ -10,7 +10,10 @@ import com.training.movieapp.ui.main.adapter.series.MainSeriesAdapter.Const.noTR
 import com.training.movieapp.ui.main.model.MainSeries
 import com.training.movieapp.ui.main.utils.Trending
 
-class MainSeriesAdapter(private val collectionSeries: List<MainSeries>) :
+class MainSeriesAdapter(
+    private val collectionSeries: List<MainSeries>,
+    private val onSeriesClick: (Int) -> Unit
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     object Const {
         const val TRENDING = 0
@@ -21,7 +24,7 @@ class MainSeriesAdapter(private val collectionSeries: List<MainSeries>) :
         RecyclerView.ViewHolder(seriesParent.root) {
         fun bind(collectionSeries: MainSeries) {
             seriesParent.tvGenreSeries.text = collectionSeries.title
-            val seriesAdapter = SeriesAdapter(collectionSeries.seriesModels)
+            val seriesAdapter = SeriesAdapter(collectionSeries.seriesModels, onSeriesClick)
             seriesParent.rvSeries.adapter = seriesAdapter
         }
     }
@@ -30,7 +33,8 @@ class MainSeriesAdapter(private val collectionSeries: List<MainSeries>) :
         RecyclerView.ViewHolder(trendingSeriesParent.root) {
         fun bind(collectionSeries: MainSeries) {
             trendingSeriesParent.tvGenreSeries.text = collectionSeries.title
-            val trendingSeriesAdapter = TrendingSeriesAdapter(collectionSeries.seriesModels)
+            val trendingSeriesAdapter =
+                TrendingSeriesAdapter(collectionSeries.seriesModels, onSeriesClick)
             trendingSeriesParent.rvSeriesTrending.adapter = trendingSeriesAdapter
         }
     }

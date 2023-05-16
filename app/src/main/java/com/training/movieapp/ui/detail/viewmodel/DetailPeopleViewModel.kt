@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.training.movieapp.common.BaseViewModel
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.domain.usecase.people.GetPeopleDetailUseCase
-import com.training.movieapp.ui.detail.model.PeopleDetail
+import com.training.movieapp.ui.detail.model.PeopleDetailView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,8 +17,8 @@ class DetailPeopleViewModel @Inject constructor(
     private val getPeopleDetailUseCase: GetPeopleDetailUseCase
 ) : BaseViewModel() {
 
-    private val _peopleState = MutableStateFlow<DataState<PeopleDetail>>(DataState.Idle)
-    val peopleState: StateFlow<DataState<PeopleDetail>> = _peopleState.asStateFlow()
+    private val _peopleState = MutableStateFlow<DataState<PeopleDetailView>>(DataState.Idle)
+    val peopleState: StateFlow<DataState<PeopleDetailView>> = _peopleState.asStateFlow()
 
     fun getPeopleDetail(peopleId: Int) = viewModelScope.launch {
         handleState(_peopleState, getPeopleDetailUseCase.execute(peopleId))

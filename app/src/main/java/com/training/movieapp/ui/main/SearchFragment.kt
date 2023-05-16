@@ -139,9 +139,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
 
-    private val onMovieClick: (movie: Movie) -> Unit = { movie ->
+    private val onMovieClick: (movieId: Int) -> Unit = { movieId ->
         val action =
-            SearchFragmentDirections.actionSearchFragmentToDetailMovieFragment(movieId = movie.id)
+            SearchFragmentDirections.actionSearchFragmentToDetailMovieFragment(movieId)
         findNavController().navigate(action)
     }
 

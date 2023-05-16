@@ -3,7 +3,7 @@ package com.training.movieapp.ui.main.adapter.movie
 import com.training.movieapp.domain.model.Movie
 
 class PaginationMovieAdapter(
-    onMovieClick: (Movie) -> Unit,
+    onMovieClick: (Int) -> Unit,
     private val onLoadMoreMovies: (Int) -> Unit
 ) :
     MovieAdapter(onMovieClick) {

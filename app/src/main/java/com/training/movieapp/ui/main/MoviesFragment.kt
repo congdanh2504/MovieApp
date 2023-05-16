@@ -27,15 +27,10 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MoviesFragment : Fragment(R.layout.fragment_movies) {
-    private val moviesViewModel: MoviesViewModel by viewModels()
+    private val moviesViewModel: MoviesViewModel by activityViewModels()
     private val binding: FragmentMoviesBinding by viewBinding(FragmentMoviesBinding::bind)
     private lateinit var dialog: LoadingDialog
     private val mainViewModel: MainViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        moviesViewModel.getMovies()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -79,10 +74,8 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
         }
     }
 
-    private val onMovieClick: (movie: Movie) -> Unit = { movie ->
-        val action = MoviesFragmentDirections.actionMoviesFragmentToDetailMovieFragment(
-            movieId = movie.id
-        )
+    private val onMovieClick: (movieId: Int) -> Unit = { movieId ->
+        val action = MoviesFragmentDirections.actionMoviesFragmentToDetailMovieFragment(movieId)
         findNavController().navigate(action)
     }
 }

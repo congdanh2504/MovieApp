@@ -13,7 +13,7 @@ import com.training.movieapp.ui.main.utils.Trending
 
 class MainMovieAdapter(
     private val collection: List<MainMovie>,
-    private val onMovieClick: (Movie) -> Unit
+    private val onMovieClick: (Int) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     object Const {

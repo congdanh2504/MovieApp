@@ -12,7 +12,7 @@ import com.training.movieapp.domain.model.Movie
 import com.training.movieapp.ui.main.utils.Images
 
 open class MovieAdapter(
-    private val onMovieClick: (Movie) -> Unit
+    private val onMovieClick: (Int) -> Unit
 ) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
@@ -51,7 +51,7 @@ open class MovieAdapter(
                 else R.drawable.noimage
             )
             imgMoviePoster.setOnClickListener {
-                onMovieClick(movies[position])
+                onMovieClick(movies[position].id)
             }
         }
     }

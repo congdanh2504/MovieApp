@@ -13,8 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import coil.load
 import com.google.android.material.tabs.TabLayoutMediator
 import com.training.movieapp.R
@@ -24,7 +22,7 @@ import com.training.movieapp.databinding.FragmentDetailPersonBinding
 import com.training.movieapp.domain.model.MovieCredits
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.detail.adapter.MyPagerAdapter
-import com.training.movieapp.ui.detail.model.PeopleDetail
+import com.training.movieapp.ui.detail.model.PeopleDetailView
 import com.training.movieapp.ui.detail.viewmodel.DetailPeopleViewModel
 import com.training.movieapp.ui.main.utils.Images
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,7 +53,6 @@ class DetailPersonFragment : Fragment(R.layout.fragment_detail_person) {
     }
 
     private fun initView() {
-//        binding.viewPager.reduceDragSensitivity()
         dialog = LoadingDialog(requireContext())
     }
 
@@ -99,7 +96,7 @@ class DetailPersonFragment : Fragment(R.layout.fragment_detail_person) {
         }
     }
 
-    private fun setPeopleDetail(peopleDetail: PeopleDetail) {
+    private fun setPeopleDetail(peopleDetail: PeopleDetailView) {
         binding.apply {
             imageViewProfileImage.load(
                 if (peopleDetail.profilePath == null) R.drawable.icons8user
@@ -147,17 +144,5 @@ class DetailPersonFragment : Fragment(R.layout.fragment_detail_person) {
         tab.findViewById<TextView>(R.id.number).text = number.toString()
         tab.findViewById<TextView>(R.id.title).text = title
         return tab
-    }
-
-    fun ViewPager2.reduceDragSensitivity() {
-        val recyclerViewField = ViewPager2::class.java.getDeclaredField("mRecyclerView")
-        recyclerViewField.isAccessible = true
-        val recyclerView = recyclerViewField.get(this) as RecyclerView
-
-        val touchSlopField = RecyclerView::class.java.getDeclaredField("mTouchSlop")
-        touchSlopField.isAccessible = true
-        val touchSlop = touchSlopField.get(recyclerView) as Int
-
-        touchSlopField.set(recyclerView, touchSlop*8)       // "8" was obtained experimentally
     }
 }
