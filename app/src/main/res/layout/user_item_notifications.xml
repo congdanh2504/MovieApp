@@ -12,7 +12,6 @@
         android:orientation="horizontal"
         android:padding="15dp"
         android:weightSum="10"
-        android:background="@color/background_primary"
         >
 
         <androidx.cardview.widget.CardView
