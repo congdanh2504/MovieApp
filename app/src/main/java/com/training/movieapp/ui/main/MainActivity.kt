@@ -26,6 +26,7 @@ import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.ActivityMainBinding
 import com.training.movieapp.domain.model.User
 import com.training.movieapp.domain.model.state.DataState
+import com.training.movieapp.ui.main.viewmodel.ExploreViewModel
 import com.training.movieapp.ui.main.viewmodel.MainViewModel
 import com.training.movieapp.ui.main.viewmodel.MoviesViewModel
 import com.training.movieapp.ui.main.viewmodel.SeriesViewModel
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private val mainViewModel: MainViewModel by viewModels()
     private val moviesViewModel: MoviesViewModel by viewModels()
     private val seriesViewModel: SeriesViewModel by viewModels()
+    private val exploreViewModel: ExploreViewModel by viewModels()
     private lateinit var splashScreen: SplashScreen
     private lateinit var navController: NavController
 
@@ -55,6 +57,8 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.checkUserLoggedIn()
         moviesViewModel.getMovies()
         seriesViewModel.getSeries()
+        exploreViewModel.getUsers()
+        exploreViewModel.getPeoplePopular()
     }
 
     private fun initNavController() {

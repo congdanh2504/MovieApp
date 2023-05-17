@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -22,14 +22,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ExploreFragment : Fragment(R.layout.fragment_explore) {
-    private val exploreViewModel: ExploreViewModel by viewModels()
+    private val exploreViewModel: ExploreViewModel by activityViewModels()
     private val binding: FragmentExploreBinding by viewBinding(FragmentExploreBinding::bind)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        exploreViewModel.getUsers()
-        exploreViewModel.getPeoplePopular()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,7 +56,7 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
     }
 
     private fun setUsers(data: List<User>) {
-        SampleData.User =data
+        SampleData.User = data
         binding.apply {
             rvMainExplore.adapter = ExploreAdapter(SampleData.listView)
         }

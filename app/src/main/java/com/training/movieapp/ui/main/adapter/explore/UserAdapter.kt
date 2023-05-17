@@ -22,10 +22,17 @@ class UserAdapter(private val userModel: List<User>) :
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.binding.apply {
-            userImage.load(userModel[position].imageURL)
+            userImage.load(userModel[position].imageURL ?: R.drawable.icons8user)
             tvUserName.text = userModel[position].username
             tvUserNickName.text = "@" + userModel[position].bio
+            if (position == 0) {
+                card.setBackgroundResource(R.drawable.top_radius)
+            } else if (position == userModel.size - 1) {
+                card.setBackgroundResource(R.drawable.bottom_radius)
+            }
+
         }
     }
+
     override fun getItemCount() = userModel.size
 }
