@@ -35,6 +35,6 @@ class LoadingDialog(private val fragmentManager: FragmentManager) : DialogFragme
     }
 
     companion object {
-        private const val TAG = "PurchaseConfirmationDialog"
+        private const val TAG = "LoadingDialog"
     }
 }
