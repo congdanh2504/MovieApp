@@ -36,7 +36,7 @@ class ChangeEmailFragment : Fragment(R.layout.fragment_change_email) {
     }
 
     private fun initView() {
-        dialog = LoadingDialog(requireContext())
+        dialog = LoadingDialog(childFragmentManager)
     }
 
     private fun initActions() {
@@ -77,12 +77,12 @@ class ChangeEmailFragment : Fragment(R.layout.fragment_change_email) {
                     changeEmailViewModel.changeEmailState.collect { state ->
                         when (state) {
                             is DataState.Idle -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.textViewError.isVisible = false
                             }
 
                             is DataState.Success -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.textViewError.isVisible = false
                                 Toast.makeText(
                                     requireContext(),
@@ -93,7 +93,7 @@ class ChangeEmailFragment : Fragment(R.layout.fragment_change_email) {
                             }
 
                             is DataState.Error -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.textViewError.isVisible = true
                                 binding.textViewError.text = state.message
                             }

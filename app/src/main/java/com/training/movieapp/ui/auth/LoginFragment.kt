@@ -35,7 +35,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun initView() {
-        dialog = LoadingDialog(requireContext())
+        dialog = LoadingDialog(childFragmentManager)
     }
 
     private fun initActions() {
@@ -58,19 +58,19 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 loginViewModel.loginState.collect { state ->
                     when (state) {
                         is DataState.Idle -> {
-                            dialog.dismiss()
+                            dialog.safeDismiss()
                             binding.errorTV.isVisible = false
                         }
 
                         is DataState.Success -> {
-                            dialog.dismiss()
+                            dialog.safeDismiss()
                             binding.errorTV.isVisible = false
                             loginViewModel.saveUser(state.data)
                             findNavController().navigate(R.id.action_loginFragment_to_moviesFragment)
                         }
 
                         is DataState.Error -> {
-                            dialog.dismiss()
+                            dialog.safeDismiss()
                             binding.errorTV.isVisible = true
                             binding.errorTV.text = state.message
                         }

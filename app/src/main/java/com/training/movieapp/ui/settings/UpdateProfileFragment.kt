@@ -41,7 +41,7 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
     }
 
     private fun initView() {
-        dialog = LoadingDialog(requireContext())
+        dialog = LoadingDialog(childFragmentManager)
     }
 
     private fun initActions() {
@@ -84,12 +84,12 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
                     updateProfileViewModel.updateProfileState.collect { state ->
                         when (state) {
                             is DataState.Idle -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.textViewError.isVisible = false
                             }
 
                             is DataState.Success -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.textViewError.isVisible = false
                                 Toast.makeText(
                                     requireContext(),
@@ -100,7 +100,7 @@ class UpdateProfileFragment : Fragment(R.layout.fragment_update_profile) {
                             }
 
                             is DataState.Error -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.textViewError.isVisible = true
                                 binding.textViewError.text = state.message
                             }

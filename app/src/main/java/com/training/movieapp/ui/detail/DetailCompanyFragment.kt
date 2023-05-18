@@ -28,7 +28,7 @@ class DetailCompanyFragment : Fragment(R.layout.fragment_detail_company) {
     private val binding: FragmentDetailCompanyBinding by viewBinding(FragmentDetailCompanyBinding::bind)
     private val detailCompanyViewModel: DetailCompanyViewModel by viewModels()
     private val args: DetailCompanyFragmentArgs by navArgs()
-    private lateinit var loadingDialog: LoadingDialog
+    private lateinit var dialog: LoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +43,7 @@ class DetailCompanyFragment : Fragment(R.layout.fragment_detail_company) {
     }
 
     private fun initView() {
-        loadingDialog = LoadingDialog(requireContext())
+        dialog = LoadingDialog(childFragmentManager)
     }
 
     private fun initActions() {
@@ -60,20 +60,20 @@ class DetailCompanyFragment : Fragment(R.layout.fragment_detail_company) {
                 detailCompanyViewModel.companiesState.collect { state ->
                     when (state) {
                         is DataState.Idle -> {
-                            loadingDialog.dismiss()
+                            dialog.safeDismiss()
                         }
 
                         is DataState.Loading -> {
-                            loadingDialog.show()
+                            dialog.show()
                         }
 
                         is DataState.Success -> {
-                            loadingDialog.dismiss()
+                            dialog.safeDismiss()
                             setCompany(state.data)
                         }
 
                         is DataState.Error -> {
-                            loadingDialog.dismiss()
+                            dialog.safeDismiss()
                             Toast.makeText(
                                 requireContext(),
                                 state.message.toString(),

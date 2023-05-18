@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -14,7 +13,6 @@ import com.training.movieapp.R
 import com.training.movieapp.common.LoadingDialog
 import com.training.movieapp.common.viewBinding
 import com.training.movieapp.databinding.FragmentMoviesBinding
-import com.training.movieapp.domain.model.Movie
 import com.training.movieapp.domain.model.Movies
 import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.main.adapter.movie.MainMovieAdapter
@@ -34,7 +32,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dialog = LoadingDialog(requireContext())
+        dialog = LoadingDialog(childFragmentManager)
         mainViewModel.readUser()
         initObservers()
     }
@@ -45,10 +43,12 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
                 moviesViewModel.moviesState.collect { state ->
                     when (state) {
                         is DataState.Success -> {
+                            dialog.safeDismiss()
                             setMovies(state.data)
                         }
 
                         is DataState.Error -> {
+                            dialog.safeDismiss()
                             Toast.makeText(
                                 requireContext(),
                                 state.message.toString(),
@@ -56,7 +56,13 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
                             ).show()
                         }
 
-                        else -> {}
+                        is DataState.Loading -> {
+                            dialog.show()
+                        }
+
+                        is DataState.Idle -> {
+                            dialog.safeDismiss()
+                        }
                     }
                 }
             }

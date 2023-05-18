@@ -63,7 +63,7 @@ class DetailSeriesFragment : Fragment(R.layout.fragment_detail_series) {
 
     private fun initView() {
         binding.viewPager.reduceDragSensitivity()
-        dialog = LoadingDialog(requireContext())
+        dialog = LoadingDialog(childFragmentManager)
     }
 
     private fun initActions() {
@@ -80,7 +80,7 @@ class DetailSeriesFragment : Fragment(R.layout.fragment_detail_series) {
                 detailSeriesViewModel.detailSeriesState.collect { state ->
                     when (state) {
                         is DataState.Idle -> {
-                            dialog.dismiss()
+                            dialog.safeDismiss()
                         }
 
                         is DataState.Loading -> {
@@ -88,12 +88,12 @@ class DetailSeriesFragment : Fragment(R.layout.fragment_detail_series) {
                         }
 
                         is DataState.Success -> {
-                            dialog.dismiss()
+                            dialog.safeDismiss()
                             setSeriesDetail(state.data)
                         }
 
                         is DataState.Error -> {
-                            dialog.dismiss()
+                            dialog.safeDismiss()
                             Toast.makeText(
                                 requireContext(), state.message.toString(), Toast.LENGTH_LONG
                             ).show()
