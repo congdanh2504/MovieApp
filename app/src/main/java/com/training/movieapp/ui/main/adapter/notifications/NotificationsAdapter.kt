@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.training.movieapp.R
 import com.training.movieapp.databinding.UserItemNotificationsBinding
-import com.training.movieapp.ui.main.model.User
+import com.training.movieapp.domain.model.User
 
 class NotificationsAdapter(private val userModel: List<User>) :
     RecyclerView.Adapter<NotificationsAdapter.NotificationsViewHolder>() {
@@ -25,9 +25,9 @@ class NotificationsAdapter(private val userModel: List<User>) :
 
     override fun onBindViewHolder(holder: NotificationsViewHolder, position: Int) {
         holder.binding.apply {
-            userImage.load(userModel[position].imageUrl)
-            tvUsername.text = userModel[position].name
-            tvNickname.text = "@" + userModel[position].name
+            userImage.load(userModel[position].imageURL)
+            tvUsername.text = userModel[position].username
+            tvNickname.text = "@" + userModel[position].bio
         }
     }
 }

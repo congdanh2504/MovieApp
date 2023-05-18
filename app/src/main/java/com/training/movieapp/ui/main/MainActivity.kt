@@ -29,6 +29,7 @@ import com.training.movieapp.domain.model.state.DataState
 import com.training.movieapp.ui.main.viewmodel.ExploreViewModel
 import com.training.movieapp.ui.main.viewmodel.MainViewModel
 import com.training.movieapp.ui.main.viewmodel.MoviesViewModel
+import com.training.movieapp.ui.main.viewmodel.NotificationsViewModel
 import com.training.movieapp.ui.main.viewmodel.SeriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     private val moviesViewModel: MoviesViewModel by viewModels()
     private val seriesViewModel: SeriesViewModel by viewModels()
     private val exploreViewModel: ExploreViewModel by viewModels()
+    private val notificationsViewModel: NotificationsViewModel by viewModels()
     private lateinit var splashScreen: SplashScreen
     private lateinit var navController: NavController
 
@@ -59,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         seriesViewModel.getSeries()
         exploreViewModel.getUsers()
         exploreViewModel.getPeoplePopular()
+        notificationsViewModel.getUsers()
     }
 
     private fun initNavController() {
