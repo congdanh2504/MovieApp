@@ -4,34 +4,35 @@
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_primary">
+    android:backgroundTint="@color/background_grouped_primary">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:padding="15dp"
-        android:weightSum="10"
-        >
+        android:weightSum="10">
 
         <androidx.cardview.widget.CardView
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:backgroundTint="@color/background_primary"
+            android:backgroundTint="@color/background_grouped_primary"
             android:orientation="horizontal"
-            >
+            app:cardElevation="0dp">
+
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/_50sdp"
-                >
+                app:cardCornerRadius="@dimen/_50sdp">
+
                 <ImageView
                     android:id="@+id/userImage"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_launcher_background" />
-            </androidx.cardview.widget.CardView>
 
+            </androidx.cardview.widget.CardView>
 
         </androidx.cardview.widget.CardView>
 
@@ -40,8 +41,7 @@
             android:layout_height="match_parent"
             android:layout_weight="6"
             android:orientation="vertical"
-            android:weightSum="4"
-            >
+            android:weightSum="4">
 
             <TextView
                 android:id="@+id/tvUsername"
@@ -89,10 +89,10 @@
             android:layout_weight="3">
 
             <Button
-                android:layout_marginTop="@dimen/_5sdp"
                 android:id="@+id/createAccountBtn"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/rounded_rectangle"
                 android:text="Follow"
                 android:textAllCaps="false"
@@ -105,10 +105,10 @@
     </LinearLayout>
 
     <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:dividerInsetStart="@dimen/_65sdp"
-        app:dividerInsetEnd="@dimen/_20sdp"
         android:layout_gravity="bottom"
-        />
+        app:dividerInsetEnd="@dimen/_20sdp"
+        app:dividerInsetStart="@dimen/_65sdp" />
 </androidx.cardview.widget.CardView>

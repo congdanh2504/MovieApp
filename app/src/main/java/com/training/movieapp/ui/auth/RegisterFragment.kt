@@ -33,7 +33,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun initView() {
-        dialog = LoadingDialog(requireContext())
+        dialog = LoadingDialog(childFragmentManager)
     }
 
     private fun initActions() {
@@ -64,18 +64,18 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                     .collect { state ->
                         when (state) {
                             is DataState.Idle -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.errorTV.isVisible = false
                             }
 
                             is DataState.Success -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.errorTV.isVisible = false
                                 findNavController().popBackStack()
                             }
 
                             is DataState.Error -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.errorTV.isVisible = true
                                 binding.errorTV.text = state.message
                             }

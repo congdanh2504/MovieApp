@@ -35,7 +35,7 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
     }
 
     private fun initView() {
-        dialog = LoadingDialog(requireContext())
+        dialog = LoadingDialog(childFragmentManager)
     }
 
     private fun initActions() {
@@ -77,12 +77,12 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
                     changePasswordViewModel.changePasswordState.collect { state ->
                         when (state) {
                             is DataState.Idle -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.textViewError.isVisible = false
                             }
 
                             is DataState.Success -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.textViewError.isVisible = false
                                 Toast.makeText(
                                     requireContext(),
@@ -92,7 +92,7 @@ class ChangePasswordFragment : Fragment(R.layout.fragment_change_password) {
                             }
 
                             is DataState.Error -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.textViewError.isVisible = true
                                 binding.textViewError.text = state.message
                             }

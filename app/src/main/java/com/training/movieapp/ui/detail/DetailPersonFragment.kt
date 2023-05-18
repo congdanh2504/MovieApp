@@ -53,7 +53,7 @@ class DetailPersonFragment : Fragment(R.layout.fragment_detail_person) {
     }
 
     private fun initView() {
-        dialog = LoadingDialog(requireContext())
+        dialog = LoadingDialog(childFragmentManager)
     }
 
     private fun initActions() {
@@ -70,7 +70,7 @@ class DetailPersonFragment : Fragment(R.layout.fragment_detail_person) {
                 detailPeopleViewModel.peopleState.collect { state ->
                     when (state) {
                         is DataState.Idle -> {
-                            dialog.dismiss()
+                            dialog.safeDismiss()
                         }
 
                         is DataState.Loading -> {
@@ -78,12 +78,12 @@ class DetailPersonFragment : Fragment(R.layout.fragment_detail_person) {
                         }
 
                         is DataState.Success -> {
-                            dialog.dismiss()
+                            dialog.safeDismiss()
                             setPeopleDetail(state.data)
                         }
 
                         is DataState.Error -> {
-                            dialog.dismiss()
+                            dialog.safeDismiss()
                             Toast.makeText(
                                 requireContext(),
                                 state.message.toString(),

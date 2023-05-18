@@ -4,6 +4,7 @@
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:backgroundTint="@color/background_grouped_primary"
     android:layout_marginHorizontal="@dimen/_3sdp">
 
     <LinearLayout
@@ -80,6 +81,7 @@
     </LinearLayout>
 
     <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_10sdp" />

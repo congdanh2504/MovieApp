@@ -64,7 +64,7 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
     private fun initView() {
         lifecycle.addObserver(binding.youtubePlayerView)
         binding.viewPager.reduceDragSensitivity()
-        dialog = LoadingDialog(requireContext())
+        dialog = LoadingDialog(childFragmentManager)
     }
 
     private fun initObservers() {
@@ -74,7 +74,7 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
                     detailMovieViewModel.movieDetailState.collect { state ->
                         when (state) {
                             is DataState.Idle -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                             }
 
                             is DataState.Loading -> {
@@ -82,12 +82,12 @@ class DetailMovieFragment : Fragment(R.layout.fragment_detail_movie) {
                             }
 
                             is DataState.Success -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 setMovieDetail(state.data)
                             }
 
                             is DataState.Error -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 Toast.makeText(
                                     requireContext(),
                                     state.message.toString(),

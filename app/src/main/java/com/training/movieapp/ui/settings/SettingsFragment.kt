@@ -40,7 +40,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun initView() {
-        dialog = LoadingDialog(requireContext())
+        dialog = LoadingDialog(childFragmentManager)
     }
 
     private fun initActions() {
@@ -70,16 +70,16 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     settingsViewModel.signOutState.collect { state ->
                         when (state) {
                             is DataState.Idle -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                             }
 
                             is DataState.Success -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 findNavController().navigate(R.id.action_settingsFragment_to_loginFragment)
                             }
 
                             is DataState.Error -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG)
                                     .show()
                             }

@@ -34,7 +34,6 @@ class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
                     when (state) {
                         is DataState.Success -> {
                             setUsers(state.data)
-                            Log.d("notification",state.data.toString())
                         }
 
                         is DataState.Error -> {

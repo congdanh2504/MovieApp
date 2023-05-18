@@ -33,7 +33,7 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
     }
 
     private fun initView() {
-        dialog = LoadingDialog(requireContext())
+        dialog = LoadingDialog(childFragmentManager)
     }
 
     private fun initActions() {
@@ -54,12 +54,12 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
                     .collect { state ->
                         when (state) {
                             is DataState.Idle -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.errorTV.isVisible = false
                             }
 
                             is DataState.Success -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.errorTV.isVisible = false
                                 val action =
                                     ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToResetFragment(
@@ -69,7 +69,7 @@ class ForgotPasswordFragment : Fragment(R.layout.fragment_forgot_password) {
                             }
 
                             is DataState.Error -> {
-                                dialog.dismiss()
+                                dialog.safeDismiss()
                                 binding.errorTV.isVisible = true
                                 binding.errorTV.text = state.message
                             }

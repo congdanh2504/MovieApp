@@ -3,6 +3,7 @@ package com.training.movieapp.ui.main.adapter.notifications
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.training.movieapp.R
@@ -25,9 +26,15 @@ class NotificationsAdapter(private val userModel: List<User>) :
 
     override fun onBindViewHolder(holder: NotificationsViewHolder, position: Int) {
         holder.binding.apply {
-            userImage.load(userModel[position].imageURL)
+            userImage.load(userModel[position].imageURL ?: R.drawable.icons8user)
             tvUsername.text = userModel[position].username
             tvNickname.text = "@" + userModel[position].bio
+            if (position == 0) {
+                card.setBackgroundResource(R.drawable.top_radius)
+            } else if (position == userModel.size - 1) {
+                card.setBackgroundResource(R.drawable.bottom_radius)
+                divider.isVisible = false
+            }
         }
     }
 }
