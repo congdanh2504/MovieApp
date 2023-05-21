@@ -16,7 +16,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ExploreViewModel @Inject constructor(private val getPeoplePopularUseCase: GetPeoplePopularUseCase,private val getUsersUseCase: GetUsersUseCase) :
+class ExploreViewModel @Inject constructor(
+    private val getPeoplePopularUseCase: GetPeoplePopularUseCase,
+    private val getUsersUseCase: GetUsersUseCase
+) :
     BaseViewModel() {
     private val _peoplePopularState =
         MutableStateFlow<DataState<PageResponse<People>>>(DataState.Idle)
@@ -26,10 +29,12 @@ class ExploreViewModel @Inject constructor(private val getPeoplePopularUseCase: 
         MutableStateFlow<DataState<List<User>>>(DataState.Idle)
     val usersState: StateFlow<DataState<List<User>>> =
         _usersState.asStateFlow()
+
     fun getPeoplePopular() = viewModelScope.launch {
         handleState(_peoplePopularState, getPeoplePopularUseCase.execute())
     }
+
     fun getUsers() = viewModelScope.launch {
-        handleState(_usersState,getUsersUseCase.execute())
+        handleState(_usersState, getUsersUseCase.execute())
     }
 }

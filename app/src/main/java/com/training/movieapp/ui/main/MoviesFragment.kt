@@ -34,7 +34,14 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
         super.onViewCreated(view, savedInstanceState)
         dialog = LoadingDialog(childFragmentManager)
         mainViewModel.readUser()
+        initActions()
         initObservers()
+    }
+
+    private fun initActions() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            moviesViewModel.getMovies()
+        }
     }
 
     private fun initObservers() {
@@ -44,11 +51,13 @@ class MoviesFragment : Fragment(R.layout.fragment_movies) {
                     when (state) {
                         is DataState.Success -> {
                             dialog.safeDismiss()
+                            binding.swipeRefreshLayout.isRefreshing = false
                             setMovies(state.data)
                         }
 
                         is DataState.Error -> {
                             dialog.safeDismiss()
+                            binding.swipeRefreshLayout.isRefreshing = false
                             Toast.makeText(
                                 requireContext(),
                                 state.message.toString(),

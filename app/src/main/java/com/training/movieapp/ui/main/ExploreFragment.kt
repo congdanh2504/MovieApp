@@ -27,8 +27,16 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initActions()
         initObserversPeople()
         initObserversUser()
+    }
+
+    private fun initActions() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            exploreViewModel.getPeoplePopular()
+            exploreViewModel.getUsers()
+        }
     }
 
     private fun initObserversUser() {
@@ -37,10 +45,12 @@ class ExploreFragment : Fragment(R.layout.fragment_explore) {
                 exploreViewModel.usersState.collect { state ->
                     when (state) {
                         is DataState.Success -> {
+                            binding.swipeRefreshLayout.isRefreshing = false
                             setUsers(state.data)
                         }
 
                         is DataState.Error -> {
+                            binding.swipeRefreshLayout.isRefreshing = false
                             Toast.makeText(
                                 requireContext(),
                                 state.message.toString(),

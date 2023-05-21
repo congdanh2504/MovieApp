@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -28,7 +27,14 @@ class SeriesFragment : Fragment(R.layout.fragment_series) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initActions()
         initObservers()
+    }
+
+    private fun initActions() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            seriesViewModel.getSeries()
+        }
     }
 
     private fun initObservers() {
@@ -37,10 +43,12 @@ class SeriesFragment : Fragment(R.layout.fragment_series) {
                 seriesViewModel.mainSeriesState.collect { state ->
                     when (state) {
                         is DataState.Success -> {
+                            binding.swipeRefreshLayout.isRefreshing = false
                             setSeries(state.data)
                         }
 
                         is DataState.Error -> {
+                            binding.swipeRefreshLayout.isRefreshing = false
                             Toast.makeText(
                                 requireContext(),
                                 state.message.toString(),
@@ -78,7 +86,7 @@ class SeriesFragment : Fragment(R.layout.fragment_series) {
         }
     }
 
-    private val onSeriesClick : (seriesId: Int) -> Unit = {seriesId ->
+    private val onSeriesClick: (seriesId: Int) -> Unit = { seriesId ->
         val action = SeriesFragmentDirections.actionSeriesFragmentToSeriesDetailFragment(seriesId)
         findNavController().navigate(action)
     }

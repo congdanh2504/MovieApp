@@ -1,7 +1,6 @@
 package com.training.movieapp.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -18,13 +17,21 @@ import com.training.movieapp.ui.main.adapter.notifications.NotificationsAdapter
 import com.training.movieapp.ui.main.viewmodel.NotificationsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
 @AndroidEntryPoint
 class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
     private val binding: FragmentNotificationsBinding by viewBinding(FragmentNotificationsBinding::bind)
     private val notificationsViewModel: NotificationsViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initActions()
         initObservers()
+    }
+
+    private fun initActions() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            notificationsViewModel.getUsers()
+        }
     }
 
     private fun initObservers() {
@@ -33,10 +40,12 @@ class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
                 notificationsViewModel.usersState.collect { state ->
                     when (state) {
                         is DataState.Success -> {
+                            binding.swipeRefreshLayout.isRefreshing = false
                             setUsers(state.data)
                         }
 
                         is DataState.Error -> {
+                            binding.swipeRefreshLayout.isRefreshing = false
                             Toast.makeText(
                                 requireContext(),
                                 state.message.toString(),
@@ -48,7 +57,8 @@ class NotificationsFragment : Fragment(R.layout.fragment_notifications) {
                     }
                 }
             }
-        }    }
+        }
+    }
 
     private fun setUsers(data: List<User>) {
         binding.apply {

@@ -118,10 +118,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun initObservers() {
         mainViewModel.isUserLoggedIn.observe(this) { isUserLoggedIn ->
-            splashScreen.setKeepOnScreenCondition { false }
+
             if (!isUserLoggedIn) {
                 navController.navigate(R.id.action_moviesFragment_to_loginFragment)
             }
+            splashScreen.setKeepOnScreenCondition { false }
         }
 
         lifecycleScope.launch {
